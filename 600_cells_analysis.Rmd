@@ -1,0 +1,126 @@
+---
+title: "600 cell analysis"
+output: html_notebook
+---
+
+```{r Set up environment manually}
+#Define list of packages
+#pkg_list <- c('Seurat', 'dplyr', 'Matrix', 'ggplot2', 'rmarkdown')
+
+#Install packages
+#lapply(pkg_list, install.packages)
+#install.packages('here')
+
+#Load libraries
+#lapply(pkg_list, library, character.only=TRUE)
+
+#Remove pkg_list from environment
+#rm(pkg_list)
+
+#Save renv session
+#renv::snapshot()
+```
+
+```{r Set seed and load environment}
+#Set seed for random number generation
+set.seed(444)
+
+#Restore renv session
+renv::restore()
+
+#Update all packages
+#renv::update()
+```
+
+```{r Define paths}
+
+#Set top-level directory using the here package
+here::i_am("600_cells_analysis/600_cells_analysis.Rmd")
+library(here)
+here()
+
+#Set paths to save and read Seurat objects
+ifelse(!dir.exists(here("r_objects")), dir.create(here("r_objects")), "Folder exists already")
+data_path <- here('r_objects')
+
+#Make and/or set path to save figures
+ifelse(!dir.exists(here("r_figures")), dir.create(here("r_figures")), "Folder exists already")
+fig_path <- here('r_figures')
+```
+
+```{r Convenience functions}
+#ReadParseBio with correct count_matrix name
+ReadParseBio_count <- function(data.dir, ...) {
+  mtx <- file.path(data.dir, "count_matrix.mtx")
+  cells <- file.path(data.dir, "cell_metadata.csv")
+  features <- file.path(data.dir, "all_genes.csv")
+  return(ReadMtx(
+    mtx = mtx,
+    cells = cells,
+    features = features,
+    cell.column = 1,
+    feature.column = 2,
+    cell.sep = ",",
+    feature.sep = ",",
+    skip.cell = 1,
+    skip.feature = 1,
+    mtx.transpose = TRUE
+  ))
+}
+
+#Save figures
+SaveFigure <- function(plots, name, type = "png", width, height, res){
+  if(type == "png") {
+    png(paste0(fig_path, name, ".", type),
+      width = width, height = height, units = "in", res = 200)
+  } else {
+    pdf(paste0(fig_path, name, ".", type),
+      width = width, height = height)
+}
+print(plots)
+dev.off()
+}
+
+#Save Seurat objects
+SaveObject <- function(object, name){
+  saveRDS(object, here('r_objects', paste0(name, ".RDS")))
+}
+
+#Read Seurat objects
+ReadObject <- function(name){
+  readRDS(here('r_objects', paste0(name, ".RDS")))
+}
+```
+
+```{r Read in data}
+#Load in count matrix
+data_dir <- here('all-sample', 'DGE_filtered')
+counts <- ReadParseBio_count(data_dir)
+
+# Check to see if empty gene names are present, add name if so.
+table(rownames(counts) == "")
+rownames(counts)[rownames(counts) == ""] <- "unknown"
+
+# Read in cell meta data
+cell_meta <- read.csv(here('all-sample', 'DGE_filtered', "/cell_metadata.csv"), row.names = 1)
+
+#Create Seurat object
+seurat_obj <- CreateSeuratObject(counts = counts, names.field = 0, meta.data = cell_meta)
+```
+
+FROM PARSE BIO:
+When we create our Seurat object the plate well numbers (column names in the expression matrix) from the experiment will automatically be assigned to the cell identity slot. In other words, the program assumes this how we want to initially classify our cells. In general, we would like to avoid this behavior so there isn't a bias towards a particular cell class when removing outliers.
+
+```{r Well numbers}
+# Setting our initial cell class to a single type, this will change after clustering. 
+seurat_obj@meta.data$orig.ident <- factor(rep("seurat_obj", nrow(seurat_obj@meta.data)))
+Idents(seurat_obj) <- seurat_obj@meta.data$orig.ident
+
+#Save raw Seurat object
+SaveObject(seurat_obj, 'raw_seurat_obj')
+seurat_obj <- ReadObject('raw_seurat_obj')
+```
+
+```{r Cell quality control}
+
+```
