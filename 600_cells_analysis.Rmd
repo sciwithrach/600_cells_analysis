@@ -3,33 +3,39 @@ title: "600 cell analysis"
 output: html_notebook
 ---
 
-```{r Set up environment manually}
-#Define list of packages
-#pkg_list <- c('Seurat', 'dplyr', 'Matrix', 'ggplot2', 'rmarkdown')
+```{r Set up environment}
+#Define packages for install and/or library loading 
+pkg_list_cran <- c('BiocManager', 'dplyr', 'Matrix', 'ggplot2', 'rmarkdown')
+pkg_list_bioc <- c('Seurat', 'SingleCellExperiment', 'scater')
+pkg_list_all <- c(pkg_list_cran, pkg_list_bioc)
+
+##############################################################
+
+# ONLY RUN THIS SECTION IF INSTALLING PACKAGES FROM SCRATCH #
 
 #Install packages
-#lapply(pkg_list, install.packages)
+#lapply(pkg_list_cran, install.packages)
+#lapply(pkg_list_bioc, BiocManager::install)
 #install.packages('here')
-
-#Load libraries
-#lapply(pkg_list, library, character.only=TRUE)
-
-#Remove pkg_list from environment
-#rm(pkg_list)
 
 #Save renv session
 #renv::snapshot()
-```
 
-```{r Set seed and load environment}
-#Set seed for random number generation
-set.seed(444)
+##############################################################
 
 #Restore renv session
 renv::restore()
 
-#Update all packages
-#renv::update()
+# Update all packages - recommended if it's been a while
+# since the code was last run
+# renv::update()
+
+#Load libraries
+lapply(pkg_list_all, library, character.only=TRUE)
+
+#Set seed for random number generation
+set.seed(444)
+
 ```
 
 ```{r Define paths}
@@ -39,13 +45,16 @@ here::i_am("600_cells_analysis/600_cells_analysis.Rmd")
 library(here)
 here()
 
+#Select experiment - CHANGE THIS EACH TIME
+exp <- '310523_PR0979_v2'
+
 #Set paths to save and read Seurat objects
-ifelse(!dir.exists(here("r_objects")), dir.create(here("r_objects")), "Folder exists already")
-data_path <- here('r_objects')
+ifelse(!dir.exists(here(exp, "r_objects")), dir.create(here(exp, "r_objects")), "Folder exists already")
+data_path <- here(exp, 'r_objects')
 
 #Make and/or set path to save figures
-ifelse(!dir.exists(here("r_figures")), dir.create(here("r_figures")), "Folder exists already")
-fig_path <- here('r_figures')
+ifelse(!dir.exists(here(exp, "r_figures")), dir.create(here(exp, "r_figures")), "Folder exists already")
+fig_path <- here(exp, 'r_figures')
 ```
 
 ```{r Convenience functions}
@@ -83,18 +92,18 @@ dev.off()
 
 #Save Seurat objects
 SaveObject <- function(object, name){
-  saveRDS(object, here('r_objects', paste0(name, ".RDS")))
+  saveRDS(object, here(exp, 'r_objects', paste0(name, ".RDS")))
 }
 
 #Read Seurat objects
 ReadObject <- function(name){
-  readRDS(here('r_objects', paste0(name, ".RDS")))
+  readRDS(here(exp, 'r_objects', paste0(name, ".RDS")))
 }
 ```
 
 ```{r Read in data}
 #Load in count matrix
-data_dir <- here('all-sample', 'DGE_filtered')
+data_dir <- here(exp, 'all-sample', 'DGE_filtered')
 counts <- ReadParseBio_count(data_dir)
 
 # Check to see if empty gene names are present, add name if so.
@@ -102,7 +111,7 @@ table(rownames(counts) == "")
 rownames(counts)[rownames(counts) == ""] <- "unknown"
 
 # Read in cell meta data
-cell_meta <- read.csv(here('all-sample', 'DGE_filtered', "/cell_metadata.csv"), row.names = 1)
+cell_meta <- read.csv(here(exp, 'all-sample', 'DGE_filtered', "/cell_metadata.csv"), row.names = 1)
 
 #Create Seurat object
 seurat_obj <- CreateSeuratObject(counts = counts, names.field = 0, meta.data = cell_meta)
