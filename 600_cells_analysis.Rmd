@@ -118,7 +118,11 @@ Idents(seurat_obj) <- seurat_obj@meta.data$orig.ident
 
 #Save raw Seurat object
 SaveObject(seurat_obj, 'raw_seurat_obj')
-seurat_obj <- ReadObject('raw_seurat_obj')
+#seurat_obj <- ReadObject('raw_seurat_obj')
+
+#Save raw SingleCellExperiment object
+sce_obj <- as.SingleCellExperiment(seurat_obj)
+SaveObject(sce_obj, 'raw_sce_obj')
 ```
 
 ```{r Cell quality control}
