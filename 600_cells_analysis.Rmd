@@ -80,10 +80,10 @@ ReadParseBio_count <- function(data.dir, ...) {
 #Save figures
 SaveFigure <- function(plots, name, type = "png", width, height, res){
   if(type == "png") {
-    png(paste0(fig_path, name, ".", type),
+    png(paste0(fig_path, '/', name, ".", type),
       width = width, height = height, units = "in", res = 200)
   } else {
-    pdf(paste0(fig_path, name, ".", type),
+    pdf(paste0(fig_path, '/', name, ".", type),
       width = width, height = height)
 }
 print(plots)
@@ -134,6 +134,280 @@ sce_obj <- as.SingleCellExperiment(seurat_obj)
 SaveObject(sce_obj, 'raw_sce_obj')
 ```
 
+We need to exclude multiplets from analysis - these are cells with abnormally high transcript of gene counts.
+
+[FROM BIOSTARS](https://www.biostars.org/p/407036/#:~:text=nCount_RNA%20is%20the%20total%20number,a%20doublet%20(or%20multiplet).)
+
+"nFeature_RNA is the number of genes detected in each cell. nCount_RNA is the total number of molecules detected within a cell. Low nFeature_RNA for a cell indicates that it may be dead/dying or an empty droplet. High nCount_RNA and/or nFeature_RNA indicates that the "cell" may in fact be a doublet (or multiplet). In combination with %mitochondrial reads, removing outliers from these groups removes most doublets/dead cells/empty droplets, hence why filtering is a common pre-processing step.
+
+The NormalizeData step is basically just ensuring expression values across cells are on a comparable scale. By default, it will divide counts for each gene by the total counts in the cell, multiply that value for each gene by the scale.factor (10,000 by default), and then natural log-transform them."
+
+The columns added after quickpercellQC can be described as follows:
+
+- sum = nCount_RNA = lib_size = number of molecules in the well
+
+- detected = nFeature_RNA = number of unique genes in the well
+
+- low_lib_size suggests RNA has been lost at some point during library preparation, either due to cell lysis or inefficient cDNA capture and amplification
+
+- low_n_features suggests cell is dead/dying/"empty droplet"
+
 ```{r Cell quality control}
+#Add quick per cell QC
+sce_obj <- scuttle::quickPerCellQC(sce_obj)
+
+#Load stringr for string functions
+library(stringr)
+
+#Add mitoDNA proportion
+location <- rowRanges(sce_obj)
+is.mito <- sapply(names(seqnames(location)), str_detect, '^mt*')
+sce_obj <- addPerCellQCMetrics(sce_obj, subsets = list(Mito = is.mito))
+qc_df <- perCellQCMetrics(sce_obj, subsets = list(Mito = is.mito))
+
+#Get the number of cells for which %mito is greater than 10
+sum(sce_obj$subsets_Mito2_percent > 10)
+```
+
+Alternatively, do a quick version of this QC with Seurat:
+```{r Seurat QC}
+seurat_obj[["percent.mt"]] <- PercentageFeatureSet(seurat_obj, pattern = "^MT-")
+plot <- VlnPlot(seurat_obj, pt.size = 0.10,
+features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3)
+
+plot
+SaveFigure(plot, "vln_QC", width = 12, height = 6)
+
+
+plot1 <- FeatureScatter(seurat_obj, feature1 = "nCount_RNA", feature2 = "percent.mt")
+plot2 <- FeatureScatter(seurat_obj, feature1 = "nCount_RNA", feature2 = "nFeature_RNA")
+
+plot1 + plot2
+SaveFigure((plot1 + plot2),"scatter_QC", width = 12, height = 6, res = 200)
+```
+
+Now time to find highly variable features for the whole dataset:
+```{r Normalise and find highly variable features}
+#Normalise
+seurat_obj <- NormalizeData(seurat_obj, normalization.method = "LogNormalize", scale.factor = 10000)
+
+#Find HVFs
+seurat_obj <- FindVariableFeatures(seurat_obj, selection.method = "vst", nfeatures = 2000)
+# Identify the 10 most highly variable genes
+top10 <- head(VariableFeatures(seurat_obj), 10)
+# plot variable features with and without labels
+plot1 <- VariableFeaturePlot(seurat_obj)
+plot2 <- LabelPoints(plot = plot1, points = top10, repel = TRUE)
+
+plot1 + plot2
+SaveFigure((plot1 + plot2), "var_features", width = 12, height = 6)
+```
+
+```{r Scale and dimensionality reduction}
+#Scale 
+seurat_obj <- ScaleData(seurat_obj)
+
+#Dimensionality reduction
+seurat_obj <- RunPCA(seurat_obj)
+SaveObject(seurat_obj, "seurat_obj_after_PCA")
+
+#Load obj
+srat <- ReadObject("seurat_obj_after_PCA")
+
+# Examine and visualize PCA results a few different ways
+print(srat[["pca"]], dims = 1:5, nfeatures = 5)
+
+#Plot!
+plot <- VizDimLoadings(srat, dims = 1:2, reduction = "pca")
+SaveFigure(plot, "viz_PCA_loadings", width = 10, height = 8)
+
+plot <- DimPlot(srat, reduction = "pca", group.by = "orig.ident")
+SaveFigure(plot, "pc1_2_scatter", width = 8, height = 6)
+```
+
+Now let's look at heterogeneity in the dataset with DimHeatmap
+```{r DimHeatmap}
+#Plot DimHeatmap for PC1
+# NB: For large datasets, set cells = 500
+plot <- DimHeatmap(srat, dims = 1, balanced = TRUE, fast = FALSE)
+SaveFigure(plot, "dim_heatmap1", width = 8, height = 6)
+
+#Plot DimHeatmap for PC2
+# NB: For large datasets, set cells = 500
+plot <- DimHeatmap(srat, dims = 1:15, balanced = TRUE, fast = FALSE)
+SaveFigure(plot, "dim_heatmap1_15", width = 12, height = 18)
+```
+
+```{r Determine dimensionality of the dataset}
+# NOTE: This process can take a long time for big datasets, comment out for expediency. More
+# approximate techniques such as those implemented in ElbowPlot() can be used to reduce
+# computation time
+srat <- JackStraw(srat, num.replicate = 100)
+srat <- ScoreJackStraw(srat, dims = 1:20)
+plot <- JackStrawPlot(srat, dim=1:20)
+SaveFigure(plot, "PC_JackStraw_plot", width = 8, height = 10)
+
+#Quicker alternative!
+plot <- ElbowPlot(srat,ndims = 50)
+SaveFigure(plot, "PC_elbow_plot", width = 8, height = 10)
+```
+
+Chose the first 9 PCs, now time to cluster:
+```{r Clustering}
+
+### NB: NUMBER OF PCs FOR CLUSTERING = NUMBER OF PCs FOR UMAP
+
+
+#Find SNN
+srat <- Seurat:::FindNeighbors(srat, dims=1:30)
+#Run Louvain clustering
+srat <- FindClusters(srat, resolution = 0.8)
+srat <- FindClusters(srat, resolution = 0.6)
+srat <- FindClusters(srat, resolution = 1)
+srat <- FindClusters(srat, resolution = 1.2)
+srat <- FindClusters(srat, resolution = 1.4)
+
+############################################
+##### CLUSTREE #######
+######################
+#
+# Run find cluster step with a range of resolutions 
+# On the srat obj, it will generate a column for each
+renv::install('clustree')
+library(clustree)
+
+plot <- clustree(srat)
+SaveFigure(plot, "clustree", width = 10, height = 10)
+
+#renv::install('ape')
+#library(ape)
+
+
+```
+
+```{r Run non-linear dimensionality reduction}
+
+### NB: NUMBER OF PCs FOR CLUSTERING = NUMBER OF PCs FOR UMAP
+
+srat <- RunUMAP(srat, dims=1:30)
+plot <- DimPlot(srat, reduction = 'umap')
+SaveFigure(plot, 'umap_louvain_res_p3', width=9, height=8)
+
+#Save object
+SaveObject(srat, "seurat_obj_clustered")
+#srat <- ReadObject("seurat_obj_clustered")
+
+
+
+```
+NOTES FROM MARCELA:
+functional annotation
+go genome annotation terms
+gene ontology resource
+good guides & annotation
+
+cluster profiler r package
+generates plots & viz for this type of analysis e.g.
+
+refine clusters
+cluster stability
+ontology analysis
+
+```{r Find cluster markers (DGE)}
+#Find markers per cluster
+BiocManager::install("MAST")
+library('MAST')
+#srat <- BuildClusterTree(srat, reorder = T, reorder.numeric = T)
+srat_markers <- FindMarkers(srat, test.use = 'MAST', ident.1=1)
+
+c8_ont <- srat_markers[srat_markers$cluster == '8' & srat_markers$p_val_adj <0.05 & srat_markers$avg_log2FC > 0,]
+
+writeLines(c8_ont$gene, 'c8_ontology.csv')
+
+#Find unique markers per cluster
+srat_all_markers <- FindAllMarkers(srat, min.pct = 0.25, logfc.threshold = 0.25)
+srat_all_markers %>% group_by(cluster) %>% top_n(n = 2, wt = avg_log2FC)
+
+######
+# Use FindMarkers, not FindAllMarkers, use MAST method
+######
+
+#Plot expression probability distributions across clusters
+plot <- VlnPlot(srat, features = c("Otog", "Armc4"), group.by = "tree.ident")
+SaveFigure(plot, "vln_exp1", width = 16, height = 8)
+
+#Plot raw counts
+plot <- VlnPlot(srat, features = c("Otog", "Armc4"), slot = "counts", log = TRUE)
+SaveFigure(plot, "vln_exp2", width = 16, height = 8)
+```
+
+```{r Plot top n genes per cluster}
+top5 <- srat_markers %>% group_by(cluster) %>% top_n(n = 5, wt = avg_log2FC)
+to_plot <- unique(top5$gene)
+plot <- DotPlot(srat, features = to_plot, group.by = "tree.ident") + coord_flip()
+SaveFigure(plot, "dplot_top5", width = 9, height = 20)
+```
+
+```{r Merging clusters and labelling cell types}
+# Plotting PBMC markers
+markers <- c("Otog", "Armc4", "Mgat4c", "Kcnh7", "mt-Rnr1", "mt-Rnr2", "Coch",
+"Tectb", "Sparcl1", "Miat", "Ush2a", "Mbp")
+
+srat_markers <- FeaturePlot(srat, features = markers)
+SaveFigure(srat_markers, "srat_markers", width = 40, height = 30)
+```
+
+```{r Plot UMAP with labelled clusters}
+plot <- DimPlot(srat, reduction = "umap", label = TRUE) + NoAxes() + NoLegend()
+SaveFigure(plot, "umap_louvain_nolegend", width = 8, height = 7)
+```
+
+```{r gene ontology analysis}
+c8_ont <- srat_markers[srat_markers$cluster == '8' & srat_markers$p_val_adj <0.05 & srat_markers$avg_log2FC > 0,]
+
+writeLines(c8_ont$gene, 'c8_ontology.csv')
+```
+
+
+```{r Plot UMAP with descriptive labelled clusters}
+#NB: Taken from tutorial, doesn't work for this dataset, revisit at a later date!
+
+#new_ids <- c("HCs", "SCs Sparcl1+", "SCs Sparcl1-", "mt+ myelin+", "mt+ myelin-", "Lateral wall")
+
+#new_id_list <- list(HCs = c(8,9,10), SCsPlus = c(6,7),
+#  SCsMinus = 5, MtPlus = 1, MtMinus = 2, LatWall = c(3,4))
+
+#for (i in 1:length(new_id_list)) {
+#  ind <- which(srat@meta.data$tree.ident %in% new_id_list[[i]])
+#  srat@meta.data$collapsed[ind] <- names(new_id_list)[i]
+#}
+
+#srat@meta.data$collapsed <- factor(
+#  srat@meta.data$collapsed, levels = names(new_id_list), ordered = TRUE)
+#Idents(srat) <- pbmc@meta.data$collapsed
+
+#names(new_ids) <- levels(srat)
+#srat <- RenameIdents(srat, new_ids)
+
+#plot <- DimPlot(srat, reduction = "umap", label = TRUE) + NoAxes() + NoLegend()
+#SaveFigure(plot, "umap_louvain_nolegend_names", width = 8, height = 7)
+```
+
+
+
+```{r Trajectory analysis}
+BiocManager::install(c('BiocGenerics', 'DelayedArray', 'DelayedMatrixStats',
+                       'limma', 'lme4', 'S4Vectors', 'SingleCellExperiment',
+                       'SummarizedExperiment', 'batchelor', 'HDF5Array',
+                       'terra', 'ggrastr'))
+
+renv::install('devtools')
+
+devtools::install_github('cole-trapnell-lab/monocle3')
+
+library(monocle3)
+
+remotes::install_github('satijalab/seurat-wrappers')
+
 
 ```
