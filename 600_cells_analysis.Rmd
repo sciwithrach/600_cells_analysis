@@ -358,7 +358,7 @@ SaveFigure(plot, "hmap_top5", width=5, height = 7)
 ```
 
 ```{r Merging clusters and labelling cell types}
-# Plotting PBMC markers
+# Plotting HC, SC, and mesenchymal markers
 markers <- c("Otog", "Armc4", "Mgat4c", "Kcnh7", "mt-Rnr1", "mt-Rnr2", "Coch",
 "Tectb", "Sparcl1", "Miat", "Ush2a", "Mbp")
 
@@ -372,13 +372,43 @@ SaveFigure(plot, "umap_louvain_nolegend", width = 8, height = 7)
 ```
 
 ```{r Ontology analysis with cluster profiler}
-BiocManager::install('ggtree')
-BiocManager::install("clusterProfiler")
+#BiocManager::install('ggtree')
+#BiocManager::install("clusterProfiler")
 #devtools::install_github('cole-trapnell-lab/monocle3')
+#BiocManager::install('AnnotationHub')
+#BiocManager::install('rtracklayer')
+#BiocManager::install("org.Mm.eg.db")
 
+library(AnnotationHub)
 library(clusterProfiler)
 library(monocle3)
+library(tibble)
+library(rtracklayer)
+library(org.Mm.eg.db)
+library(enrichplot)
 
+
+GO.genes <- lapply(srat_markers, function(x) tibble(gene_name = rownames(x), avg_log2FC = x$avg_log2FC))
+GO.genes <- lapply(GO.genes, deframe)
+GO.genes <- lapply(GO.genes, sort, decreasing = T)
+
+#OrgDB <- org.Mm.eg.db
+
+eGO <- lapply(GO.genes, function (x) 
+            gseGO(geneList = x,
+             OrgDb = org.Mm.eg.db,
+             keyType = 'SYMBOL',
+             ont = 'ALL',
+             minGSSize = 100,
+             maxGSSize = 500,
+             pvalueCutoff = 0.05,
+             verbose = T)
+            )
+
+#SaveObject(eGO, 'eGO')
+
+plots <- lapply(eGO, dotplot)
+p <- gridExtra::grid.arrange(globs = plots, ncol=4)
 
 ```
 
