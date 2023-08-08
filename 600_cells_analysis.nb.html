@@ -1754,148 +1754,266 @@ display: none;
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuI1NhdmUgcmVudiBzZXNzaW9uXG5yZW52OjpzbmFwc2hvdCgpXG5cbmBgYFxuYGBgIn0= -->
-<pre class="r"><code>```r
-#Save renv session
-renv::snapshot()
-</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiLSBMb2NrZmlsZSB3cml0dGVuIHRvICd+L25ld3ZvbHVtZS9hbmFseXNpcy82MDBfY2VsbHNfYW5hbHlzaXMvcmVudi5sb2NrJy5cbiJ9 --&gt;
-</code></pre>
-<ul>
-<li>Lockfile written to
-‘~/newvolume/analysis/600_cells_analysis/renv.lock’.</li>
-</ul>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI1NldCB0b3AtbGV2ZWwgZGlyZWN0b3J5IHVzaW5nIHRoZSBoZXJlIHBhY2thZ2VcbmhlcmU6OmlfYW0oXCI2MDBfY2VsbHNfYW5hbHlzaXMvNjAwX2NlbGxzX2FuYWx5c2lzLlJtZFwiKVxuXG5gYGAifQ== --&gt;
-
-```r
-#Set top-level directory using the here package
-here::i_am(&quot;600_cells_analysis/600_cells_analysis.Rmd&quot;)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0xvYWQgbGlicmFyaWVzXG5sYXBwbHkocGtnX2xpc3RfYWxsLCBsaWJyYXJ5LCBjaGFyYWN0ZXIub25seT1UUlVFKVxuXG5gYGAifQ== -->
+<pre class="r"><code>#Load libraries
+lapply(pkg_list_all, library, character.only=TRUE)
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiaGVyZSgpIHN0YXJ0cyBhdCAvaG9tZS9yYWNoZWwvbmV3dm9sdW1lL2FuYWx5c2lzXG4ifQ== -->
-<pre><code>here() starts at /home/rachel/newvolume/analysis</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiQmlvY29uZHVjdG9yIHZlcnNpb24gMy4xNCAoQmlvY01hbmFnZXIgMS4zMC4yMS4xKSwgUiA0LjEuMiAoMjAyMS0xMS0wMSlcbkJpb2NvbmR1Y3RvciB2ZXJzaW9uICczLjE0JyBpcyBvdXQtb2YtZGF0ZTsgdGhlIGN1cnJlbnQgcmVsZWFzZSB2ZXJzaW9uICczLjE3JyBpcyBhdmFpbGFibGUgd2l0aCBSIHZlcnNpb24gJzQuMyc7IHNlZVxuICBodHRwczovL2Jpb2NvbmR1Y3Rvci5vcmcvaW5zdGFsbFxuXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYZHBseXLigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOnN0YXRz4oCZOlxuXG4gICAgZmlsdGVyLCBsYWdcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmJhc2XigJk6XG5cbiAgICBpbnRlcnNlY3QsIHNldGRpZmYsIHNldGVxdWFsLCB1bmlvblxuXG5BdHRhY2hpbmcgU2V1cmF0T2JqZWN0XG5Mb2FkaW5nIHJlcXVpcmVkIHBhY2thZ2U6IFN1bW1hcml6ZWRFeHBlcmltZW50XG5Mb2FkaW5nIHJlcXVpcmVkIHBhY2thZ2U6IE1hdHJpeEdlbmVyaWNzXG5Mb2FkaW5nIHJlcXVpcmVkIHBhY2thZ2U6IG1hdHJpeFN0YXRzXG5cbkF0dGFjaGluZyBwYWNrYWdlOiDigJhtYXRyaXhTdGF0c+KAmVxuXG5UaGUgZm9sbG93aW5nIG9iamVjdCBpcyBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmRwbHly4oCZOlxuXG4gICAgY291bnRcblxuXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYTWF0cml4R2VuZXJpY3PigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOm1hdHJpeFN0YXRz4oCZOlxuXG4gICAgY29sQWxscywgY29sQW55TkFzLCBjb2xBbnlzLCBjb2xBdmdzUGVyUm93U2V0LCBjb2xDb2xsYXBzZSwgY29sQ291bnRzLCBjb2xDdW1tYXhzLCBjb2xDdW1taW5zLCBjb2xDdW1wcm9kcywgY29sQ3Vtc3VtcyxcbiAgICBjb2xEaWZmcywgY29sSVFSRGlmZnMsIGNvbElRUnMsIGNvbExvZ1N1bUV4cHMsIGNvbE1hZERpZmZzLCBjb2xNYWRzLCBjb2xNYXhzLCBjb2xNZWFuczIsIGNvbE1lZGlhbnMsIGNvbE1pbnMsIGNvbE9yZGVyU3RhdHMsXG4gICAgY29sUHJvZHMsIGNvbFF1YW50aWxlcywgY29sUmFuZ2VzLCBjb2xSYW5rcywgY29sU2REaWZmcywgY29sU2RzLCBjb2xTdW1zMiwgY29sVGFidWxhdGVzLCBjb2xWYXJEaWZmcywgY29sVmFycyxcbiAgICBjb2xXZWlnaHRlZE1hZHMsIGNvbFdlaWdodGVkTWVhbnMsIGNvbFdlaWdodGVkTWVkaWFucywgY29sV2VpZ2h0ZWRTZHMsIGNvbFdlaWdodGVkVmFycywgcm93QWxscywgcm93QW55TkFzLCByb3dBbnlzLFxuICAgIHJvd0F2Z3NQZXJDb2xTZXQsIHJvd0NvbGxhcHNlLCByb3dDb3VudHMsIHJvd0N1bW1heHMsIHJvd0N1bW1pbnMsIHJvd0N1bXByb2RzLCByb3dDdW1zdW1zLCByb3dEaWZmcywgcm93SVFSRGlmZnMsIHJvd0lRUnMsXG4gICAgcm93TG9nU3VtRXhwcywgcm93TWFkRGlmZnMsIHJvd01hZHMsIHJvd01heHMsIHJvd01lYW5zMiwgcm93TWVkaWFucywgcm93TWlucywgcm93T3JkZXJTdGF0cywgcm93UHJvZHMsIHJvd1F1YW50aWxlcyxcbiAgICByb3dSYW5nZXMsIHJvd1JhbmtzLCByb3dTZERpZmZzLCByb3dTZHMsIHJvd1N1bXMyLCByb3dUYWJ1bGF0ZXMsIHJvd1ZhckRpZmZzLCByb3dWYXJzLCByb3dXZWlnaHRlZE1hZHMsIHJvd1dlaWdodGVkTWVhbnMsXG4gICAgcm93V2VpZ2h0ZWRNZWRpYW5zLCByb3dXZWlnaHRlZFNkcywgcm93V2VpZ2h0ZWRWYXJzXG5cbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogR2Vub21pY1Jhbmdlc1xuTG9hZGluZyByZXF1aXJlZCBwYWNrYWdlOiBzdGF0czRcbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogQmlvY0dlbmVyaWNzXG5cbkF0dGFjaGluZyBwYWNrYWdlOiDigJhCaW9jR2VuZXJpY3PigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmRwbHly4oCZOlxuXG4gICAgY29tYmluZSwgaW50ZXJzZWN0LCBzZXRkaWZmLCB1bmlvblxuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIOKAmHBhY2thZ2U6c3RhdHPigJk6XG5cbiAgICBJUVIsIG1hZCwgc2QsIHZhciwgeHRhYnNcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmJhc2XigJk6XG5cbiAgICBhbnlEdXBsaWNhdGVkLCBhcHBlbmQsIGFzLmRhdGEuZnJhbWUsIGJhc2VuYW1lLCBjYmluZCwgY29sbmFtZXMsIGRpcm5hbWUsIGRvLmNhbGwsIGR1cGxpY2F0ZWQsIGV2YWwsIGV2YWxxLCBGaWx0ZXIsIEZpbmQsXG4gICAgZ2V0LCBncmVwLCBncmVwbCwgaW50ZXJzZWN0LCBpcy51bnNvcnRlZCwgbGFwcGx5LCBNYXAsIG1hcHBseSwgbWF0Y2gsIG1nZXQsIG9yZGVyLCBwYXN0ZSwgcG1heCwgcG1heC5pbnQsIHBtaW4sIHBtaW4uaW50LFxuICAgIFBvc2l0aW9uLCByYW5rLCByYmluZCwgUmVkdWNlLCByb3duYW1lcywgc2FwcGx5LCBzZXRkaWZmLCBzb3J0LCB0YWJsZSwgdGFwcGx5LCB1bmlvbiwgdW5pcXVlLCB1bnNwbGl0LCB3aGljaC5tYXgsIHdoaWNoLm1pblxuXG5Mb2FkaW5nIHJlcXVpcmVkIHBhY2thZ2U6IFM0VmVjdG9yc1xuXG5BdHRhY2hpbmcgcGFja2FnZTog4oCYUzRWZWN0b3Jz4oCZXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0cyBhcmUgbWFza2VkIGZyb20g4oCYcGFja2FnZTpNYXRyaXjigJk6XG5cbiAgICBleHBhbmQsIHVubmFtZVxuXG5UaGUgZm9sbG93aW5nIG9iamVjdHMgYXJlIG1hc2tlZCBmcm9tIOKAmHBhY2thZ2U6ZHBseXLigJk6XG5cbiAgICBmaXJzdCwgcmVuYW1lXG5cblRoZSBmb2xsb3dpbmcgb2JqZWN0cyBhcmUgbWFza2VkIGZyb20g4oCYcGFja2FnZTpiYXNl4oCZOlxuXG4gICAgZXhwYW5kLmdyaWQsIEksIHVubmFtZVxuXG5Mb2FkaW5nIHJlcXVpcmVkIHBhY2thZ2U6IElSYW5nZXNcblxuQXR0YWNoaW5nIHBhY2thZ2U6IOKAmElSYW5nZXPigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOmRwbHly4oCZOlxuXG4gICAgY29sbGFwc2UsIGRlc2MsIHNsaWNlXG5cbkxvYWRpbmcgcmVxdWlyZWQgcGFja2FnZTogR2Vub21lSW5mb0RiXG5Mb2FkaW5nIHJlcXVpcmVkIHBhY2thZ2U6IEJpb2Jhc2VcbldlbGNvbWUgdG8gQmlvY29uZHVjdG9yXG5cbiAgICBWaWduZXR0ZXMgY29udGFpbiBpbnRyb2R1Y3RvcnkgbWF0ZXJpYWw7IHZpZXcgd2l0aCAnYnJvd3NlVmlnbmV0dGVzKCknLiBUbyBjaXRlIEJpb2NvbmR1Y3Rvciwgc2VlICdjaXRhdGlvbihcIkJpb2Jhc2VcIiknLCBhbmRcbiAgICBmb3IgcGFja2FnZXMgJ2NpdGF0aW9uKFwicGtnbmFtZVwiKScuXG5cblxuQXR0YWNoaW5nIHBhY2thZ2U6IOKAmEJpb2Jhc2XigJlcblxuVGhlIGZvbGxvd2luZyBvYmplY3QgaXMgbWFza2VkIGZyb20g4oCYcGFja2FnZTpNYXRyaXhHZW5lcmljc+KAmTpcblxuICAgIHJvd01lZGlhbnNcblxuVGhlIGZvbGxvd2luZyBvYmplY3RzIGFyZSBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOm1hdHJpeFN0YXRz4oCZOlxuXG4gICAgYW55TWlzc2luZywgcm93TWVkaWFuc1xuXG5cbkF0dGFjaGluZyBwYWNrYWdlOiDigJhTdW1tYXJpemVkRXhwZXJpbWVudOKAmVxuXG5UaGUgZm9sbG93aW5nIG9iamVjdCBpcyBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOlNldXJhdE9iamVjdOKAmTpcblxuICAgIEFzc2F5c1xuXG5UaGUgZm9sbG93aW5nIG9iamVjdCBpcyBtYXNrZWQgZnJvbSDigJhwYWNrYWdlOlNldXJhdOKAmTpcblxuICAgIEFzc2F5c1xuXG5Mb2FkaW5nIHJlcXVpcmVkIHBhY2thZ2U6IHNjdXR0bGVcbiJ9 -->
+<pre><code>Bioconductor version 3.14 (BiocManager 1.30.21.1), R 4.1.2 (2021-11-01)
+Bioconductor version &#39;3.14&#39; is out-of-date; the current release version &#39;3.17&#39; is available with R version &#39;4.3&#39;; see
+  https://bioconductor.org/install
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Attaching SeuratObject
+Loading required package: SummarizedExperiment
+Loading required package: MatrixGenerics
+Loading required package: matrixStats
+
+Attaching package: ‘matrixStats’
+
+The following object is masked from ‘package:dplyr’:
+
+    count
+
+
+Attaching package: ‘MatrixGenerics’
+
+The following objects are masked from ‘package:matrixStats’:
+
+    colAlls, colAnyNAs, colAnys, colAvgsPerRowSet, colCollapse, colCounts, colCummaxs, colCummins, colCumprods, colCumsums,
+    colDiffs, colIQRDiffs, colIQRs, colLogSumExps, colMadDiffs, colMads, colMaxs, colMeans2, colMedians, colMins, colOrderStats,
+    colProds, colQuantiles, colRanges, colRanks, colSdDiffs, colSds, colSums2, colTabulates, colVarDiffs, colVars,
+    colWeightedMads, colWeightedMeans, colWeightedMedians, colWeightedSds, colWeightedVars, rowAlls, rowAnyNAs, rowAnys,
+    rowAvgsPerColSet, rowCollapse, rowCounts, rowCummaxs, rowCummins, rowCumprods, rowCumsums, rowDiffs, rowIQRDiffs, rowIQRs,
+    rowLogSumExps, rowMadDiffs, rowMads, rowMaxs, rowMeans2, rowMedians, rowMins, rowOrderStats, rowProds, rowQuantiles,
+    rowRanges, rowRanks, rowSdDiffs, rowSds, rowSums2, rowTabulates, rowVarDiffs, rowVars, rowWeightedMads, rowWeightedMeans,
+    rowWeightedMedians, rowWeightedSds, rowWeightedVars
+
+Loading required package: GenomicRanges
+Loading required package: stats4
+Loading required package: BiocGenerics
+
+Attaching package: ‘BiocGenerics’
+
+The following objects are masked from ‘package:dplyr’:
+
+    combine, intersect, setdiff, union
+
+The following objects are masked from ‘package:stats’:
+
+    IQR, mad, sd, var, xtabs
+
+The following objects are masked from ‘package:base’:
+
+    anyDuplicated, append, as.data.frame, basename, cbind, colnames, dirname, do.call, duplicated, eval, evalq, Filter, Find,
+    get, grep, grepl, intersect, is.unsorted, lapply, Map, mapply, match, mget, order, paste, pmax, pmax.int, pmin, pmin.int,
+    Position, rank, rbind, Reduce, rownames, sapply, setdiff, sort, table, tapply, union, unique, unsplit, which.max, which.min
+
+Loading required package: S4Vectors
+
+Attaching package: ‘S4Vectors’
+
+The following objects are masked from ‘package:Matrix’:
+
+    expand, unname
+
+The following objects are masked from ‘package:dplyr’:
+
+    first, rename
+
+The following objects are masked from ‘package:base’:
+
+    expand.grid, I, unname
+
+Loading required package: IRanges
+
+Attaching package: ‘IRanges’
+
+The following objects are masked from ‘package:dplyr’:
+
+    collapse, desc, slice
+
+Loading required package: GenomeInfoDb
+Loading required package: Biobase
+Welcome to Bioconductor
+
+    Vignettes contain introductory material; view with &#39;browseVignettes()&#39;. To cite Bioconductor, see &#39;citation(&quot;Biobase&quot;)&#39;, and
+    for packages &#39;citation(&quot;pkgname&quot;)&#39;.
+
+
+Attaching package: ‘Biobase’
+
+The following object is masked from ‘package:MatrixGenerics’:
+
+    rowMedians
+
+The following objects are masked from ‘package:matrixStats’:
+
+    anyMissing, rowMedians
+
+
+Attaching package: ‘SummarizedExperiment’
+
+The following object is masked from ‘package:SeuratObject’:
+
+    Assays
+
+The following object is masked from ‘package:Seurat’:
+
+    Assays
+
+Loading required package: scuttle</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiW1sxXV1cblsxXSBcIkJpb2NNYW5hZ2VyXCIgXCJzdGF0c1wiICAgICAgIFwiZ3JhcGhpY3NcIiAgICBcImdyRGV2aWNlc1wiICAgXCJkYXRhc2V0c1wiICAgIFwidXRpbHNcIiAgICAgICBcIm1ldGhvZHNcIiAgICAgXCJiYXNlXCIgICAgICAgXG5cbltbMl1dXG5bMV0gXCJkcGx5clwiICAgICAgIFwiQmlvY01hbmFnZXJcIiBcInN0YXRzXCIgICAgICAgXCJncmFwaGljc1wiICAgIFwiZ3JEZXZpY2VzXCIgICBcImRhdGFzZXRzXCIgICAgXCJ1dGlsc1wiICAgICAgIFwibWV0aG9kc1wiICAgICBcImJhc2VcIiAgICAgICBcblxuW1szXV1cbiBbMV0gXCJNYXRyaXhcIiAgICAgIFwiZHBseXJcIiAgICAgICBcIkJpb2NNYW5hZ2VyXCIgXCJzdGF0c1wiICAgICAgIFwiZ3JhcGhpY3NcIiAgICBcImdyRGV2aWNlc1wiICAgXCJkYXRhc2V0c1wiICAgIFwidXRpbHNcIiAgICAgICBcIm1ldGhvZHNcIiAgICAgXCJiYXNlXCIgICAgICAgXG5cbltbNF1dXG4gWzFdIFwiZ2dwbG90MlwiICAgICBcIk1hdHJpeFwiICAgICAgXCJkcGx5clwiICAgICAgIFwiQmlvY01hbmFnZXJcIiBcInN0YXRzXCIgICAgICAgXCJncmFwaGljc1wiICAgIFwiZ3JEZXZpY2VzXCIgICBcImRhdGFzZXRzXCIgICAgXCJ1dGlsc1wiICAgICAgIFwibWV0aG9kc1wiICAgIFxuWzExXSBcImJhc2VcIiAgICAgICBcblxuW1s1XV1cbiBbMV0gXCJybWFya2Rvd25cIiAgIFwiZ2dwbG90MlwiICAgICBcIk1hdHJpeFwiICAgICAgXCJkcGx5clwiICAgICAgIFwiQmlvY01hbmFnZXJcIiBcInN0YXRzXCIgICAgICAgXCJncmFwaGljc1wiICAgIFwiZ3JEZXZpY2VzXCIgICBcImRhdGFzZXRzXCIgICAgXCJ1dGlsc1wiICAgICAgXG5bMTFdIFwibWV0aG9kc1wiICAgICBcImJhc2VcIiAgICAgICBcblxuW1s2XV1cbiBbMV0gXCJTZXVyYXRPYmplY3RcIiBcIlNldXJhdFwiICAgICAgIFwicm1hcmtkb3duXCIgICAgXCJnZ3Bsb3QyXCIgICAgICBcIk1hdHJpeFwiICAgICAgIFwiZHBseXJcIiAgICAgICAgXCJCaW9jTWFuYWdlclwiICBcInN0YXRzXCIgICAgICAgIFwiZ3JhcGhpY3NcIiAgICBcblsxMF0gXCJnckRldmljZXNcIiAgICBcImRhdGFzZXRzXCIgICAgIFwidXRpbHNcIiAgICAgICAgXCJtZXRob2RzXCIgICAgICBcImJhc2VcIiAgICAgICAgXG5cbltbN11dXG4gWzFdIFwiU2luZ2xlQ2VsbEV4cGVyaW1lbnRcIiBcIlN1bW1hcml6ZWRFeHBlcmltZW50XCIgXCJCaW9iYXNlXCIgICAgICAgICAgICAgIFwiR2Vub21pY1Jhbmdlc1wiICAgICAgICBcIkdlbm9tZUluZm9EYlwiICAgICAgICAgXCJJUmFuZ2VzXCIgICAgICAgICAgICAgXG4gWzddIFwiUzRWZWN0b3JzXCIgICAgICAgICAgICBcIkJpb2NHZW5lcmljc1wiICAgICAgICAgXCJzdGF0czRcIiAgICAgICAgICAgICAgIFwiTWF0cml4R2VuZXJpY3NcIiAgICAgICBcIm1hdHJpeFN0YXRzXCIgICAgICAgICAgXCJTZXVyYXRPYmplY3RcIiAgICAgICAgXG5bMTNdIFwiU2V1cmF0XCIgICAgICAgICAgICAgICBcInJtYXJrZG93blwiICAgICAgICAgICAgXCJnZ3Bsb3QyXCIgICAgICAgICAgICAgIFwiTWF0cml4XCIgICAgICAgICAgICAgICBcImRwbHlyXCIgICAgICAgICAgICAgICAgXCJCaW9jTWFuYWdlclwiICAgICAgICAgXG5bMTldIFwic3RhdHNcIiAgICAgICAgICAgICAgICBcImdyYXBoaWNzXCIgICAgICAgICAgICAgXCJnckRldmljZXNcIiAgICAgICAgICAgIFwiZGF0YXNldHNcIiAgICAgICAgICAgICBcInV0aWxzXCIgICAgICAgICAgICAgICAgXCJtZXRob2RzXCIgICAgICAgICAgICAgXG5bMjVdIFwiYmFzZVwiICAgICAgICAgICAgICAgIFxuXG5bWzhdXVxuIFsxXSBcInNjYXRlclwiICAgICAgICAgICAgICAgXCJzY3V0dGxlXCIgICAgICAgICAgICAgIFwiU2luZ2xlQ2VsbEV4cGVyaW1lbnRcIiBcIlN1bW1hcml6ZWRFeHBlcmltZW50XCIgXCJCaW9iYXNlXCIgICAgICAgICAgICAgIFwiR2Vub21pY1Jhbmdlc1wiICAgICAgIFxuIFs3XSBcIkdlbm9tZUluZm9EYlwiICAgICAgICAgXCJJUmFuZ2VzXCIgICAgICAgICAgICAgIFwiUzRWZWN0b3JzXCIgICAgICAgICAgICBcIkJpb2NHZW5lcmljc1wiICAgICAgICAgXCJzdGF0czRcIiAgICAgICAgICAgICAgIFwiTWF0cml4R2VuZXJpY3NcIiAgICAgIFxuWzEzXSBcIm1hdHJpeFN0YXRzXCIgICAgICAgICAgXCJTZXVyYXRPYmplY3RcIiAgICAgICAgIFwiU2V1cmF0XCIgICAgICAgICAgICAgICBcInJtYXJrZG93blwiICAgICAgICAgICAgXCJnZ3Bsb3QyXCIgICAgICAgICAgICAgIFwiTWF0cml4XCIgICAgICAgICAgICAgIFxuWzE5XSBcImRwbHlyXCIgICAgICAgICAgICAgICAgXCJCaW9jTWFuYWdlclwiICAgICAgICAgIFwic3RhdHNcIiAgICAgICAgICAgICAgICBcImdyYXBoaWNzXCIgICAgICAgICAgICAgXCJnckRldmljZXNcIiAgICAgICAgICAgIFwiZGF0YXNldHNcIiAgICAgICAgICAgIFxuWzI1XSBcInV0aWxzXCIgICAgICAgICAgICAgICAgXCJtZXRob2RzXCIgICAgICAgICAgICAgIFwiYmFzZVwiICAgICAgICAgICAgICAgIFxuIn0= -->
+<pre><code>[[1]]
+[1] &quot;BiocManager&quot; &quot;stats&quot;       &quot;graphics&quot;    &quot;grDevices&quot;   &quot;datasets&quot;    &quot;utils&quot;       &quot;methods&quot;     &quot;base&quot;       
+
+[[2]]
+[1] &quot;dplyr&quot;       &quot;BiocManager&quot; &quot;stats&quot;       &quot;graphics&quot;    &quot;grDevices&quot;   &quot;datasets&quot;    &quot;utils&quot;       &quot;methods&quot;     &quot;base&quot;       
+
+[[3]]
+ [1] &quot;Matrix&quot;      &quot;dplyr&quot;       &quot;BiocManager&quot; &quot;stats&quot;       &quot;graphics&quot;    &quot;grDevices&quot;   &quot;datasets&quot;    &quot;utils&quot;       &quot;methods&quot;     &quot;base&quot;       
+
+[[4]]
+ [1] &quot;ggplot2&quot;     &quot;Matrix&quot;      &quot;dplyr&quot;       &quot;BiocManager&quot; &quot;stats&quot;       &quot;graphics&quot;    &quot;grDevices&quot;   &quot;datasets&quot;    &quot;utils&quot;       &quot;methods&quot;    
+[11] &quot;base&quot;       
+
+[[5]]
+ [1] &quot;rmarkdown&quot;   &quot;ggplot2&quot;     &quot;Matrix&quot;      &quot;dplyr&quot;       &quot;BiocManager&quot; &quot;stats&quot;       &quot;graphics&quot;    &quot;grDevices&quot;   &quot;datasets&quot;    &quot;utils&quot;      
+[11] &quot;methods&quot;     &quot;base&quot;       
+
+[[6]]
+ [1] &quot;SeuratObject&quot; &quot;Seurat&quot;       &quot;rmarkdown&quot;    &quot;ggplot2&quot;      &quot;Matrix&quot;       &quot;dplyr&quot;        &quot;BiocManager&quot;  &quot;stats&quot;        &quot;graphics&quot;    
+[10] &quot;grDevices&quot;    &quot;datasets&quot;     &quot;utils&quot;        &quot;methods&quot;      &quot;base&quot;        
+
+[[7]]
+ [1] &quot;SingleCellExperiment&quot; &quot;SummarizedExperiment&quot; &quot;Biobase&quot;              &quot;GenomicRanges&quot;        &quot;GenomeInfoDb&quot;         &quot;IRanges&quot;             
+ [7] &quot;S4Vectors&quot;            &quot;BiocGenerics&quot;         &quot;stats4&quot;               &quot;MatrixGenerics&quot;       &quot;matrixStats&quot;          &quot;SeuratObject&quot;        
+[13] &quot;Seurat&quot;               &quot;rmarkdown&quot;            &quot;ggplot2&quot;              &quot;Matrix&quot;               &quot;dplyr&quot;                &quot;BiocManager&quot;         
+[19] &quot;stats&quot;                &quot;graphics&quot;             &quot;grDevices&quot;            &quot;datasets&quot;             &quot;utils&quot;                &quot;methods&quot;             
+[25] &quot;base&quot;                
+
+[[8]]
+ [1] &quot;scater&quot;               &quot;scuttle&quot;              &quot;SingleCellExperiment&quot; &quot;SummarizedExperiment&quot; &quot;Biobase&quot;              &quot;GenomicRanges&quot;       
+ [7] &quot;GenomeInfoDb&quot;         &quot;IRanges&quot;              &quot;S4Vectors&quot;            &quot;BiocGenerics&quot;         &quot;stats4&quot;               &quot;MatrixGenerics&quot;      
+[13] &quot;matrixStats&quot;          &quot;SeuratObject&quot;         &quot;Seurat&quot;               &quot;rmarkdown&quot;            &quot;ggplot2&quot;              &quot;Matrix&quot;              
+[19] &quot;dplyr&quot;                &quot;BiocManager&quot;          &quot;stats&quot;                &quot;graphics&quot;             &quot;grDevices&quot;            &quot;datasets&quot;            
+[25] &quot;utils&quot;                &quot;methods&quot;              &quot;base&quot;                </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuI1NhdmUgZmlndXJlc1xuU2F2ZUZpZ3VyZSA8LSBmdW5jdGlvbihwbG90cywgbmFtZSwgdHlwZSA9IFxccG5nXFwsIHdpZHRoLCBoZWlnaHQsIHJlcywgdHlwZSA9ICdjYWlybycpe1xuICBpZih0eXBlID09IFxccG5nXFwpIHtcbiAgICBwbmcocGFzdGUwKGZpZ19wYXRoLCAnLycsIG5hbWUsIFxcLlxcLCB0eXBlKSxcbiAgICAgIHdpZHRoID0gd2lkdGgsIGhlaWdodCA9IGhlaWdodCwgdW5pdHMgPSBcXGluXFwsIHJlcyA9IDIwMClcbiAgfSBlbHNlIHtcbiAgICBwZGYocGFzdGUwKGZpZ19wYXRoLCAnLycsIG5hbWUsIFxcLlxcLCB0eXBlKSxcbiAgICAgIHdpZHRoID0gd2lkdGgsIGhlaWdodCA9IGhlaWdodClcbn1cbnByaW50KHBsb3RzKVxuZGV2Lm9mZigpXG59XG5cbmBgYFxuYGBgIn0= -->
-<pre class="r"><code>```r
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI1NldCBwYXRocyB0byBzYXZlIGFuZCByZWFkIFNldXJhdCBvYmplY3RzXG5pZmVsc2UoIWRpci5leGlzdHMoaGVyZShleHAsIFwicl9vYmplY3RzXCIpKSwgZGlyLmNyZWF0ZShoZXJlKGV4cCwgXCJyX29iamVjdHNcIikpLCBcIkZvbGRlciBleGlzdHMgYWxyZWFkeVwiKVxuXG5gYGAifQ== -->
+<pre class="r"><code>#Set paths to save and read Seurat objects
+ifelse(!dir.exists(here(exp, &quot;r_objects&quot;)), dir.create(here(exp, &quot;r_objects&quot;)), &quot;Folder exists already&quot;)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiRm9sZGVyIGV4aXN0cyBhbHJlYWR5XCJcbiJ9 -->
+<pre><code>[1] &quot;Folder exists already&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZGF0YV9wYXRoIDwtIGhlcmUoZXhwLCAncl9vYmplY3RzJylcblxuI01ha2UgYW5kL29yIHNldCBwYXRoIHRvIHNhdmUgZmlndXJlc1xuaWZlbHNlKCFkaXIuZXhpc3RzKGhlcmUoZXhwLCBcInJfZmlndXJlc1wiKSksIGRpci5jcmVhdGUoaGVyZShleHAsIFwicl9maWd1cmVzXCIpKSwgXCJGb2xkZXIgZXhpc3RzIGFscmVhZHlcIilcbmBgYCJ9 -->
+<pre class="r"><code>data_path &lt;- here(exp, &#39;r_objects&#39;)
+
+#Make and/or set path to save figures
+ifelse(!dir.exists(here(exp, &quot;r_figures&quot;)), dir.create(here(exp, &quot;r_figures&quot;)), &quot;Folder exists already&quot;)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiWzFdIFwiRm9sZGVyIGV4aXN0cyBhbHJlYWR5XCJcbiJ9 -->
+<pre><code>[1] &quot;Folder exists already&quot;</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuZmlnX3BhdGggPC0gaGVyZShleHAsICdyX2ZpZ3VyZXMnKVxuXG5gYGAifQ== -->
+<pre class="r"><code>fig_path &lt;- here(exp, &#39;r_figures&#39;)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI1JlYWRQYXJzZUJpbyB3aXRoIGNvcnJlY3QgY291bnRfbWF0cml4IG5hbWVcblJlYWRQYXJzZUJpb19jb3VudCA8LSBmdW5jdGlvbihkYXRhLmRpciwgLi4uKSB7XG4gIG10eCA8LSBmaWxlLnBhdGgoZGF0YS5kaXIsIFwiY291bnRfbWF0cml4Lm10eFwiKVxuICBjZWxscyA8LSBmaWxlLnBhdGgoZGF0YS5kaXIsIFwiY2VsbF9tZXRhZGF0YS5jc3ZcIilcbiAgZmVhdHVyZXMgPC0gZmlsZS5wYXRoKGRhdGEuZGlyLCBcImFsbF9nZW5lcy5jc3ZcIilcbiAgcmV0dXJuKFJlYWRNdHgoXG4gICAgbXR4ID0gbXR4LFxuICAgIGNlbGxzID0gY2VsbHMsXG4gICAgZmVhdHVyZXMgPSBmZWF0dXJlcyxcbiAgICBjZWxsLmNvbHVtbiA9IDEsXG4gICAgZmVhdHVyZS5jb2x1bW4gPSAyLFxuICAgIGNlbGwuc2VwID0gXCIsXCIsXG4gICAgZmVhdHVyZS5zZXAgPSBcIixcIixcbiAgICBza2lwLmNlbGwgPSAxLFxuICAgIHNraXAuZmVhdHVyZSA9IDEsXG4gICAgbXR4LnRyYW5zcG9zZSA9IFRSVUVcbiAgKSlcbn1cblxuI1NhdmUgZmlndXJlc1xuU2F2ZUZpZ3VyZSA8LSBmdW5jdGlvbihwbG90cywgbmFtZSwgdHlwZSA9IFwicG5nXCIsIHdpZHRoLCBoZWlnaHQsIHJlcyl7XG4gIGlmKHR5cGUgPT0gXCJwbmdcIikge1xuICAgIHBuZyhwYXN0ZTAoZmlnX3BhdGgsICcvJywgbmFtZSwgXCIuXCIsIHR5cGUpLFxuICAgICAgd2lkdGggPSB3aWR0aCwgaGVpZ2h0ID0gaGVpZ2h0LCB1bml0cyA9IFwiaW5cIiwgcmVzID0gMjAwKVxuICB9IGVsc2Uge1xuICAgIHBkZihwYXN0ZTAoZmlnX3BhdGgsICcvJywgbmFtZSwgXCIuXCIsIHR5cGUpLFxuICAgICAgd2lkdGggPSB3aWR0aCwgaGVpZ2h0ID0gaGVpZ2h0KVxufVxucHJpbnQocGxvdHMpXG5kZXYub2ZmKClcbn1cblxuI1NhdmUgU2V1cmF0IG9iamVjdHNcblNhdmVPYmplY3QgPC0gZnVuY3Rpb24ob2JqZWN0LCBuYW1lKXtcbiAgc2F2ZVJEUyhvYmplY3QsIGhlcmUoZXhwLCAncl9vYmplY3RzJywgcGFzdGUwKG5hbWUsIFwiLlJEU1wiKSkpXG59XG5cbiNSZWFkIFNldXJhdCBvYmplY3RzXG5SZWFkT2JqZWN0IDwtIGZ1bmN0aW9uKG5hbWUpe1xuICByZWFkUkRTKGhlcmUoZXhwLCAncl9vYmplY3RzJywgcGFzdGUwKG5hbWUsIFwiLlJEU1wiKSkpXG59XG5gYGAifQ== -->
+<pre class="r"><code>#ReadParseBio with correct count_matrix name
+ReadParseBio_count &lt;- function(data.dir, ...) {
+  mtx &lt;- file.path(data.dir, &quot;count_matrix.mtx&quot;)
+  cells &lt;- file.path(data.dir, &quot;cell_metadata.csv&quot;)
+  features &lt;- file.path(data.dir, &quot;all_genes.csv&quot;)
+  return(ReadMtx(
+    mtx = mtx,
+    cells = cells,
+    features = features,
+    cell.column = 1,
+    feature.column = 2,
+    cell.sep = &quot;,&quot;,
+    feature.sep = &quot;,&quot;,
+    skip.cell = 1,
+    skip.feature = 1,
+    mtx.transpose = TRUE
+  ))
+}
+
 #Save figures
-SaveFigure &lt;- function(plots, name, type = \png\, width, height, res, type = &#39;cairo&#39;){
-  if(type == \png\) {
-    png(paste0(fig_path, &#39;/&#39;, name, \.\, type),
-      width = width, height = height, units = \in\, res = 200)
+SaveFigure &lt;- function(plots, name, type = &quot;png&quot;, width, height, res){
+  if(type == &quot;png&quot;) {
+    png(paste0(fig_path, &#39;/&#39;, name, &quot;.&quot;, type),
+      width = width, height = height, units = &quot;in&quot;, res = 200)
   } else {
-    pdf(paste0(fig_path, &#39;/&#39;, name, \.\, type),
+    pdf(paste0(fig_path, &#39;/&#39;, name, &quot;.&quot;, type),
       width = width, height = height)
 }
 print(plots)
 dev.off()
 }
-</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
 
-&lt;!-- rnb-output-begin eyJkYXRhIjoiRXJyb3I6IHJlcGVhdGVkIGZvcm1hbCBhcmd1bWVudCAndHlwZScgb24gbGluZSAxXG4ifQ== --&gt;
-</code></pre>
-<p>Error: repeated formal argument ‘type’ on line 1</p>
-<pre><code>
+#Save Seurat objects
+SaveObject &lt;- function(object, name){
+  saveRDS(object, here(exp, &#39;r_objects&#39;, paste0(name, &quot;.RDS&quot;)))
+}
 
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuI0xvYWQgaW4gY291bnQgbWF0cml4XG5kYXRhX2RpciA8LSBoZXJlKGV4cCwgJ2FsbC1zYW1wbGUnLCAnREdFX2ZpbHRlcmVkJylcbmNvdW50cyA8LSBSZWFkUGFyc2VCaW9fY291bnQoZGF0YV9kaXIpXG5cbiMgQ2hlY2sgdG8gc2VlIGlmIGVtcHR5IGdlbmUgbmFtZXMgYXJlIHByZXNlbnQsIGFkZCBuYW1lIGlmIHNvLlxudGFibGUocm93bmFtZXMoY291bnRzKSA9PSBcXFxcKVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-#Load in count matrix
+#Read Seurat objects
+ReadObject &lt;- function(name){
+  readRDS(here(exp, &#39;r_objects&#39;, paste0(name, &quot;.RDS&quot;)))
+}</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0xvYWQgaW4gY291bnQgbWF0cml4XG5kYXRhX2RpciA8LSBoZXJlKGV4cCwgJ2FsbC1zYW1wbGUnLCAnREdFX2ZpbHRlcmVkJylcbmNvdW50cyA8LSBSZWFkUGFyc2VCaW9fY291bnQoZGF0YV9kaXIpXG5cbiMgQ2hlY2sgdG8gc2VlIGlmIGVtcHR5IGdlbmUgbmFtZXMgYXJlIHByZXNlbnQsIGFkZCBuYW1lIGlmIHNvLlxudGFibGUocm93bmFtZXMoY291bnRzKSA9PSBcIlwiKVxucm93bmFtZXMoY291bnRzKVtyb3duYW1lcyhjb3VudHMpID09IFwiXCJdIDwtIFwidW5rbm93blwiXG5cbiMgUmVhZCBpbiBjZWxsIG1ldGEgZGF0YVxuY2VsbF9tZXRhIDwtIHJlYWQuY3N2KGhlcmUoZXhwLCAnYWxsLXNhbXBsZScsICdER0VfZmlsdGVyZWQnLCBcIi9jZWxsX21ldGFkYXRhLmNzdlwiKSwgcm93Lm5hbWVzID0gMSlcblxuI0NyZWF0ZSBTZXVyYXQgb2JqZWN0XG5zZXVyYXRfb2JqIDwtIENyZWF0ZVNldXJhdE9iamVjdChjb3VudHMgPSBjb3VudHMsIG5hbWVzLmZpZWxkID0gMCwgbWV0YS5kYXRhID0gY2VsbF9tZXRhKVxuYGBgIn0= -->
+<pre class="r"><code>#Load in count matrix
 data_dir &lt;- here(exp, &#39;all-sample&#39;, &#39;DGE_filtered&#39;)
 counts &lt;- ReadParseBio_count(data_dir)
 
 # Check to see if empty gene names are present, add name if so.
-table(rownames(counts) == \\)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-output-begin eyJkYXRhIjoiXG5GQUxTRSBcbjU1NDg3IFxuIn0= --&gt;
-</code></pre>
-<p>FALSE 55487</p>
-<pre><code>
-
-
-&lt;!-- rnb-output-end --&gt;
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxucm93bmFtZXMoY291bnRzKVtyb3duYW1lcyhjb3VudHMpID09IFxcXFxdIDwtIFxcdW5rbm93blxcXG5cbiMgUmVhZCBpbiBjZWxsIG1ldGEgZGF0YVxuY2VsbF9tZXRhIDwtIHJlYWQuY3N2KGhlcmUoZXhwLCAnYWxsLXNhbXBsZScsICdER0VfZmlsdGVyZWQnLCBcXC9jZWxsX21ldGFkYXRhLmNzdlxcKSwgcm93Lm5hbWVzID0gMSlcblxuI0NyZWF0ZSBTZXVyYXQgb2JqZWN0XG5zZXVyYXRfb2JqIDwtIENyZWF0ZVNldXJhdE9iamVjdChjb3VudHMgPSBjb3VudHMsIG5hbWVzLmZpZWxkID0gMCwgbWV0YS5kYXRhID0gY2VsbF9tZXRhKVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-rownames(counts)[rownames(counts) == \\] &lt;- \unknown\
+table(rownames(counts) == &quot;&quot;)
+rownames(counts)[rownames(counts) == &quot;&quot;] &lt;- &quot;unknown&quot;
 
 # Read in cell meta data
-cell_meta &lt;- read.csv(here(exp, &#39;all-sample&#39;, &#39;DGE_filtered&#39;, \/cell_metadata.csv\), row.names = 1)
+cell_meta &lt;- read.csv(here(exp, &#39;all-sample&#39;, &#39;DGE_filtered&#39;, &quot;/cell_metadata.csv&quot;), row.names = 1)
 
 #Create Seurat object
 seurat_obj &lt;- CreateSeuratObject(counts = counts, names.field = 0, meta.data = cell_meta)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-FROM PARSE BIO:
-When we create our Seurat object the plate well numbers (column names in the expression matrix) from the experiment will automatically be assigned to the cell identity slot. In other words, the program assumes this how we want to initially classify our cells. In general, we would like to avoid this behavior so there isn&#39;t a bias towards a particular cell class when removing outliers.
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYGBgclxuIyBTZXR0aW5nIG91ciBpbml0aWFsIGNlbGwgY2xhc3MgdG8gYSBzaW5nbGUgdHlwZSwgdGhpcyB3aWxsIGNoYW5nZSBhZnRlciBjbHVzdGVyaW5nLiBcbnNldXJhdF9vYmpAbWV0YS5kYXRhJG9yaWcuaWRlbnQgPC0gZmFjdG9yKHJlcChcXHNldXJhdF9vYmpcXCwgbnJvdyhzZXVyYXRfb2JqQG1ldGEuZGF0YSkpKVxuSWRlbnRzKHNldXJhdF9vYmopIDwtIHNldXJhdF9vYmpAbWV0YS5kYXRhJG9yaWcuaWRlbnRcblxuI1NhdmUgcmF3IFNldXJhdCBvYmplY3RcblNhdmVPYmplY3Qoc2V1cmF0X29iaiwgJ3Jhd19zZXVyYXRfb2JqJylcbiNzZXVyYXRfb2JqIDwtIFJlYWRPYmplY3QoJ3Jhd19zZXVyYXRfb2JqJylcblxuI1NhdmUgcmF3IFNpbmdsZUNlbGxFeHBlcmltZW50IG9iamVjdFxuc2NlX29iaiA8LSBhcy5TaW5nbGVDZWxsRXhwZXJpbWVudChzZXVyYXRfb2JqKVxuU2F2ZU9iamVjdChzY2Vfb2JqLCAncmF3X3NjZV9vYmonKVxuYGBgXG5gYGAifQ== --&gt;
-
-```r
-```r
-# Setting our initial cell class to a single type, this will change after clustering. 
-seurat_obj@meta.data$orig.ident &lt;- factor(rep(\seurat_obj\, nrow(seurat_obj@meta.data)))
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>FROM PARSE BIO: When we create our Seurat object the plate well
+numbers (column names in the expression matrix) from the experiment will
+automatically be assigned to the cell identity slot. In other words, the
+program assumes this how we want to initially classify our cells. In
+general, we would like to avoid this behavior so there isn’t a bias
+towards a particular cell class when removing outliers.</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBTZXR0aW5nIG91ciBpbml0aWFsIGNlbGwgY2xhc3MgdG8gYSBzaW5nbGUgdHlwZSwgdGhpcyB3aWxsIGNoYW5nZSBhZnRlciBjbHVzdGVyaW5nLiBcbnNldXJhdF9vYmpAbWV0YS5kYXRhJG9yaWcuaWRlbnQgPC0gZmFjdG9yKHJlcChcInNldXJhdF9vYmpcIiwgbnJvdyhzZXVyYXRfb2JqQG1ldGEuZGF0YSkpKVxuSWRlbnRzKHNldXJhdF9vYmopIDwtIHNldXJhdF9vYmpAbWV0YS5kYXRhJG9yaWcuaWRlbnRcblxuI1NhdmUgcmF3IFNldXJhdCBvYmplY3RcblNhdmVPYmplY3Qoc2V1cmF0X29iaiwgJ3Jhd19zZXVyYXRfb2JqJylcbiNzZXVyYXRfb2JqIDwtIFJlYWRPYmplY3QoJ3Jhd19zZXVyYXRfb2JqJylcblxuI1NhdmUgcmF3IFNpbmdsZUNlbGxFeHBlcmltZW50IG9iamVjdFxuc2NlX29iaiA8LSBhcy5TaW5nbGVDZWxsRXhwZXJpbWVudChzZXVyYXRfb2JqKVxuU2F2ZU9iamVjdChzY2Vfb2JqLCAncmF3X3NjZV9vYmonKVxuYGBgIn0= -->
+<pre class="r"><code># Setting our initial cell class to a single type, this will change after clustering. 
+seurat_obj@meta.data$orig.ident &lt;- factor(rep(&quot;seurat_obj&quot;, nrow(seurat_obj@meta.data)))
 Idents(seurat_obj) &lt;- seurat_obj@meta.data$orig.ident
 
 #Save raw Seurat object
@@ -1905,44 +2023,43 @@ SaveObject(seurat_obj, &#39;raw_seurat_obj&#39;)
 #Save raw SingleCellExperiment object
 sce_obj &lt;- as.SingleCellExperiment(seurat_obj)
 SaveObject(sce_obj, &#39;raw_sce_obj&#39;)</code></pre>
-<pre><code>
-&lt;!-- rnb-source-end --&gt;
-
-&lt;!-- rnb-chunk-end --&gt;
-
-
-&lt;!-- rnb-text-begin --&gt;
-
-
-We need to exclude multiplets from analysis - these are cells with abnormally high transcript of gene counts.
-
-[FROM BIOSTARS](https://www.biostars.org/p/407036/#:~:text=nCount_RNA%20is%20the%20total%20number,a%20doublet%20(or%20multiplet).)
-
-&quot;nFeature_RNA is the number of genes detected in each cell. nCount_RNA is the total number of molecules detected within a cell. Low nFeature_RNA for a cell indicates that it may be dead/dying or an empty droplet. High nCount_RNA and/or nFeature_RNA indicates that the &quot;cell&quot; may in fact be a doublet (or multiplet). In combination with %mitochondrial reads, removing outliers from these groups removes most doublets/dead cells/empty droplets, hence why filtering is a common pre-processing step.
-
-The NormalizeData step is basically just ensuring expression values across cells are on a comparable scale. By default, it will divide counts for each gene by the total counts in the cell, multiply that value for each gene by the scale.factor (10,000 by default), and then natural log-transform them.&quot;
-
-The columns added after quickpercellQC can be described as follows:
-
-- sum = nCount_RNA = lib_size = number of molecules in the well
-
-- detected = nFeature_RNA = number of unique genes in the well
-
-- low_lib_size suggests RNA has been lost at some point during library preparation, either due to cell lysis or inefficient cDNA capture and amplification
-
-- low_n_features suggests cell is dead/dying/&quot;empty droplet&quot;
-
-
-&lt;!-- rnb-text-end --&gt;
-
-
-&lt;!-- rnb-chunk-begin --&gt;
-
-
-&lt;!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0FkZCBxdWljayBwZXIgY2VsbCBRQ1xuc2NlX29iaiA8LSBzY3V0dGxlOjpxdWlja1BlckNlbGxRQyhzY2Vfb2JqKVxuXG4jTG9hZCBzdHJpbmdyIGZvciBzdHJpbmcgZnVuY3Rpb25zXG5saWJyYXJ5KHN0cmluZ3IpXG5cbiNBZGQgbWl0b0ROQSBwcm9wb3J0aW9uXG5sb2NhdGlvbiA8LSByb3dSYW5nZXMoc2NlX29iailcbmlzLm1pdG8gPC0gc2FwcGx5KG5hbWVzKHNlcW5hbWVzKGxvY2F0aW9uKSksIHN0cl9kZXRlY3QsICdebXQqJylcbnNjZV9vYmogPC0gYWRkUGVyQ2VsbFFDTWV0cmljcyhzY2Vfb2JqLCBzdWJzZXRzID0gbGlzdChNaXRvID0gaXMubWl0bykpXG5xY19kZiA8LSBwZXJDZWxsUUNNZXRyaWNzKHNjZV9vYmosIHN1YnNldHMgPSBsaXN0KE1pdG8gPSBpcy5taXRvKSlcblxuI0dldCB0aGUgbnVtYmVyIG9mIGNlbGxzIGZvciB3aGljaCAlbWl0byBpcyBncmVhdGVyIHRoYW4gMTBcbnN1bShzY2Vfb2JqJHN1YnNldHNfTWl0bzJfcGVyY2VudCA+IDEwKVxuYGBgIn0= --&gt;
-
-```r
-#Add quick per cell QC
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>We need to exclude multiplets from analysis - these are cells with
+abnormally high transcript of gene counts.</p>
+<p><a href="https://www.biostars.org/p/407036/#:~:text=nCount_RNA%20is%20the%20total%20number,a%20doublet%20(or%20multiplet).">FROM
+BIOSTARS</a></p>
+<p>“nFeature_RNA is the number of genes detected in each cell.
+nCount_RNA is the total number of molecules detected within a cell. Low
+nFeature_RNA for a cell indicates that it may be dead/dying or an empty
+droplet. High nCount_RNA and/or nFeature_RNA indicates that the”cell”
+may in fact be a doublet (or multiplet). In combination with
+%mitochondrial reads, removing outliers from these groups removes most
+doublets/dead cells/empty droplets, hence why filtering is a common
+pre-processing step.</p>
+<p>The NormalizeData step is basically just ensuring expression values
+across cells are on a comparable scale. By default, it will divide
+counts for each gene by the total counts in the cell, multiply that
+value for each gene by the scale.factor (10,000 by default), and then
+natural log-transform them.”</p>
+<p>The columns added after quickpercellQC can be described as
+follows:</p>
+<ul>
+<li><p>sum = nCount_RNA = lib_size = number of molecules in the
+well</p></li>
+<li><p>detected = nFeature_RNA = number of unique genes in the
+well</p></li>
+<li><p>low_lib_size suggests RNA has been lost at some point during
+library preparation, either due to cell lysis or inefficient cDNA
+capture and amplification</p></li>
+<li><p>low_n_features suggests cell is dead/dying/“empty
+droplet”</p></li>
+</ul>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI0FkZCBxdWljayBwZXIgY2VsbCBRQ1xuc2NlX29iaiA8LSBzY3V0dGxlOjpxdWlja1BlckNlbGxRQyhzY2Vfb2JqKVxuXG4jTG9hZCBzdHJpbmdyIGZvciBzdHJpbmcgZnVuY3Rpb25zXG5saWJyYXJ5KHN0cmluZ3IpXG5cbiNBZGQgbWl0b0ROQSBwcm9wb3J0aW9uXG5sb2NhdGlvbiA8LSByb3dSYW5nZXMoc2NlX29iailcbmlzLm1pdG8gPC0gc2FwcGx5KG5hbWVzKHNlcW5hbWVzKGxvY2F0aW9uKSksIHN0cl9kZXRlY3QsICdebXQqJylcbnNjZV9vYmogPC0gYWRkUGVyQ2VsbFFDTWV0cmljcyhzY2Vfb2JqLCBzdWJzZXRzID0gbGlzdChNaXRvID0gaXMubWl0bykpXG5xY19kZiA8LSBwZXJDZWxsUUNNZXRyaWNzKHNjZV9vYmosIHN1YnNldHMgPSBsaXN0KE1pdG8gPSBpcy5taXRvKSlcblxuI0dldCB0aGUgbnVtYmVyIG9mIGNlbGxzIGZvciB3aGljaCAlbWl0byBpcyBncmVhdGVyIHRoYW4gMTBcbnN1bShzY2Vfb2JqJHN1YnNldHNfTWl0bzJfcGVyY2VudCA+IDEwKVxuYGBgIn0= -->
+<pre class="r"><code>#Add quick per cell QC
 sce_obj &lt;- scuttle::quickPerCellQC(sce_obj)
 
 #Load stringr for string functions
@@ -2001,28 +2118,6 @@ SaveFigure((plot1 + plot2), &quot;var_features&quot;, width = 12, height = 6)</c
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBFeGFtaW5lIGFuZCB2aXN1YWxpemUgUENBIHJlc3VsdHMgYSBmZXcgZGlmZmVyZW50IHdheXNcbnByaW50KHNyYXRbW1wicGNhXCJdXSwgZGltcyA9IDE6NSwgbmZlYXR1cmVzID0gNSlcblxuYGBgIn0= -->
-<pre class="r"><code># Examine and visualize PCA results a few different ways
-print(srat[[&quot;pca&quot;]], dims = 1:5, nfeatures = 5)
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiUENfIDEgXG5Qb3NpdGl2ZTogIEZtbmwyLCBBbnR4cjEsIFNwYXJjLCBaZnA1MzYsIE5ja2FwNSBcbk5lZ2F0aXZlOiAgQXJtYzQsIE1pbmR5NGItcHMsIEtjbmg3LCBMb3hoZDEsIFNtcHggXG5QQ18gMiBcblBvc2l0aXZlOiAgUG1wMjIsIE1weiwgUGxla2hhNCwgUmVsbiwgS2NuYTEgXG5OZWdhdGl2ZTogIE90b2csIE90b2EsIEdwYzUsIENlcDQxLCBUZWN0YSBcblBDXyAzIFxuUG9zaXRpdmU6ICA0OTMwNTk0TTIyUmlrLCBDYWNuYTFlLCBSYW5icDNsLCBDb2xlYzEyLCBTbmVkMSBcbk5lZ2F0aXZlOiAgT3RvZywgSWwxcmFwbDEsIE1icCwgRW1pZDEsIFNveDJvdCBcblBDXyA0IFxuUG9zaXRpdmU6ICBDZGgxMSwgRmJuMiwgTmNrYXA1LCBBbmtzMWIsIEVwaGIxIFxuTmVnYXRpdmU6ICBTdGFiMSwgRG9jazIsIFRieGFzMSwgSW5wcDVkLCBDc2YxciBcblBDXyA1IFxuUG9zaXRpdmU6ICBEY2xrMSwgRW5wZXAsIExteDFhLCBMcnAyLCBHbTEzMDc1IFxuTmVnYXRpdmU6ICBTdGFiMSwgRG9jazIsIElucHA1ZCwgVGJ4YXMxLCBDc2YxciBcbiJ9 -->
-<pre><code>PC_ 1 
-Positive:  Fmnl2, Antxr1, Sparc, Zfp536, Nckap5 
-Negative:  Armc4, Mindy4b-ps, Kcnh7, Loxhd1, Smpx 
-PC_ 2 
-Positive:  Pmp22, Mpz, Plekha4, Reln, Kcna1 
-Negative:  Otog, Otoa, Gpc5, Cep41, Tecta 
-PC_ 3 
-Positive:  4930594M22Rik, Cacna1e, Ranbp3l, Colec12, Sned1 
-Negative:  Otog, Il1rapl1, Mbp, Emid1, Sox2ot 
-PC_ 4 
-Positive:  Cdh11, Fbn2, Nckap5, Anks1b, Ephb1 
-Negative:  Stab1, Dock2, Tbxas1, Inpp5d, Csf1r 
-PC_ 5 
-Positive:  Dclk1, Enpep, Lmx1a, Lrp2, Gm13075 
-Negative:  Stab1, Dock2, Inpp5d, Tbxas1, Csf1r </code></pre>
-<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <p>Now let’s look at heterogeneity in the dataset with DimHeatmap</p>
@@ -2043,54 +2138,73 @@ SaveFigure(plot, &quot;dim_heatmap1_15&quot;, width = 12, height = 18)</code></p
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3JhdCA8LSBTY29yZUphY2tTdHJhdyhzcmF0LCBkaW1zID0gMToyNSlcblxuYGBgIn0= -->
-<pre class="r"><code>srat &lt;- ScoreJackStraw(srat, dims = 1:25)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBOT1RFOiBUaGlzIHByb2Nlc3MgY2FuIHRha2UgYSBsb25nIHRpbWUgZm9yIGJpZyBkYXRhc2V0cywgY29tbWVudCBvdXQgZm9yIGV4cGVkaWVuY3kuIE1vcmVcbiMgYXBwcm94aW1hdGUgdGVjaG5pcXVlcyBzdWNoIGFzIHRob3NlIGltcGxlbWVudGVkIGluIEVsYm93UGxvdCgpIGNhbiBiZSB1c2VkIHRvIHJlZHVjZVxuIyBjb21wdXRhdGlvbiB0aW1lXG5zcmF0IDwtIEphY2tTdHJhdyhzcmF0LCBudW0ucmVwbGljYXRlID0gMTAwKVxuc3JhdCA8LSBTY29yZUphY2tTdHJhdyhzcmF0LCBkaW1zID0gMToyMClcbnBsb3QgPC0gSmFja1N0cmF3UGxvdChzcmF0LCBkaW09MToyMClcblNhdmVGaWd1cmUocGxvdCwgXCJQQ19KYWNrU3RyYXdfcGxvdFwiLCB3aWR0aCA9IDgsIGhlaWdodCA9IDEwKVxuXG4jUXVpY2tlciBhbHRlcm5hdGl2ZSFcbnBsb3QgPC0gRWxib3dQbG90KHNyYXQsbmRpbXMgPSA1MClcblNhdmVGaWd1cmUocGxvdCwgXCJQQ19lbGJvd19wbG90XCIsIHdpZHRoID0gOCwgaGVpZ2h0ID0gMTApXG5gYGAifQ== -->
+<pre class="r"><code># NOTE: This process can take a long time for big datasets, comment out for expediency. More
+# approximate techniques such as those implemented in ElbowPlot() can be used to reduce
+# computation time
+srat &lt;- JackStraw(srat, num.replicate = 100)
+srat &lt;- ScoreJackStraw(srat, dims = 1:20)
+plot &lt;- JackStrawPlot(srat, dim=1:20)
+SaveFigure(plot, &quot;PC_JackStraw_plot&quot;, width = 8, height = 10)
+
+#Quicker alternative!
+plot &lt;- ElbowPlot(srat,ndims = 50)
+SaveFigure(plot, &quot;PC_elbow_plot&quot;, width = 8, height = 10)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<p>Chose the first 21 PCs, now time to cluster:</p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3JhdCA8LSBGaW5kQ2x1c3RlcnMoc3JhdCwgcmVzb2x1dGlvbiA9IDAuNClcblxuYGBgIn0= -->
+<pre class="r"><code>srat &lt;- FindClusters(srat, resolution = 0.4)
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gcEFsbFssIGRpbXMsIGRyb3AgPSBGQUxTRV0gOiBzdWJzY3JpcHQgb3V0IG9mIGJvdW5kc1xuIn0= -->
-<pre><code>Error in pAll[, dims, drop = FALSE] : subscript out of bounds</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiTW9kdWxhcml0eSBPcHRpbWl6ZXIgdmVyc2lvbiAxLjMuMCBieSBMdWRvIFdhbHRtYW4gYW5kIE5lZXMgSmFuIHZhbiBFY2tcblxuTnVtYmVyIG9mIG5vZGVzOiA2ODdcbk51bWJlciBvZiBlZGdlczogMTgxMDhcblxuUnVubmluZyBMb3V2YWluIGFsZ29yaXRobS4uLlxuIn0= -->
+<pre><code>Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+
+Number of nodes: 687
+Number of edges: 18108
+
+Running Louvain algorithm...</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiMCUgICAxMCAgIDIwICAgMzAgICA0MCAgIDUwICAgNjAgICA3MCAgIDgwICAgOTAgICAxMDAlXG5bLS0tLXwtLS0tfC0tLS18LS0tLXwtLS0tfC0tLS18LS0tLXwtLS0tfC0tLS18LS0tLXxcbioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqfFxuIn0= -->
+<pre><code>0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTWF4aW11bSBtb2R1bGFyaXR5IGluIDEwIHJhbmRvbSBzdGFydHM6IDAuODg5MVxuTnVtYmVyIG9mIGNvbW11bml0aWVzOiA2XG5FbGFwc2VkIHRpbWU6IDAgc2Vjb25kc1xuIn0= -->
+<pre><code>Maximum modularity in 10 random starts: 0.8891
+Number of communities: 6
+Elapsed time: 0 seconds</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuc3JhdCA8LSBGaW5kQ2x1c3RlcnMoc3JhdCwgcmVzb2x1dGlvbiA9IDAuMilcbmBgYCJ9 -->
+<pre class="r"><code>srat &lt;- FindClusters(srat, resolution = 0.2)</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTW9kdWxhcml0eSBPcHRpbWl6ZXIgdmVyc2lvbiAxLjMuMCBieSBMdWRvIFdhbHRtYW4gYW5kIE5lZXMgSmFuIHZhbiBFY2tcblxuTnVtYmVyIG9mIG5vZGVzOiA2ODdcbk51bWJlciBvZiBlZGdlczogMTgxMDhcblxuUnVubmluZyBMb3V2YWluIGFsZ29yaXRobS4uLlxuIn0= -->
+<pre><code>Modularity Optimizer version 1.3.0 by Ludo Waltman and Nees Jan van Eck
+
+Number of nodes: 687
+Number of edges: 18108
+
+Running Louvain algorithm...</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiMCUgICAxMCAgIDIwICAgMzAgICA0MCAgIDUwICAgNjAgICA3MCAgIDgwICAgOTAgICAxMDAlXG5bLS0tLXwtLS0tfC0tLS18LS0tLXwtLS0tfC0tLS18LS0tLXwtLS0tfC0tLS18LS0tLXxcbioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqKioqfFxuIn0= -->
+<pre><code>0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiTWF4aW11bSBtb2R1bGFyaXR5IGluIDEwIHJhbmRvbSBzdGFydHM6IDAuOTMwNVxuTnVtYmVyIG9mIGNvbW11bml0aWVzOiA1XG5FbGFwc2VkIHRpbWU6IDAgc2Vjb25kc1xuIn0= -->
+<pre><code>Maximum modularity in 10 random starts: 0.9305
+Number of communities: 5
+Elapsed time: 0 seconds</code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
-<p>Chose the first 9 PCs, now time to cluster:</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuXG4jIyMgTkI6IE5VTUJFUiBPRiBQQ3MgRk9SIENMVVNURVJJTkcgPSBOVU1CRVIgT0YgUENzIEZPUiBVTUFQXG5cblxuI0ZpbmQgU05OXG5zcmF0IDwtIFNldXJhdDo6OkZpbmROZWlnaGJvcnMoc3JhdCwgZGltcz0xOjMwKVxuI1J1biBMb3V2YWluIGNsdXN0ZXJpbmdcbnNyYXQgPC0gRmluZENsdXN0ZXJzKHNyYXQsIHJlc29sdXRpb24gPSAwLjgpXG5zcmF0IDwtIEZpbmRDbHVzdGVycyhzcmF0LCByZXNvbHV0aW9uID0gMC42KVxuc3JhdCA8LSBGaW5kQ2x1c3RlcnMoc3JhdCwgcmVzb2x1dGlvbiA9IDEpXG5zcmF0IDwtIEZpbmRDbHVzdGVycyhzcmF0LCByZXNvbHV0aW9uID0gMS4yKVxuc3JhdCA8LSBGaW5kQ2x1c3RlcnMoc3JhdCwgcmVzb2x1dGlvbiA9IDEuNClcblxuIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyNcbiMjIyMjIENMVVNUUkVFICMjIyMjIyNcbiMjIyMjIyMjIyMjIyMjIyMjIyMjIyNcbiNcbiMgUnVuIGZpbmQgY2x1c3RlciBzdGVwIHdpdGggYSByYW5nZSBvZiByZXNvbHV0aW9ucyBcbiMgT24gdGhlIHNyYXQgb2JqLCBpdCB3aWxsIGdlbmVyYXRlIGEgY29sdW1uIGZvciBlYWNoXG5yZW52OjppbnN0YWxsKCdjbHVzdHJlZScpXG5saWJyYXJ5KGNsdXN0cmVlKVxuXG5wbG90IDwtIGNsdXN0cmVlKHNyYXQpXG5TYXZlRmlndXJlKHBsb3QsIFwiY2x1c3RyZWVcIiwgd2lkdGggPSAxMCwgaGVpZ2h0ID0gMTApXG5cbiNyZW52OjppbnN0YWxsKCdhcGUnKVxuI2xpYnJhcnkoYXBlKVxuXG5cbmBgYCJ9 -->
-<pre class="r"><code>
-### NB: NUMBER OF PCs FOR CLUSTERING = NUMBER OF PCs FOR UMAP
-
-
-#Find SNN
-srat &lt;- Seurat:::FindNeighbors(srat, dims=1:30)
-#Run Louvain clustering
-srat &lt;- FindClusters(srat, resolution = 0.8)
-srat &lt;- FindClusters(srat, resolution = 0.6)
-srat &lt;- FindClusters(srat, resolution = 1)
-srat &lt;- FindClusters(srat, resolution = 1.2)
-srat &lt;- FindClusters(srat, resolution = 1.4)
-
-############################################
-##### CLUSTREE #######
-######################
-#
-# Run find cluster step with a range of resolutions 
-# On the srat obj, it will generate a column for each
-renv::install(&#39;clustree&#39;)
-library(clustree)
-
-plot &lt;- clustree(srat)
-SaveFigure(plot, &quot;clustree&quot;, width = 10, height = 10)
-
-#renv::install(&#39;ape&#39;)
-#library(ape)
-</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuU2F2ZUZpZ3VyZShwbG90LCAndW1hcF9sb3V2YWluX3Jlc19wMycsIHdpZHRoPTksIGhlaWdodD04KVxuXG5gYGAifQ== -->
-<pre class="r"><code>SaveFigure(plot, &#39;umap_louvain_res_p3&#39;, width=9, height=8)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuU2F2ZUZpZ3VyZShwbG90LCAndW1hcF9sb3V2YWluX3Jlc19wNicsIHdpZHRoPTksIGhlaWdodD04KVxuXG5gYGAifQ== -->
+<pre class="r"><code>SaveFigure(plot, &#39;umap_louvain_res_p6&#39;, width=9, height=8)
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-output-begin eyJkYXRhIjoiUlN0dWRpb0dEIFxuICAgICAgICAyIFxuIn0= -->
@@ -2106,402 +2220,122 @@ analysis e.g.</p>
 <p>refine clusters cluster stability ontology analysis</p>
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI3NyYXQgPC0gQnVpbGRDbHVzdGVyVHJlZShzcmF0LCByZW9yZGVyID0gVCwgcmVvcmRlci5udW1lcmljID0gVClcbnNyYXRfbWFya2VycyA8LSBGaW5kTWFya2VycyhzcmF0LCB0ZXN0LnVzZSA9ICdNQVNUJywgaWRlbnQuMT0xKVxuXG5gYGAifQ== -->
-<pre class="r"><code>#srat &lt;- BuildClusterTree(srat, reorder = T, reorder.numeric = T)
-srat_markers &lt;- FindMarkers(srat, test.use = &#39;MAST&#39;, ident.1=1)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuU2F2ZUZpZ3VyZShwbG90LCBcInZsbl9leHAyXCIsIHdpZHRoID0gMTYsIGhlaWdodCA9IDgpXG5cbmBgYCJ9 -->
+<pre class="r"><code>SaveFigure(plot, &quot;vln_exp2&quot;, width = 16, height = 8)
 </code></pre>
 <!-- rnb-source-end -->
-<!-- rnb-output-begin eyJkYXRhIjoiXG4gQ29tcGxldGVkIFstLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgIDAlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gICAxJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWy0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAgMiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgIDIlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gICAzJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAgNCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgIDUlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gICA1JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAgNiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgIDclIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gICA4JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAgOSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgIDklIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDEwJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAxMSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMTIlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDEzJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAxNCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMTUlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDE2JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAxNiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMTclIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDE4JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAxOSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMjAlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDIwJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAyMSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMjIlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDIzJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAyMyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMjQlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDI1JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAyNiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMjclIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDI3JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS1dICAyOCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMjklIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDMwJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS1dICAzMCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMzElIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLV0gIDMyJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS1dICAzMyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMzQlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLV0gIDM0JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS1dICAzNSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tXSAgMzYlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLV0gIDM3JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS1dICAzOCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tXSAgMzklIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLV0gIDQwJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS1dICA0MSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tXSAgNDElIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLV0gIDQyJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS1dICA0MyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tXSAgNDQlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLV0gIDQ1JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS1dICA0NSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tXSAgNDYlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLV0gIDQ3JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS1dICA0OCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tXSAgNDglIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLV0gIDQ5JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS1dICA1MCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tXSAgNTElIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLV0gIDUyJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS1dICA1MiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tXSAgNTMlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLV0gIDU0JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS1dICA1NSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tXSAgNTUlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLV0gIDU2JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS1dICA1NyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tXSAgNTglIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLV0gIDU5JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS1dICA1OSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tXSAgNjAlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLV0gIDYxJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS1dICA2MiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tXSAgNjMlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLV0gIDY0JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS1dICA2NSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tXSAgNjYlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLV0gIDY2JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS1dICA2NyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tXSAgNjglIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLV0gIDY5JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS1dICA3MCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tXSAgNzAlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLV0gIDcxJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS1dICA3MiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tXSAgNzMlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLV0gIDczJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS1dICA3NCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tXSAgNzUlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLV0gIDc2JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS1dICA3NyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tXSAgNzclIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLV0gIDc4JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT4tLS0tLS1dICA3OSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tXSAgODAlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT4tLS0tLV0gIDgwJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT0+LS0tLS1dICA4MSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tXSAgODIlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT4tLS0tLV0gIDgzJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT0+LS0tLS1dICA4NCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT4tLS0tXSAgODQlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT0+LS0tLV0gIDg1JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09Pi0tLS1dICA4NiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT4tLS0tXSAgODclIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09Pi0tLV0gIDg4JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT4tLS1dICA4OSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT0+LS0tXSAgOTAlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09Pi0tLV0gIDkxJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT0+LS1dICA5MSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09Pi0tXSAgOTIlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT4tLV0gIDkzJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT0+LS1dICA5NCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09Pi0tXSAgOTUlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT0+LV0gIDk1JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09Pi1dICA5NiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT4tXSAgOTclIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT0+LV0gIDk4JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT5dICA5OCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT0+XSAgOTklIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09Pl0gMTAwJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT1dIDEwMCUgd2l0aCAwIGZhaWx1cmVzXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuXG5Eb25lIVxuQ29tYmluaW5nIGNvZWZmaWNpZW50cyBhbmQgc3RhbmRhcmQgZXJyb3JzXG5DYWxjdWxhdGluZyBsb2ctZm9sZCBjaGFuZ2VzXG5DYWxjdWxhdGluZyBsaWtlbGlob29kIHJhdGlvIHRlc3RzXG5SZWZpdHRpbmcgb24gcmVkdWNlZCBtb2RlbC4uLlxuXG4gQ29tcGxldGVkIFs9Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgIDElIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gICAyJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAgMiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgIDMlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gICAzJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAgNCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgIDQlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gICA1JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAgNSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgIDYlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gICA2JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAgNyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgIDclIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gICA4JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAgOCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgIDklIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gICA5JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAxMCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMTAlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDExJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAxMSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMTElIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDEyJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAxMiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMTMlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDEzJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAxNCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMTQlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDE1JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAxNSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMTYlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDE2JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAxNyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMTclIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDE3JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAxOCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMTglIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDE5JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAxOSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMjAlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDIwJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAyMSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMjElIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDIyJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAyMiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMjIlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDIzJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAyMyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMjQlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDI0JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAyNSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMjUlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDI2JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAyNiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMjclIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDI3JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAyOCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMjglIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDI4JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAyOSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMjklIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDMwJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAzMCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMzElIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDMxJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAzMiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMzIlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDMzJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAzMyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMzMlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDM0JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAzNCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMzUlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDM1JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAzNiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMzYlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDM3JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAzNyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMzglIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDM4JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICAzOSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgMzklIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDM5JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA0MCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNDAlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDQxJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA0MSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNDIlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDQyJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA0MyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNDMlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDQ0JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA0NCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNDUlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDQ1JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA0NiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNDYlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDQ3JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA0NyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNDglIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDQ4JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA0OSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNDklIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDUwJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA1MCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNTAlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDUxJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA1MSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNTIlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDUyJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA1MyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNTMlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDU0JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA1NCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNTUlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDU1JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA1NiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNTYlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDU3JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA1NyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNTglIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDU4JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA1OSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNTklIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDYwJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA2MCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNjElIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDYxJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA2MSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNjIlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDYyJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA2MyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNjMlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDY0JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA2NCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNjUlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDY1JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA2NiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNjYlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDY3JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA2NyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNjclIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDY4JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA2OCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNjklIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDY5JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA3MCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNzAlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDcxJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA3MSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNzIlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDcyJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA3MiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNzMlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDczJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA3NCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNzQlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDc1JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA3NSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNzYlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDc2JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA3NyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNzclIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDc4JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA3OCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgNzglIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDc5JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA3OSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgODAlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDgwJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA4MSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgODElIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDgyJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLS1dICA4MiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tLS0tLS0tLS0tXSAgODMlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tLV0gIDgzJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLS1dICA4MyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS0tXSAgODQlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tLV0gIDg0JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLS1dICA4NSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS0tXSAgODUlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tLV0gIDg2JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLS1dICA4NiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS0tXSAgODclIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tLV0gIDg3JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLS1dICA4OCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS0tXSAgODglIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS0tLS0tLS0tLV0gIDg5JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLS1dICA4OSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS0tXSAgODklIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tLV0gIDkwJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLS1dICA5MCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS0tXSAgOTElIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tLV0gIDkxJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLS1dICA5MiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS0tXSAgOTIlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tLV0gIDkzJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLS1dICA5MyUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tLS0tXSAgOTQlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT0+LS0tLS0tLV0gIDk0JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLS1dICA5NSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS0tXSAgOTUlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tLV0gIDk2JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLS1dICA5NiUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS0tXSAgOTclIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tLV0gIDk3JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLS1dICA5OCUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi0tXSAgOTglIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tLV0gIDk5JSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pi1dICA5OSUgd2l0aCAwIGZhaWx1cmVzXG4gQ29tcGxldGVkIFs9PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT4tXSAxMDAlIHdpdGggMCBmYWlsdXJlc1xuIENvbXBsZXRlZCBbPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09Pl0gMTAwJSB3aXRoIDAgZmFpbHVyZXNcbiBDb21wbGV0ZWQgWz09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT1dIDEwMCUgd2l0aCAwIGZhaWx1cmVzXG4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgIFxuXG5Eb25lIVxuIn0= -->
-<pre><code>
- Completed [----------------------------]   0% with 0 failures
- Completed [----------------------------]   1% with 0 failures
- Completed [----------------------------]   2% with 0 failures
- Completed [&gt;---------------------------]   2% with 0 failures
- Completed [&gt;---------------------------]   3% with 0 failures
- Completed [&gt;---------------------------]   4% with 0 failures
- Completed [&gt;---------------------------]   5% with 0 failures
- Completed [=&gt;--------------------------]   5% with 0 failures
- Completed [=&gt;--------------------------]   6% with 0 failures
- Completed [=&gt;--------------------------]   7% with 0 failures
- Completed [=&gt;--------------------------]   8% with 0 failures
- Completed [=&gt;--------------------------]   9% with 0 failures
- Completed [==&gt;-------------------------]   9% with 0 failures
- Completed [==&gt;-------------------------]  10% with 0 failures
- Completed [==&gt;-------------------------]  11% with 0 failures
- Completed [==&gt;-------------------------]  12% with 0 failures
- Completed [===&gt;------------------------]  13% with 0 failures
- Completed [===&gt;------------------------]  14% with 0 failures
- Completed [===&gt;------------------------]  15% with 0 failures
- Completed [===&gt;------------------------]  16% with 0 failures
- Completed [====&gt;-----------------------]  16% with 0 failures
- Completed [====&gt;-----------------------]  17% with 0 failures
- Completed [====&gt;-----------------------]  18% with 0 failures
- Completed [====&gt;-----------------------]  19% with 0 failures
- Completed [====&gt;-----------------------]  20% with 0 failures
- Completed [=====&gt;----------------------]  20% with 0 failures
- Completed [=====&gt;----------------------]  21% with 0 failures
- Completed [=====&gt;----------------------]  22% with 0 failures
- Completed [=====&gt;----------------------]  23% with 0 failures
- Completed [======&gt;---------------------]  23% with 0 failures
- Completed [======&gt;---------------------]  24% with 0 failures
- Completed [======&gt;---------------------]  25% with 0 failures
- Completed [======&gt;---------------------]  26% with 0 failures
- Completed [======&gt;---------------------]  27% with 0 failures
- Completed [=======&gt;--------------------]  27% with 0 failures
- Completed [=======&gt;--------------------]  28% with 0 failures
- Completed [=======&gt;--------------------]  29% with 0 failures
- Completed [=======&gt;--------------------]  30% with 0 failures
- Completed [========&gt;-------------------]  30% with 0 failures
- Completed [========&gt;-------------------]  31% with 0 failures
- Completed [========&gt;-------------------]  32% with 0 failures
- Completed [========&gt;-------------------]  33% with 0 failures
- Completed [========&gt;-------------------]  34% with 0 failures
- Completed [=========&gt;------------------]  34% with 0 failures
- Completed [=========&gt;------------------]  35% with 0 failures
- Completed [=========&gt;------------------]  36% with 0 failures
- Completed [=========&gt;------------------]  37% with 0 failures
- Completed [==========&gt;-----------------]  38% with 0 failures
- Completed [==========&gt;-----------------]  39% with 0 failures
- Completed [==========&gt;-----------------]  40% with 0 failures
- Completed [==========&gt;-----------------]  41% with 0 failures
- Completed [===========&gt;----------------]  41% with 0 failures
- Completed [===========&gt;----------------]  42% with 0 failures
- Completed [===========&gt;----------------]  43% with 0 failures
- Completed [===========&gt;----------------]  44% with 0 failures
- Completed [===========&gt;----------------]  45% with 0 failures
- Completed [============&gt;---------------]  45% with 0 failures
- Completed [============&gt;---------------]  46% with 0 failures
- Completed [============&gt;---------------]  47% with 0 failures
- Completed [============&gt;---------------]  48% with 0 failures
- Completed [=============&gt;--------------]  48% with 0 failures
- Completed [=============&gt;--------------]  49% with 0 failures
- Completed [=============&gt;--------------]  50% with 0 failures
- Completed [=============&gt;--------------]  51% with 0 failures
- Completed [=============&gt;--------------]  52% with 0 failures
- Completed [==============&gt;-------------]  52% with 0 failures
- Completed [==============&gt;-------------]  53% with 0 failures
- Completed [==============&gt;-------------]  54% with 0 failures
- Completed [==============&gt;-------------]  55% with 0 failures
- Completed [===============&gt;------------]  55% with 0 failures
- Completed [===============&gt;------------]  56% with 0 failures
- Completed [===============&gt;------------]  57% with 0 failures
- Completed [===============&gt;------------]  58% with 0 failures
- Completed [===============&gt;------------]  59% with 0 failures
- Completed [================&gt;-----------]  59% with 0 failures
- Completed [================&gt;-----------]  60% with 0 failures
- Completed [================&gt;-----------]  61% with 0 failures
- Completed [================&gt;-----------]  62% with 0 failures
- Completed [=================&gt;----------]  63% with 0 failures
- Completed [=================&gt;----------]  64% with 0 failures
- Completed [=================&gt;----------]  65% with 0 failures
- Completed [=================&gt;----------]  66% with 0 failures
- Completed [==================&gt;---------]  66% with 0 failures
- Completed [==================&gt;---------]  67% with 0 failures
- Completed [==================&gt;---------]  68% with 0 failures
- Completed [==================&gt;---------]  69% with 0 failures
- Completed [==================&gt;---------]  70% with 0 failures
- Completed [===================&gt;--------]  70% with 0 failures
- Completed [===================&gt;--------]  71% with 0 failures
- Completed [===================&gt;--------]  72% with 0 failures
- Completed [===================&gt;--------]  73% with 0 failures
- Completed [====================&gt;-------]  73% with 0 failures
- Completed [====================&gt;-------]  74% with 0 failures
- Completed [====================&gt;-------]  75% with 0 failures
- Completed [====================&gt;-------]  76% with 0 failures
- Completed [====================&gt;-------]  77% with 0 failures
- Completed [=====================&gt;------]  77% with 0 failures
- Completed [=====================&gt;------]  78% with 0 failures
- Completed [=====================&gt;------]  79% with 0 failures
- Completed [=====================&gt;------]  80% with 0 failures
- Completed [======================&gt;-----]  80% with 0 failures
- Completed [======================&gt;-----]  81% with 0 failures
- Completed [======================&gt;-----]  82% with 0 failures
- Completed [======================&gt;-----]  83% with 0 failures
- Completed [======================&gt;-----]  84% with 0 failures
- Completed [=======================&gt;----]  84% with 0 failures
- Completed [=======================&gt;----]  85% with 0 failures
- Completed [=======================&gt;----]  86% with 0 failures
- Completed [=======================&gt;----]  87% with 0 failures
- Completed [========================&gt;---]  88% with 0 failures
- Completed [========================&gt;---]  89% with 0 failures
- Completed [========================&gt;---]  90% with 0 failures
- Completed [========================&gt;---]  91% with 0 failures
- Completed [=========================&gt;--]  91% with 0 failures
- Completed [=========================&gt;--]  92% with 0 failures
- Completed [=========================&gt;--]  93% with 0 failures
- Completed [=========================&gt;--]  94% with 0 failures
- Completed [=========================&gt;--]  95% with 0 failures
- Completed [==========================&gt;-]  95% with 0 failures
- Completed [==========================&gt;-]  96% with 0 failures
- Completed [==========================&gt;-]  97% with 0 failures
- Completed [==========================&gt;-]  98% with 0 failures
- Completed [===========================&gt;]  98% with 0 failures
- Completed [===========================&gt;]  99% with 0 failures
- Completed [===========================&gt;] 100% with 0 failures
- Completed [============================] 100% with 0 failures
-                                                              
-
-Done!
-Combining coefficients and standard errors
-Calculating log-fold changes
-Calculating likelihood ratio tests
-Refitting on reduced model...
-
- Completed [=&gt;--------------------------------------------------------------------------------------------------------------------]   1% with 0 failures
- Completed [=&gt;--------------------------------------------------------------------------------------------------------------------]   2% with 0 failures
- Completed [==&gt;-------------------------------------------------------------------------------------------------------------------]   2% with 0 failures
- Completed [==&gt;-------------------------------------------------------------------------------------------------------------------]   3% with 0 failures
- Completed [===&gt;------------------------------------------------------------------------------------------------------------------]   3% with 0 failures
- Completed [===&gt;------------------------------------------------------------------------------------------------------------------]   4% with 0 failures
- Completed [====&gt;-----------------------------------------------------------------------------------------------------------------]   4% with 0 failures
- Completed [====&gt;-----------------------------------------------------------------------------------------------------------------]   5% with 0 failures
- Completed [=====&gt;----------------------------------------------------------------------------------------------------------------]   5% with 0 failures
- Completed [======&gt;---------------------------------------------------------------------------------------------------------------]   6% with 0 failures
- Completed [=======&gt;--------------------------------------------------------------------------------------------------------------]   6% with 0 failures
- Completed [=======&gt;--------------------------------------------------------------------------------------------------------------]   7% with 0 failures
- Completed [========&gt;-------------------------------------------------------------------------------------------------------------]   7% with 0 failures
- Completed [========&gt;-------------------------------------------------------------------------------------------------------------]   8% with 0 failures
- Completed [=========&gt;------------------------------------------------------------------------------------------------------------]   8% with 0 failures
- Completed [=========&gt;------------------------------------------------------------------------------------------------------------]   9% with 0 failures
- Completed [==========&gt;-----------------------------------------------------------------------------------------------------------]   9% with 0 failures
- Completed [==========&gt;-----------------------------------------------------------------------------------------------------------]  10% with 0 failures
- Completed [===========&gt;----------------------------------------------------------------------------------------------------------]  10% with 0 failures
- Completed [===========&gt;----------------------------------------------------------------------------------------------------------]  11% with 0 failures
- Completed [============&gt;---------------------------------------------------------------------------------------------------------]  11% with 0 failures
- Completed [=============&gt;--------------------------------------------------------------------------------------------------------]  11% with 0 failures
- Completed [=============&gt;--------------------------------------------------------------------------------------------------------]  12% with 0 failures
- Completed [==============&gt;-------------------------------------------------------------------------------------------------------]  12% with 0 failures
- Completed [==============&gt;-------------------------------------------------------------------------------------------------------]  13% with 0 failures
- Completed [===============&gt;------------------------------------------------------------------------------------------------------]  13% with 0 failures
- Completed [===============&gt;------------------------------------------------------------------------------------------------------]  14% with 0 failures
- Completed [================&gt;-----------------------------------------------------------------------------------------------------]  14% with 0 failures
- Completed [================&gt;-----------------------------------------------------------------------------------------------------]  15% with 0 failures
- Completed [=================&gt;----------------------------------------------------------------------------------------------------]  15% with 0 failures
- Completed [=================&gt;----------------------------------------------------------------------------------------------------]  16% with 0 failures
- Completed [==================&gt;---------------------------------------------------------------------------------------------------]  16% with 0 failures
- Completed [==================&gt;---------------------------------------------------------------------------------------------------]  17% with 0 failures
- Completed [===================&gt;--------------------------------------------------------------------------------------------------]  17% with 0 failures
- Completed [====================&gt;-------------------------------------------------------------------------------------------------]  17% with 0 failures
- Completed [====================&gt;-------------------------------------------------------------------------------------------------]  18% with 0 failures
- Completed [=====================&gt;------------------------------------------------------------------------------------------------]  18% with 0 failures
- Completed [=====================&gt;------------------------------------------------------------------------------------------------]  19% with 0 failures
- Completed [======================&gt;-----------------------------------------------------------------------------------------------]  19% with 0 failures
- Completed [======================&gt;-----------------------------------------------------------------------------------------------]  20% with 0 failures
- Completed [=======================&gt;----------------------------------------------------------------------------------------------]  20% with 0 failures
- Completed [=======================&gt;----------------------------------------------------------------------------------------------]  21% with 0 failures
- Completed [========================&gt;---------------------------------------------------------------------------------------------]  21% with 0 failures
- Completed [========================&gt;---------------------------------------------------------------------------------------------]  22% with 0 failures
- Completed [=========================&gt;--------------------------------------------------------------------------------------------]  22% with 0 failures
- Completed [==========================&gt;-------------------------------------------------------------------------------------------]  22% with 0 failures
- Completed [==========================&gt;-------------------------------------------------------------------------------------------]  23% with 0 failures
- Completed [===========================&gt;------------------------------------------------------------------------------------------]  23% with 0 failures
- Completed [===========================&gt;------------------------------------------------------------------------------------------]  24% with 0 failures
- Completed [============================&gt;-----------------------------------------------------------------------------------------]  24% with 0 failures
- Completed [============================&gt;-----------------------------------------------------------------------------------------]  25% with 0 failures
- Completed [=============================&gt;----------------------------------------------------------------------------------------]  25% with 0 failures
- Completed [=============================&gt;----------------------------------------------------------------------------------------]  26% with 0 failures
- Completed [==============================&gt;---------------------------------------------------------------------------------------]  26% with 0 failures
- Completed [==============================&gt;---------------------------------------------------------------------------------------]  27% with 0 failures
- Completed [===============================&gt;--------------------------------------------------------------------------------------]  27% with 0 failures
- Completed [===============================&gt;--------------------------------------------------------------------------------------]  28% with 0 failures
- Completed [================================&gt;-------------------------------------------------------------------------------------]  28% with 0 failures
- Completed [=================================&gt;------------------------------------------------------------------------------------]  28% with 0 failures
- Completed [=================================&gt;------------------------------------------------------------------------------------]  29% with 0 failures
- Completed [==================================&gt;-----------------------------------------------------------------------------------]  29% with 0 failures
- Completed [==================================&gt;-----------------------------------------------------------------------------------]  30% with 0 failures
- Completed [===================================&gt;----------------------------------------------------------------------------------]  30% with 0 failures
- Completed [===================================&gt;----------------------------------------------------------------------------------]  31% with 0 failures
- Completed [====================================&gt;---------------------------------------------------------------------------------]  31% with 0 failures
- Completed [====================================&gt;---------------------------------------------------------------------------------]  32% with 0 failures
- Completed [=====================================&gt;--------------------------------------------------------------------------------]  32% with 0 failures
- Completed [=====================================&gt;--------------------------------------------------------------------------------]  33% with 0 failures
- Completed [======================================&gt;-------------------------------------------------------------------------------]  33% with 0 failures
- Completed [=======================================&gt;------------------------------------------------------------------------------]  33% with 0 failures
- Completed [=======================================&gt;------------------------------------------------------------------------------]  34% with 0 failures
- Completed [========================================&gt;-----------------------------------------------------------------------------]  34% with 0 failures
- Completed [========================================&gt;-----------------------------------------------------------------------------]  35% with 0 failures
- Completed [=========================================&gt;----------------------------------------------------------------------------]  35% with 0 failures
- Completed [=========================================&gt;----------------------------------------------------------------------------]  36% with 0 failures
- Completed [==========================================&gt;---------------------------------------------------------------------------]  36% with 0 failures
- Completed [==========================================&gt;---------------------------------------------------------------------------]  37% with 0 failures
- Completed [===========================================&gt;--------------------------------------------------------------------------]  37% with 0 failures
- Completed [===========================================&gt;--------------------------------------------------------------------------]  38% with 0 failures
- Completed [============================================&gt;-------------------------------------------------------------------------]  38% with 0 failures
- Completed [============================================&gt;-------------------------------------------------------------------------]  39% with 0 failures
- Completed [=============================================&gt;------------------------------------------------------------------------]  39% with 0 failures
- Completed [==============================================&gt;-----------------------------------------------------------------------]  39% with 0 failures
- Completed [==============================================&gt;-----------------------------------------------------------------------]  40% with 0 failures
- Completed [===============================================&gt;----------------------------------------------------------------------]  40% with 0 failures
- Completed [===============================================&gt;----------------------------------------------------------------------]  41% with 0 failures
- Completed [================================================&gt;---------------------------------------------------------------------]  41% with 0 failures
- Completed [================================================&gt;---------------------------------------------------------------------]  42% with 0 failures
- Completed [=================================================&gt;--------------------------------------------------------------------]  42% with 0 failures
- Completed [=================================================&gt;--------------------------------------------------------------------]  43% with 0 failures
- Completed [==================================================&gt;-------------------------------------------------------------------]  43% with 0 failures
- Completed [==================================================&gt;-------------------------------------------------------------------]  44% with 0 failures
- Completed [===================================================&gt;------------------------------------------------------------------]  44% with 0 failures
- Completed [====================================================&gt;-----------------------------------------------------------------]  45% with 0 failures
- Completed [=====================================================&gt;----------------------------------------------------------------]  45% with 0 failures
- Completed [=====================================================&gt;----------------------------------------------------------------]  46% with 0 failures
- Completed [======================================================&gt;---------------------------------------------------------------]  46% with 0 failures
- Completed [======================================================&gt;---------------------------------------------------------------]  47% with 0 failures
- Completed [=======================================================&gt;--------------------------------------------------------------]  47% with 0 failures
- Completed [=======================================================&gt;--------------------------------------------------------------]  48% with 0 failures
- Completed [========================================================&gt;-------------------------------------------------------------]  48% with 0 failures
- Completed [========================================================&gt;-------------------------------------------------------------]  49% with 0 failures
- Completed [=========================================================&gt;------------------------------------------------------------]  49% with 0 failures
- Completed [=========================================================&gt;------------------------------------------------------------]  50% with 0 failures
- Completed [==========================================================&gt;-----------------------------------------------------------]  50% with 0 failures
- Completed [===========================================================&gt;----------------------------------------------------------]  50% with 0 failures
- Completed [===========================================================&gt;----------------------------------------------------------]  51% with 0 failures
- Completed [============================================================&gt;---------------------------------------------------------]  51% with 0 failures
- Completed [============================================================&gt;---------------------------------------------------------]  52% with 0 failures
- Completed [=============================================================&gt;--------------------------------------------------------]  52% with 0 failures
- Completed [=============================================================&gt;--------------------------------------------------------]  53% with 0 failures
- Completed [==============================================================&gt;-------------------------------------------------------]  53% with 0 failures
- Completed [==============================================================&gt;-------------------------------------------------------]  54% with 0 failures
- Completed [===============================================================&gt;------------------------------------------------------]  54% with 0 failures
- Completed [===============================================================&gt;------------------------------------------------------]  55% with 0 failures
- Completed [================================================================&gt;-----------------------------------------------------]  55% with 0 failures
- Completed [=================================================================&gt;----------------------------------------------------]  56% with 0 failures
- Completed [==================================================================&gt;---------------------------------------------------]  56% with 0 failures
- Completed [==================================================================&gt;---------------------------------------------------]  57% with 0 failures
- Completed [===================================================================&gt;--------------------------------------------------]  57% with 0 failures
- Completed [===================================================================&gt;--------------------------------------------------]  58% with 0 failures
- Completed [====================================================================&gt;-------------------------------------------------]  58% with 0 failures
- Completed [====================================================================&gt;-------------------------------------------------]  59% with 0 failures
- Completed [=====================================================================&gt;------------------------------------------------]  59% with 0 failures
- Completed [=====================================================================&gt;------------------------------------------------]  60% with 0 failures
- Completed [======================================================================&gt;-----------------------------------------------]  60% with 0 failures
- Completed [======================================================================&gt;-----------------------------------------------]  61% with 0 failures
- Completed [=======================================================================&gt;----------------------------------------------]  61% with 0 failures
- Completed [========================================================================&gt;---------------------------------------------]  61% with 0 failures
- Completed [========================================================================&gt;---------------------------------------------]  62% with 0 failures
- Completed [=========================================================================&gt;--------------------------------------------]  62% with 0 failures
- Completed [=========================================================================&gt;--------------------------------------------]  63% with 0 failures
- Completed [==========================================================================&gt;-------------------------------------------]  63% with 0 failures
- Completed [==========================================================================&gt;-------------------------------------------]  64% with 0 failures
- Completed [===========================================================================&gt;------------------------------------------]  64% with 0 failures
- Completed [===========================================================================&gt;------------------------------------------]  65% with 0 failures
- Completed [============================================================================&gt;-----------------------------------------]  65% with 0 failures
- Completed [============================================================================&gt;-----------------------------------------]  66% with 0 failures
- Completed [=============================================================================&gt;----------------------------------------]  66% with 0 failures
- Completed [=============================================================================&gt;----------------------------------------]  67% with 0 failures
- Completed [==============================================================================&gt;---------------------------------------]  67% with 0 failures
- Completed [===============================================================================&gt;--------------------------------------]  67% with 0 failures
- Completed [===============================================================================&gt;--------------------------------------]  68% with 0 failures
- Completed [================================================================================&gt;-------------------------------------]  68% with 0 failures
- Completed [================================================================================&gt;-------------------------------------]  69% with 0 failures
- Completed [=================================================================================&gt;------------------------------------]  69% with 0 failures
- Completed [=================================================================================&gt;------------------------------------]  70% with 0 failures
- Completed [==================================================================================&gt;-----------------------------------]  70% with 0 failures
- Completed [==================================================================================&gt;-----------------------------------]  71% with 0 failures
- Completed [===================================================================================&gt;----------------------------------]  71% with 0 failures
- Completed [===================================================================================&gt;----------------------------------]  72% with 0 failures
- Completed [====================================================================================&gt;---------------------------------]  72% with 0 failures
- Completed [=====================================================================================&gt;--------------------------------]  72% with 0 failures
- Completed [=====================================================================================&gt;--------------------------------]  73% with 0 failures
- Completed [======================================================================================&gt;-------------------------------]  73% with 0 failures
- Completed [======================================================================================&gt;-------------------------------]  74% with 0 failures
- Completed [=======================================================================================&gt;------------------------------]  74% with 0 failures
- Completed [=======================================================================================&gt;------------------------------]  75% with 0 failures
- Completed [========================================================================================&gt;-----------------------------]  75% with 0 failures
- Completed [========================================================================================&gt;-----------------------------]  76% with 0 failures
- Completed [=========================================================================================&gt;----------------------------]  76% with 0 failures
- Completed [=========================================================================================&gt;----------------------------]  77% with 0 failures
- Completed [==========================================================================================&gt;---------------------------]  77% with 0 failures
- Completed [==========================================================================================&gt;---------------------------]  78% with 0 failures
- Completed [===========================================================================================&gt;--------------------------]  78% with 0 failures
- Completed [============================================================================================&gt;-------------------------]  78% with 0 failures
- Completed [============================================================================================&gt;-------------------------]  79% with 0 failures
- Completed [=============================================================================================&gt;------------------------]  79% with 0 failures
- Completed [=============================================================================================&gt;------------------------]  80% with 0 failures
- Completed [==============================================================================================&gt;-----------------------]  80% with 0 failures
- Completed [==============================================================================================&gt;-----------------------]  81% with 0 failures
- Completed [===============================================================================================&gt;----------------------]  81% with 0 failures
- Completed [===============================================================================================&gt;----------------------]  82% with 0 failures
- Completed [================================================================================================&gt;---------------------]  82% with 0 failures
- Completed [================================================================================================&gt;---------------------]  83% with 0 failures
- Completed [=================================================================================================&gt;--------------------]  83% with 0 failures
- Completed [==================================================================================================&gt;-------------------]  83% with 0 failures
- Completed [==================================================================================================&gt;-------------------]  84% with 0 failures
- Completed [===================================================================================================&gt;------------------]  84% with 0 failures
- Completed [===================================================================================================&gt;------------------]  85% with 0 failures
- Completed [====================================================================================================&gt;-----------------]  85% with 0 failures
- Completed [====================================================================================================&gt;-----------------]  86% with 0 failures
- Completed [=====================================================================================================&gt;----------------]  86% with 0 failures
- Completed [=====================================================================================================&gt;----------------]  87% with 0 failures
- Completed [======================================================================================================&gt;---------------]  87% with 0 failures
- Completed [======================================================================================================&gt;---------------]  88% with 0 failures
- Completed [=======================================================================================================&gt;--------------]  88% with 0 failures
- Completed [=======================================================================================================&gt;--------------]  89% with 0 failures
- Completed [========================================================================================================&gt;-------------]  89% with 0 failures
- Completed [=========================================================================================================&gt;------------]  89% with 0 failures
- Completed [=========================================================================================================&gt;------------]  90% with 0 failures
- Completed [==========================================================================================================&gt;-----------]  90% with 0 failures
- Completed [==========================================================================================================&gt;-----------]  91% with 0 failures
- Completed [===========================================================================================================&gt;----------]  91% with 0 failures
- Completed [===========================================================================================================&gt;----------]  92% with 0 failures
- Completed [============================================================================================================&gt;---------]  92% with 0 failures
- Completed [============================================================================================================&gt;---------]  93% with 0 failures
- Completed [=============================================================================================================&gt;--------]  93% with 0 failures
- Completed [=============================================================================================================&gt;--------]  94% with 0 failures
- Completed [==============================================================================================================&gt;-------]  94% with 0 failures
- Completed [===============================================================================================================&gt;------]  95% with 0 failures
- Completed [================================================================================================================&gt;-----]  95% with 0 failures
- Completed [================================================================================================================&gt;-----]  96% with 0 failures
- Completed [=================================================================================================================&gt;----]  96% with 0 failures
- Completed [=================================================================================================================&gt;----]  97% with 0 failures
- Completed [==================================================================================================================&gt;---]  97% with 0 failures
- Completed [==================================================================================================================&gt;---]  98% with 0 failures
- Completed [===================================================================================================================&gt;--]  98% with 0 failures
- Completed [===================================================================================================================&gt;--]  99% with 0 failures
- Completed [====================================================================================================================&gt;-]  99% with 0 failures
- Completed [====================================================================================================================&gt;-] 100% with 0 failures
- Completed [=====================================================================================================================&gt;] 100% with 0 failures
- Completed [======================================================================================================================] 100% with 0 failures
-                                                                                                                                                        
-
-Done!</code></pre>
+<!-- rnb-output-begin eyJkYXRhIjoiUlN0dWRpb0dEIFxuICAgICAgICAyIFxuIn0= -->
+<pre><code>RStudioGD 
+        2 </code></pre>
 <!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxudG9wNSA8LSBzcmF0X21hcmtlcnMgJT4lIGdyb3VwX2J5KGNsdXN0ZXIpICU+JSB0b3BfbihuID0gNSwgd3QgPSBhdmdfbG9nMkZDKVxudG9fcGxvdCA8LSB1bmlxdWUodG9wNSRnZW5lKVxucGxvdCA8LSBEb3RQbG90KHNyYXQsIGZlYXR1cmVzID0gdG9fcGxvdCwgZ3JvdXAuYnkgPSBcInRyZWUuaWRlbnRcIikgKyBjb29yZF9mbGlwKClcblNhdmVGaWd1cmUocGxvdCwgXCJkcGxvdF90b3A1XCIsIHdpZHRoID0gOSwgaGVpZ2h0ID0gMjApXG5gYGAifQ== -->
-<pre class="r"><code>top5 &lt;- srat_markers %&gt;% group_by(cluster) %&gt;% top_n(n = 5, wt = avg_log2FC)
-to_plot &lt;- unique(top5$gene)
-plot &lt;- DotPlot(srat, features = to_plot, group.by = &quot;tree.ident&quot;) + coord_flip()
-SaveFigure(plot, &quot;dplot_top5&quot;, width = 9, height = 20)</code></pre>
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuU2F2ZUZpZ3VyZShwbG90LCBcImhtYXBfdG9wNVwiLCB3aWR0aD01LCBoZWlnaHQgPSA3KVxuXG5gYGAifQ== -->
+<pre class="r"><code>SaveFigure(plot, &quot;hmap_top5&quot;, width=5, height = 7)
+</code></pre>
 <!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoibnVsbCBkZXZpY2UgXG4gICAgICAgICAgMSBcbiJ9 -->
+<pre><code>null device 
+          1 </code></pre>
+<!-- rnb-output-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
 <!-- rnb-text-end -->
 <!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuIyBQbG90dGluZyBQQk1DIG1hcmtlcnNcbm1hcmtlcnMgPC0gYyhcIk90b2dcIiwgXCJBcm1jNFwiLCBcIk1nYXQ0Y1wiLCBcIktjbmg3XCIsIFwibXQtUm5yMVwiLCBcIm10LVJucjJcIiwgXCJDb2NoXCIsXG5cIlRlY3RiXCIsIFwiU3BhcmNsMVwiLCBcIk1pYXRcIiwgXCJVc2gyYVwiLCBcIk1icFwiKVxuXG5zcmF0X21hcmtlcnMgPC0gRmVhdHVyZVBsb3Qoc3JhdCwgZmVhdHVyZXMgPSBtYXJrZXJzKVxuU2F2ZUZpZ3VyZShzcmF0X21hcmtlcnMsIFwic3JhdF9tYXJrZXJzXCIsIHdpZHRoID0gNDAsIGhlaWdodCA9IDMwKVxuYGBgIn0= -->
-<pre class="r"><code># Plotting PBMC markers
-markers &lt;- c(&quot;Otog&quot;, &quot;Armc4&quot;, &quot;Mgat4c&quot;, &quot;Kcnh7&quot;, &quot;mt-Rnr1&quot;, &quot;mt-Rnr2&quot;, &quot;Coch&quot;,
-&quot;Tectb&quot;, &quot;Sparcl1&quot;, &quot;Miat&quot;, &quot;Ush2a&quot;, &quot;Mbp&quot;)
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuU2F2ZUZpZ3VyZShwbG90LCBcInNyYXRfbWFya2Vyc1wiLCB3aWR0aCA9IDQwLCBoZWlnaHQgPSAzMClcblxuYGBgIn0= -->
+<pre class="r"><code>SaveFigure(plot, &quot;srat_markers&quot;, width = 40, height = 30)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiUlN0dWRpb0dEIFxuICAgICAgICAyIFxuIn0= -->
+<pre><code>RStudioGD 
+        2 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuU2F2ZUZpZ3VyZShwbG90LCBcInVtYXBfbG91dmFpbl9ub2xlZ2VuZFwiLCB3aWR0aCA9IDgsIGhlaWdodCA9IDcpXG5cbmBgYCJ9 -->
+<pre class="r"><code>SaveFigure(plot, &quot;umap_louvain_nolegend&quot;, width = 8, height = 7)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoibnVsbCBkZXZpY2UgXG4gICAgICAgICAgMSBcbiJ9 -->
+<pre><code>null device 
+          1 </code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuQmlvY01hbmFnZXI6Omluc3RhbGwoJ2dndHJlZScpXG5cbmBgYCJ9 -->
+<pre class="r"><code>BiocManager::install(&#39;ggtree&#39;)
+</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiJ2dldE9wdGlvbihcInJlcG9zXCIpJyByZXBsYWNlcyBCaW9jb25kdWN0b3Igc3RhbmRhcmQgcmVwb3NpdG9yaWVzLCBzZWUgJ2hlbHAoXCJyZXBvc2l0b3JpZXNcIiwgcGFja2FnZSA9XG5cIkJpb2NNYW5hZ2VyXCIpJyBmb3IgZGV0YWlscy5cblJlcGxhY2VtZW50IHJlcG9zaXRvcmllczpcbiAgICBDUkFOOiBodHRwczovL3BhY2thZ2VtYW5hZ2VyLnBvc2l0LmNvL2NyYW4vbGF0ZXN0XG5CaW9jb25kdWN0b3IgdmVyc2lvbiAzLjE0IChCaW9jTWFuYWdlciAxLjMwLjIxLjEpLCBSIDQuMS4yICgyMDIxLTExLTAxKVxuSW5zdGFsbGluZyBwYWNrYWdlKHMpICdnZ3RyZWUnXG50cnlpbmcgVVJMICdodHRwczovL2Jpb2NvbmR1Y3Rvci5vcmcvcGFja2FnZXMvMy4xNC9iaW9jL3NyYy9jb250cmliL2dndHJlZV8zLjIuMS50YXIuZ3onXG5Db250ZW50IHR5cGUgJ2FwcGxpY2F0aW9uL29jdGV0LXN0cmVhbScgbGVuZ3RoIDM0NDU0OSBieXRlcyAoMzM2IEtCKVxuPT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT09PT1cbmRvd25sb2FkZWQgMzM2IEtCXG5cbiogaW5zdGFsbGluZyAqc291cmNlKiBwYWNrYWdlIOKAmGdndHJlZeKAmSAuLi5cbioqIHVzaW5nIHN0YWdlZCBpbnN0YWxsYXRpb25cbioqIFJcbioqIGluc3RcbioqIGJ5dGUtY29tcGlsZSBhbmQgcHJlcGFyZSBwYWNrYWdlIGZvciBsYXp5IGxvYWRpbmdcbiJ9 -->
+<pre><code>&#39;getOption(&quot;repos&quot;)&#39; replaces Bioconductor standard repositories, see &#39;help(&quot;repositories&quot;, package =
+&quot;BiocManager&quot;)&#39; for details.
+Replacement repositories:
+    CRAN: https://packagemanager.posit.co/cran/latest
+Bioconductor version 3.14 (BiocManager 1.30.21.1), R 4.1.2 (2021-11-01)
+Installing package(s) &#39;ggtree&#39;
+trying URL &#39;https://bioconductor.org/packages/3.14/bioc/src/contrib/ggtree_3.2.1.tar.gz&#39;
+Content type &#39;application/octet-stream&#39; length 344549 bytes (336 KB)
+==================================================
+downloaded 336 KB
 
-srat_markers &lt;- FeaturePlot(srat, features = markers)
-SaveFigure(srat_markers, &quot;srat_markers&quot;, width = 40, height = 30)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxucGxvdCA8LSBEaW1QbG90KHNyYXQsIHJlZHVjdGlvbiA9IFwidW1hcFwiLCBsYWJlbCA9IFRSVUUpICsgTm9BeGVzKCkgKyBOb0xlZ2VuZCgpXG5TYXZlRmlndXJlKHBsb3QsIFwidW1hcF9sb3V2YWluX25vbGVnZW5kXCIsIHdpZHRoID0gOCwgaGVpZ2h0ID0gNylcbmBgYCJ9 -->
-<pre class="r"><code>plot &lt;- DimPlot(srat, reduction = &quot;umap&quot;, label = TRUE) + NoAxes() + NoLegend()
-SaveFigure(plot, &quot;umap_louvain_nolegend&quot;, width = 8, height = 7)</code></pre>
-<!-- rnb-source-end -->
-<!-- rnb-chunk-end -->
-<!-- rnb-text-begin -->
-<!-- rnb-text-end -->
-<!-- rnb-chunk-begin -->
-<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuYzhfb250IDwtIHNyYXRfbWFya2Vyc1tzcmF0X21hcmtlcnMkY2x1c3RlciA9PSAnOCcgJiBzcmF0X21hcmtlcnMkcF92YWxfYWRqIDwwLjA1ICYgc3JhdF9tYXJrZXJzJGF2Z19sb2cyRkMgPiAwLF1cblxud3JpdGVMaW5lcyhjOF9vbnQkZ2VuZSwgJ2M4X29udG9sb2d5LmNzdicpXG5gYGAifQ== -->
-<pre class="r"><code>c8_ont &lt;- srat_markers[srat_markers$cluster == &#39;8&#39; &amp; srat_markers$p_val_adj &lt;0.05 &amp; srat_markers$avg_log2FC &gt; 0,]
+* installing *source* package ‘ggtree’ ...
+** using staged installation
+** R
+** inst
+** byte-compile and prepare package for lazy loading</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRXJyb3IgaW4gZ2V0KHgsIGVudmlyID0gbnMsIGluaGVyaXRzID0gRkFMU0UpIDogXG4gIG9iamVjdCAnd2FybmluZ193cmFwJyBub3QgZm91bmRcbkVycm9yOiB1bmFibGUgdG8gbG9hZCBSIGNvZGUgaW4gcGFja2FnZSDigJhnZ3RyZWXigJlcbkV4ZWN1dGlvbiBoYWx0ZWRcbiJ9 -->
+<pre><code>Error in get(x, envir = ns, inherits = FALSE) : 
+  object &#39;warning_wrap&#39; not found
+Error: unable to load R code in package ‘ggtree’
+Execution halted</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiRVJST1I6IGxhenkgbG9hZGluZyBmYWlsZWQgZm9yIHBhY2thZ2Ug4oCYZ2d0cmVl4oCZXG4qIHJlbW92aW5nIOKAmC9ob21lL3JhY2hlbC9uZXd2b2x1bWUvYW5hbHlzaXMvNjAwX2NlbGxzX2FuYWx5c2lzL3JlbnYvbGlicmFyeS9SLTQuMS94ODZfNjQtcGMtbGludXgtZ251L2dndHJlZeKAmVxuV2FybmluZzogaW5zdGFsbGF0aW9uIG9mIHBhY2thZ2Ug4oCYZ2d0cmVl4oCZIGhhZCBub24temVybyBleGl0IHN0YXR1c1xuVGhlIGRvd25sb2FkZWQgc291cmNlIHBhY2thZ2VzIGFyZSBpblxuXHTigJgvdG1wL1J0bXBpMEp2QlYvZG93bmxvYWRlZF9wYWNrYWdlc+KAmVxuSW5zdGFsbGF0aW9uIHBhdGhzIG5vdCB3cml0ZWFibGUsIHVuYWJsZSB0byB1cGRhdGUgcGFja2FnZXNcbiAgcGF0aDogL2hvbWUvcmFjaGVsLy5jYWNoZS9SL3JlbnYvc2FuZGJveC9SLTQuMS94ODZfNjQtcGMtbGludXgtZ251LzlhNDQ0YTcyXG4gIHBhY2thZ2VzOlxuICAgIGJvb3QsIGNsYXNzLCBjbHVzdGVyLCBjb2RldG9vbHMsIGZvcmVpZ24sIEtlcm5TbW9vdGgsIGxhdHRpY2UsIE1BU1MsIE1hdHJpeCwgbWdjdiwgbmxtZSwgbm5ldCwgcnBhcnQsXG4gICAgc3BhdGlhbCwgc3Vydml2YWxcbiJ9 -->
+<pre><code>ERROR: lazy loading failed for package ‘ggtree’
+* removing ‘/home/rachel/newvolume/analysis/600_cells_analysis/renv/library/R-4.1/x86_64-pc-linux-gnu/ggtree’
+Warning: installation of package ‘ggtree’ had non-zero exit status
+The downloaded source packages are in
+    ‘/tmp/Rtmpi0JvBV/downloaded_packages’
+Installation paths not writeable, unable to update packages
+  path: /home/rachel/.cache/R/renv/sandbox/R-4.1/x86_64-pc-linux-gnu/9a444a72
+  packages:
+    boot, class, cluster, codetools, foreign, KernSmooth, lattice, MASS, Matrix, mgcv, nlme, nnet, rpart,
+    spatial, survival</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiV2hhdCBkbyB5b3Ugd2FudCB0byBkbz8gXG5cbjE6IFNuYXBzaG90LCBqdXN0IHVzaW5nIHRoZSBjdXJyZW50bHkgaW5zdGFsbGVkIHBhY2thZ2VzLlxuMjogSW5zdGFsbCB0aGUgcGFja2FnZXMsIHRoZW4gc25hcHNob3QuXG4zOiBDYW5jZWwsIGFuZCByZXNvbHZlIHRoZSBzaXR1YXRpb24gb24geW91ciBvd24uXG4ifQ== -->
+<pre><code>What do you want to do? 
 
-writeLines(c8_ont$gene, &#39;c8_ontology.csv&#39;)</code></pre>
+1: Snapshot, just using the currently installed packages.
+2: Install the packages, then snapshot.
+3: Cancel, and resolve the situation on your own.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuMVxuYGBgIn0= -->
+<pre class="r"><code>1</code></pre>
+<!-- rnb-source-end -->
+<!-- rnb-output-begin eyJkYXRhIjoiLSBBdXRvbWF0aWMgc25hcHNob3QgaGFzIHVwZGF0ZWQgJ34vbmV3dm9sdW1lL2FuYWx5c2lzLzYwMF9jZWxsc19hbmFseXNpcy9yZW52LmxvY2snLlxuIn0= -->
+<pre><code>- Automatic snapshot has updated &#39;~/newvolume/analysis/600_cells_analysis/renv.lock&#39;.</code></pre>
+<!-- rnb-output-end -->
+<!-- rnb-chunk-end -->
+<!-- rnb-text-begin -->
+<div id="section" class="section level28">
+<p class="heading"></p>
+</div>
+<div id="graveyard" class="section level3">
+<h3>GRAVEYARD</h3>
+<div id="section-1" class="section level28">
+<p class="heading"></p>
+<!-- rnb-text-end -->
+<!-- rnb-chunk-begin -->
+<!-- rnb-source-begin eyJkYXRhIjoiYGBgclxuI2M4X29udCA8LSBzcmF0X21hcmtlcnNbc3JhdF9tYXJrZXJzJGNsdXN0ZXIgPT0gJzgnICYgc3JhdF9tYXJrZXJzJHBfdmFsX2FkaiA8MC4wNSAmIHNyYXRfbWFya2VycyRhdmdfbG9nMkZDID4gMCxdXG5cbiN3cml0ZUxpbmVzKGM4X29udCRnZW5lLCAnYzhfb250b2xvZ3kuY3N2JylcbmBgYCJ9 -->
+<pre class="r"><code>#c8_ont &lt;- srat_markers[srat_markers$cluster == &#39;8&#39; &amp; srat_markers$p_val_adj &lt;0.05 &amp; srat_markers$avg_log2FC &gt; 0,]
+
+#writeLines(c8_ont$gene, &#39;c8_ontology.csv&#39;)</code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
 <!-- rnb-text-begin -->
@@ -2550,8 +2384,10 @@ remotes::install_github(&#39;satijalab/seurat-wrappers&#39;)
 </code></pre>
 <!-- rnb-source-end -->
 <!-- rnb-chunk-end -->
+</div>
+</div>
 
-<div id="rmd-source-code">LS0tCnRpdGxlOiAiNjAwIGNlbGwgYW5hbHlzaXMiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCmBgYHtyIFNldCB1cCBlbnZpcm9ubWVudH0KI0RlZmluZSBwYWNrYWdlcyBmb3IgaW5zdGFsbCBhbmQvb3IgbGlicmFyeSBsb2FkaW5nIApwa2dfbGlzdF9jcmFuIDwtIGMoJ0Jpb2NNYW5hZ2VyJywgJ2RwbHlyJywgJ01hdHJpeCcsICdnZ3Bsb3QyJywgJ3JtYXJrZG93bicpCnBrZ19saXN0X2Jpb2MgPC0gYygnU2V1cmF0JywgJ1NpbmdsZUNlbGxFeHBlcmltZW50JywgJ3NjYXRlcicpCnBrZ19saXN0X2FsbCA8LSBjKHBrZ19saXN0X2NyYW4sIHBrZ19saXN0X2Jpb2MpCgojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIwoKIyBPTkxZIFJVTiBUSElTIFNFQ1RJT04gSUYgSU5TVEFMTElORyBQQUNLQUdFUyBGUk9NIFNDUkFUQ0ggIwoKI0luc3RhbGwgcGFja2FnZXMKI2xhcHBseShwa2dfbGlzdF9jcmFuLCBpbnN0YWxsLnBhY2thZ2VzKQojbGFwcGx5KHBrZ19saXN0X2Jpb2MsIEJpb2NNYW5hZ2VyOjppbnN0YWxsKQojaW5zdGFsbC5wYWNrYWdlcygnaGVyZScpCgojU2F2ZSByZW52IHNlc3Npb24KI3JlbnY6OnNuYXBzaG90KCkKCiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjCgojUmVzdG9yZSByZW52IHNlc3Npb24KcmVudjo6cmVzdG9yZSgpCgojIFVwZGF0ZSBhbGwgcGFja2FnZXMgLSByZWNvbW1lbmRlZCBpZiBpdCdzIGJlZW4gYSB3aGlsZQojIHNpbmNlIHRoZSBjb2RlIHdhcyBsYXN0IHJ1bgojIHJlbnY6OnVwZGF0ZSgpCgojTG9hZCBsaWJyYXJpZXMKbGFwcGx5KHBrZ19saXN0X2FsbCwgbGlicmFyeSwgY2hhcmFjdGVyLm9ubHk9VFJVRSkKCiNTZXQgc2VlZCBmb3IgcmFuZG9tIG51bWJlciBnZW5lcmF0aW9uCnNldC5zZWVkKDQ0NCkKCmBgYAoKYGBge3IgRGVmaW5lIHBhdGhzfQoKI1NldCB0b3AtbGV2ZWwgZGlyZWN0b3J5IHVzaW5nIHRoZSBoZXJlIHBhY2thZ2UKaGVyZTo6aV9hbSgiNjAwX2NlbGxzX2FuYWx5c2lzLzYwMF9jZWxsc19hbmFseXNpcy5SbWQiKQpsaWJyYXJ5KGhlcmUpCmhlcmUoKQoKI1NlbGVjdCBleHBlcmltZW50IC0gQ0hBTkdFIFRISVMgRUFDSCBUSU1FCmV4cCA8LSAnMzEwNTIzX1BSMDk3OV92MicKCiNTZXQgcGF0aHMgdG8gc2F2ZSBhbmQgcmVhZCBTZXVyYXQgb2JqZWN0cwppZmVsc2UoIWRpci5leGlzdHMoaGVyZShleHAsICJyX29iamVjdHMiKSksIGRpci5jcmVhdGUoaGVyZShleHAsICJyX29iamVjdHMiKSksICJGb2xkZXIgZXhpc3RzIGFscmVhZHkiKQpkYXRhX3BhdGggPC0gaGVyZShleHAsICdyX29iamVjdHMnKQoKI01ha2UgYW5kL29yIHNldCBwYXRoIHRvIHNhdmUgZmlndXJlcwppZmVsc2UoIWRpci5leGlzdHMoaGVyZShleHAsICJyX2ZpZ3VyZXMiKSksIGRpci5jcmVhdGUoaGVyZShleHAsICJyX2ZpZ3VyZXMiKSksICJGb2xkZXIgZXhpc3RzIGFscmVhZHkiKQpmaWdfcGF0aCA8LSBoZXJlKGV4cCwgJ3JfZmlndXJlcycpCmBgYAoKYGBge3IgQ29udmVuaWVuY2UgZnVuY3Rpb25zfQojUmVhZFBhcnNlQmlvIHdpdGggY29ycmVjdCBjb3VudF9tYXRyaXggbmFtZQpSZWFkUGFyc2VCaW9fY291bnQgPC0gZnVuY3Rpb24oZGF0YS5kaXIsIC4uLikgewogIG10eCA8LSBmaWxlLnBhdGgoZGF0YS5kaXIsICJjb3VudF9tYXRyaXgubXR4IikKICBjZWxscyA8LSBmaWxlLnBhdGgoZGF0YS5kaXIsICJjZWxsX21ldGFkYXRhLmNzdiIpCiAgZmVhdHVyZXMgPC0gZmlsZS5wYXRoKGRhdGEuZGlyLCAiYWxsX2dlbmVzLmNzdiIpCiAgcmV0dXJuKFJlYWRNdHgoCiAgICBtdHggPSBtdHgsCiAgICBjZWxscyA9IGNlbGxzLAogICAgZmVhdHVyZXMgPSBmZWF0dXJlcywKICAgIGNlbGwuY29sdW1uID0gMSwKICAgIGZlYXR1cmUuY29sdW1uID0gMiwKICAgIGNlbGwuc2VwID0gIiwiLAogICAgZmVhdHVyZS5zZXAgPSAiLCIsCiAgICBza2lwLmNlbGwgPSAxLAogICAgc2tpcC5mZWF0dXJlID0gMSwKICAgIG10eC50cmFuc3Bvc2UgPSBUUlVFCiAgKSkKfQoKI1NhdmUgZmlndXJlcwpTYXZlRmlndXJlIDwtIGZ1bmN0aW9uKHBsb3RzLCBuYW1lLCB0eXBlID0gInBuZyIsIHdpZHRoLCBoZWlnaHQsIHJlcyl7CiAgaWYodHlwZSA9PSAicG5nIikgewogICAgcG5nKHBhc3RlMChmaWdfcGF0aCwgJy8nLCBuYW1lLCAiLiIsIHR5cGUpLAogICAgICB3aWR0aCA9IHdpZHRoLCBoZWlnaHQgPSBoZWlnaHQsIHVuaXRzID0gImluIiwgcmVzID0gMjAwKQogIH0gZWxzZSB7CiAgICBwZGYocGFzdGUwKGZpZ19wYXRoLCAnLycsIG5hbWUsICIuIiwgdHlwZSksCiAgICAgIHdpZHRoID0gd2lkdGgsIGhlaWdodCA9IGhlaWdodCkKfQpwcmludChwbG90cykKZGV2Lm9mZigpCn0KCiNTYXZlIFNldXJhdCBvYmplY3RzClNhdmVPYmplY3QgPC0gZnVuY3Rpb24ob2JqZWN0LCBuYW1lKXsKICBzYXZlUkRTKG9iamVjdCwgaGVyZShleHAsICdyX29iamVjdHMnLCBwYXN0ZTAobmFtZSwgIi5SRFMiKSkpCn0KCiNSZWFkIFNldXJhdCBvYmplY3RzClJlYWRPYmplY3QgPC0gZnVuY3Rpb24obmFtZSl7CiAgcmVhZFJEUyhoZXJlKGV4cCwgJ3Jfb2JqZWN0cycsIHBhc3RlMChuYW1lLCAiLlJEUyIpKSkKfQpgYGAKCmBgYHtyIFJlYWQgaW4gZGF0YX0KI0xvYWQgaW4gY291bnQgbWF0cml4CmRhdGFfZGlyIDwtIGhlcmUoZXhwLCAnYWxsLXNhbXBsZScsICdER0VfZmlsdGVyZWQnKQpjb3VudHMgPC0gUmVhZFBhcnNlQmlvX2NvdW50KGRhdGFfZGlyKQoKIyBDaGVjayB0byBzZWUgaWYgZW1wdHkgZ2VuZSBuYW1lcyBhcmUgcHJlc2VudCwgYWRkIG5hbWUgaWYgc28uCnRhYmxlKHJvd25hbWVzKGNvdW50cykgPT0gIiIpCnJvd25hbWVzKGNvdW50cylbcm93bmFtZXMoY291bnRzKSA9PSAiIl0gPC0gInVua25vd24iCgojIFJlYWQgaW4gY2VsbCBtZXRhIGRhdGEKY2VsbF9tZXRhIDwtIHJlYWQuY3N2KGhlcmUoZXhwLCAnYWxsLXNhbXBsZScsICdER0VfZmlsdGVyZWQnLCAiL2NlbGxfbWV0YWRhdGEuY3N2IiksIHJvdy5uYW1lcyA9IDEpCgojQ3JlYXRlIFNldXJhdCBvYmplY3QKc2V1cmF0X29iaiA8LSBDcmVhdGVTZXVyYXRPYmplY3QoY291bnRzID0gY291bnRzLCBuYW1lcy5maWVsZCA9IDAsIG1ldGEuZGF0YSA9IGNlbGxfbWV0YSkKYGBgCgpGUk9NIFBBUlNFIEJJTzoKV2hlbiB3ZSBjcmVhdGUgb3VyIFNldXJhdCBvYmplY3QgdGhlIHBsYXRlIHdlbGwgbnVtYmVycyAoY29sdW1uIG5hbWVzIGluIHRoZSBleHByZXNzaW9uIG1hdHJpeCkgZnJvbSB0aGUgZXhwZXJpbWVudCB3aWxsIGF1dG9tYXRpY2FsbHkgYmUgYXNzaWduZWQgdG8gdGhlIGNlbGwgaWRlbnRpdHkgc2xvdC4gSW4gb3RoZXIgd29yZHMsIHRoZSBwcm9ncmFtIGFzc3VtZXMgdGhpcyBob3cgd2Ugd2FudCB0byBpbml0aWFsbHkgY2xhc3NpZnkgb3VyIGNlbGxzLiBJbiBnZW5lcmFsLCB3ZSB3b3VsZCBsaWtlIHRvIGF2b2lkIHRoaXMgYmVoYXZpb3Igc28gdGhlcmUgaXNuJ3QgYSBiaWFzIHRvd2FyZHMgYSBwYXJ0aWN1bGFyIGNlbGwgY2xhc3Mgd2hlbiByZW1vdmluZyBvdXRsaWVycy4KCmBgYHtyIFdlbGwgbnVtYmVyc30KIyBTZXR0aW5nIG91ciBpbml0aWFsIGNlbGwgY2xhc3MgdG8gYSBzaW5nbGUgdHlwZSwgdGhpcyB3aWxsIGNoYW5nZSBhZnRlciBjbHVzdGVyaW5nLiAKc2V1cmF0X29iakBtZXRhLmRhdGEkb3JpZy5pZGVudCA8LSBmYWN0b3IocmVwKCJzZXVyYXRfb2JqIiwgbnJvdyhzZXVyYXRfb2JqQG1ldGEuZGF0YSkpKQpJZGVudHMoc2V1cmF0X29iaikgPC0gc2V1cmF0X29iakBtZXRhLmRhdGEkb3JpZy5pZGVudAoKI1NhdmUgcmF3IFNldXJhdCBvYmplY3QKU2F2ZU9iamVjdChzZXVyYXRfb2JqLCAncmF3X3NldXJhdF9vYmonKQojc2V1cmF0X29iaiA8LSBSZWFkT2JqZWN0KCdyYXdfc2V1cmF0X29iaicpCgojU2F2ZSByYXcgU2luZ2xlQ2VsbEV4cGVyaW1lbnQgb2JqZWN0CnNjZV9vYmogPC0gYXMuU2luZ2xlQ2VsbEV4cGVyaW1lbnQoc2V1cmF0X29iaikKU2F2ZU9iamVjdChzY2Vfb2JqLCAncmF3X3NjZV9vYmonKQpgYGAKCldlIG5lZWQgdG8gZXhjbHVkZSBtdWx0aXBsZXRzIGZyb20gYW5hbHlzaXMgLSB0aGVzZSBhcmUgY2VsbHMgd2l0aCBhYm5vcm1hbGx5IGhpZ2ggdHJhbnNjcmlwdCBvZiBnZW5lIGNvdW50cy4KCltGUk9NIEJJT1NUQVJTXShodHRwczovL3d3dy5iaW9zdGFycy5vcmcvcC80MDcwMzYvIzp+OnRleHQ9bkNvdW50X1JOQSUyMGlzJTIwdGhlJTIwdG90YWwlMjBudW1iZXIsYSUyMGRvdWJsZXQlMjAob3IlMjBtdWx0aXBsZXQpLikKCiJuRmVhdHVyZV9STkEgaXMgdGhlIG51bWJlciBvZiBnZW5lcyBkZXRlY3RlZCBpbiBlYWNoIGNlbGwuIG5Db3VudF9STkEgaXMgdGhlIHRvdGFsIG51bWJlciBvZiBtb2xlY3VsZXMgZGV0ZWN0ZWQgd2l0aGluIGEgY2VsbC4gTG93IG5GZWF0dXJlX1JOQSBmb3IgYSBjZWxsIGluZGljYXRlcyB0aGF0IGl0IG1heSBiZSBkZWFkL2R5aW5nIG9yIGFuIGVtcHR5IGRyb3BsZXQuIEhpZ2ggbkNvdW50X1JOQSBhbmQvb3IgbkZlYXR1cmVfUk5BIGluZGljYXRlcyB0aGF0IHRoZSAiY2VsbCIgbWF5IGluIGZhY3QgYmUgYSBkb3VibGV0IChvciBtdWx0aXBsZXQpLiBJbiBjb21iaW5hdGlvbiB3aXRoICVtaXRvY2hvbmRyaWFsIHJlYWRzLCByZW1vdmluZyBvdXRsaWVycyBmcm9tIHRoZXNlIGdyb3VwcyByZW1vdmVzIG1vc3QgZG91YmxldHMvZGVhZCBjZWxscy9lbXB0eSBkcm9wbGV0cywgaGVuY2Ugd2h5IGZpbHRlcmluZyBpcyBhIGNvbW1vbiBwcmUtcHJvY2Vzc2luZyBzdGVwLgoKVGhlIE5vcm1hbGl6ZURhdGEgc3RlcCBpcyBiYXNpY2FsbHkganVzdCBlbnN1cmluZyBleHByZXNzaW9uIHZhbHVlcyBhY3Jvc3MgY2VsbHMgYXJlIG9uIGEgY29tcGFyYWJsZSBzY2FsZS4gQnkgZGVmYXVsdCwgaXQgd2lsbCBkaXZpZGUgY291bnRzIGZvciBlYWNoIGdlbmUgYnkgdGhlIHRvdGFsIGNvdW50cyBpbiB0aGUgY2VsbCwgbXVsdGlwbHkgdGhhdCB2YWx1ZSBmb3IgZWFjaCBnZW5lIGJ5IHRoZSBzY2FsZS5mYWN0b3IgKDEwLDAwMCBieSBkZWZhdWx0KSwgYW5kIHRoZW4gbmF0dXJhbCBsb2ctdHJhbnNmb3JtIHRoZW0uIgoKVGhlIGNvbHVtbnMgYWRkZWQgYWZ0ZXIgcXVpY2twZXJjZWxsUUMgY2FuIGJlIGRlc2NyaWJlZCBhcyBmb2xsb3dzOgoKLSBzdW0gPSBuQ291bnRfUk5BID0gbGliX3NpemUgPSBudW1iZXIgb2YgbW9sZWN1bGVzIGluIHRoZSB3ZWxsCgotIGRldGVjdGVkID0gbkZlYXR1cmVfUk5BID0gbnVtYmVyIG9mIHVuaXF1ZSBnZW5lcyBpbiB0aGUgd2VsbAoKLSBsb3dfbGliX3NpemUgc3VnZ2VzdHMgUk5BIGhhcyBiZWVuIGxvc3QgYXQgc29tZSBwb2ludCBkdXJpbmcgbGlicmFyeSBwcmVwYXJhdGlvbiwgZWl0aGVyIGR1ZSB0byBjZWxsIGx5c2lzIG9yIGluZWZmaWNpZW50IGNETkEgY2FwdHVyZSBhbmQgYW1wbGlmaWNhdGlvbgoKLSBsb3dfbl9mZWF0dXJlcyBzdWdnZXN0cyBjZWxsIGlzIGRlYWQvZHlpbmcvImVtcHR5IGRyb3BsZXQiCgpgYGB7ciBDZWxsIHF1YWxpdHkgY29udHJvbH0KI0FkZCBxdWljayBwZXIgY2VsbCBRQwpzY2Vfb2JqIDwtIHNjdXR0bGU6OnF1aWNrUGVyQ2VsbFFDKHNjZV9vYmopCgojTG9hZCBzdHJpbmdyIGZvciBzdHJpbmcgZnVuY3Rpb25zCmxpYnJhcnkoc3RyaW5ncikKCiNBZGQgbWl0b0ROQSBwcm9wb3J0aW9uCmxvY2F0aW9uIDwtIHJvd1JhbmdlcyhzY2Vfb2JqKQppcy5taXRvIDwtIHNhcHBseShuYW1lcyhzZXFuYW1lcyhsb2NhdGlvbikpLCBzdHJfZGV0ZWN0LCAnXm10KicpCnNjZV9vYmogPC0gYWRkUGVyQ2VsbFFDTWV0cmljcyhzY2Vfb2JqLCBzdWJzZXRzID0gbGlzdChNaXRvID0gaXMubWl0bykpCnFjX2RmIDwtIHBlckNlbGxRQ01ldHJpY3Moc2NlX29iaiwgc3Vic2V0cyA9IGxpc3QoTWl0byA9IGlzLm1pdG8pKQoKI0dldCB0aGUgbnVtYmVyIG9mIGNlbGxzIGZvciB3aGljaCAlbWl0byBpcyBncmVhdGVyIHRoYW4gMTAKc3VtKHNjZV9vYmokc3Vic2V0c19NaXRvMl9wZXJjZW50ID4gMTApCmBgYAoKQWx0ZXJuYXRpdmVseSwgZG8gYSBxdWljayB2ZXJzaW9uIG9mIHRoaXMgUUMgd2l0aCBTZXVyYXQ6CmBgYHtyIFNldXJhdCBRQ30Kc2V1cmF0X29ialtbInBlcmNlbnQubXQiXV0gPC0gUGVyY2VudGFnZUZlYXR1cmVTZXQoc2V1cmF0X29iaiwgcGF0dGVybiA9ICJeTVQtIikKcGxvdCA8LSBWbG5QbG90KHNldXJhdF9vYmosIHB0LnNpemUgPSAwLjEwLApmZWF0dXJlcyA9IGMoIm5GZWF0dXJlX1JOQSIsICJuQ291bnRfUk5BIiwgInBlcmNlbnQubXQiKSwgbmNvbCA9IDMpCgpwbG90ClNhdmVGaWd1cmUocGxvdCwgInZsbl9RQyIsIHdpZHRoID0gMTIsIGhlaWdodCA9IDYpCgoKcGxvdDEgPC0gRmVhdHVyZVNjYXR0ZXIoc2V1cmF0X29iaiwgZmVhdHVyZTEgPSAibkNvdW50X1JOQSIsIGZlYXR1cmUyID0gInBlcmNlbnQubXQiKQpwbG90MiA8LSBGZWF0dXJlU2NhdHRlcihzZXVyYXRfb2JqLCBmZWF0dXJlMSA9ICJuQ291bnRfUk5BIiwgZmVhdHVyZTIgPSAibkZlYXR1cmVfUk5BIikKCnBsb3QxICsgcGxvdDIKU2F2ZUZpZ3VyZSgocGxvdDEgKyBwbG90MiksInNjYXR0ZXJfUUMiLCB3aWR0aCA9IDEyLCBoZWlnaHQgPSA2LCByZXMgPSAyMDApCmBgYAoKTm93IHRpbWUgdG8gZmluZCBoaWdobHkgdmFyaWFibGUgZmVhdHVyZXMgZm9yIHRoZSB3aG9sZSBkYXRhc2V0OgpgYGB7ciBOb3JtYWxpc2UgYW5kIGZpbmQgaGlnaGx5IHZhcmlhYmxlIGZlYXR1cmVzfQojTm9ybWFsaXNlCnNldXJhdF9vYmogPC0gTm9ybWFsaXplRGF0YShzZXVyYXRfb2JqLCBub3JtYWxpemF0aW9uLm1ldGhvZCA9ICJMb2dOb3JtYWxpemUiLCBzY2FsZS5mYWN0b3IgPSAxMDAwMCkKCiNGaW5kIEhWRnMKc2V1cmF0X29iaiA8LSBGaW5kVmFyaWFibGVGZWF0dXJlcyhzZXVyYXRfb2JqLCBzZWxlY3Rpb24ubWV0aG9kID0gInZzdCIsIG5mZWF0dXJlcyA9IDIwMDApCiMgSWRlbnRpZnkgdGhlIDEwIG1vc3QgaGlnaGx5IHZhcmlhYmxlIGdlbmVzCnRvcDEwIDwtIGhlYWQoVmFyaWFibGVGZWF0dXJlcyhzZXVyYXRfb2JqKSwgMTApCiMgcGxvdCB2YXJpYWJsZSBmZWF0dXJlcyB3aXRoIGFuZCB3aXRob3V0IGxhYmVscwpwbG90MSA8LSBWYXJpYWJsZUZlYXR1cmVQbG90KHNldXJhdF9vYmopCnBsb3QyIDwtIExhYmVsUG9pbnRzKHBsb3QgPSBwbG90MSwgcG9pbnRzID0gdG9wMTAsIHJlcGVsID0gVFJVRSkKCnBsb3QxICsgcGxvdDIKU2F2ZUZpZ3VyZSgocGxvdDEgKyBwbG90MiksICJ2YXJfZmVhdHVyZXMiLCB3aWR0aCA9IDEyLCBoZWlnaHQgPSA2KQpgYGAKCmBgYHtyIFNjYWxlIGFuZCBkaW1lbnNpb25hbGl0eSByZWR1Y3Rpb259CiNTY2FsZSAKc2V1cmF0X29iaiA8LSBTY2FsZURhdGEoc2V1cmF0X29iaikKCiNEaW1lbnNpb25hbGl0eSByZWR1Y3Rpb24Kc2V1cmF0X29iaiA8LSBSdW5QQ0Eoc2V1cmF0X29iaikKU2F2ZU9iamVjdChzZXVyYXRfb2JqLCAic2V1cmF0X29ial9hZnRlcl9QQ0EiKQoKI0xvYWQgb2JqCnNyYXQgPC0gUmVhZE9iamVjdCgic2V1cmF0X29ial9hZnRlcl9QQ0EiKQoKIyBFeGFtaW5lIGFuZCB2aXN1YWxpemUgUENBIHJlc3VsdHMgYSBmZXcgZGlmZmVyZW50IHdheXMKcHJpbnQoc3JhdFtbInBjYSJdXSwgZGltcyA9IDE6NSwgbmZlYXR1cmVzID0gNSkKCiNQbG90IQpwbG90IDwtIFZpekRpbUxvYWRpbmdzKHNyYXQsIGRpbXMgPSAxOjIsIHJlZHVjdGlvbiA9ICJwY2EiKQpTYXZlRmlndXJlKHBsb3QsICJ2aXpfUENBX2xvYWRpbmdzIiwgd2lkdGggPSAxMCwgaGVpZ2h0ID0gOCkKCnBsb3QgPC0gRGltUGxvdChzcmF0LCByZWR1Y3Rpb24gPSAicGNhIiwgZ3JvdXAuYnkgPSAib3JpZy5pZGVudCIpClNhdmVGaWd1cmUocGxvdCwgInBjMV8yX3NjYXR0ZXIiLCB3aWR0aCA9IDgsIGhlaWdodCA9IDYpCmBgYAoKTm93IGxldCdzIGxvb2sgYXQgaGV0ZXJvZ2VuZWl0eSBpbiB0aGUgZGF0YXNldCB3aXRoIERpbUhlYXRtYXAKYGBge3IgRGltSGVhdG1hcH0KI1Bsb3QgRGltSGVhdG1hcCBmb3IgUEMxCiMgTkI6IEZvciBsYXJnZSBkYXRhc2V0cywgc2V0IGNlbGxzID0gNTAwCnBsb3QgPC0gRGltSGVhdG1hcChzcmF0LCBkaW1zID0gMSwgYmFsYW5jZWQgPSBUUlVFLCBmYXN0ID0gRkFMU0UpClNhdmVGaWd1cmUocGxvdCwgImRpbV9oZWF0bWFwMSIsIHdpZHRoID0gOCwgaGVpZ2h0ID0gNikKCiNQbG90IERpbUhlYXRtYXAgZm9yIFBDMgojIE5COiBGb3IgbGFyZ2UgZGF0YXNldHMsIHNldCBjZWxscyA9IDUwMApwbG90IDwtIERpbUhlYXRtYXAoc3JhdCwgZGltcyA9IDE6MTUsIGJhbGFuY2VkID0gVFJVRSwgZmFzdCA9IEZBTFNFKQpTYXZlRmlndXJlKHBsb3QsICJkaW1faGVhdG1hcDFfMTUiLCB3aWR0aCA9IDEyLCBoZWlnaHQgPSAxOCkKYGBgCgpgYGB7ciBEZXRlcm1pbmUgZGltZW5zaW9uYWxpdHkgb2YgdGhlIGRhdGFzZXR9CiMgTk9URTogVGhpcyBwcm9jZXNzIGNhbiB0YWtlIGEgbG9uZyB0aW1lIGZvciBiaWcgZGF0YXNldHMsIGNvbW1lbnQgb3V0IGZvciBleHBlZGllbmN5LiBNb3JlCiMgYXBwcm94aW1hdGUgdGVjaG5pcXVlcyBzdWNoIGFzIHRob3NlIGltcGxlbWVudGVkIGluIEVsYm93UGxvdCgpIGNhbiBiZSB1c2VkIHRvIHJlZHVjZQojIGNvbXB1dGF0aW9uIHRpbWUKc3JhdCA8LSBKYWNrU3RyYXcoc3JhdCwgbnVtLnJlcGxpY2F0ZSA9IDEwMCkKc3JhdCA8LSBTY29yZUphY2tTdHJhdyhzcmF0LCBkaW1zID0gMToyMCkKcGxvdCA8LSBKYWNrU3RyYXdQbG90KHNyYXQsIGRpbT0xOjIwKQpTYXZlRmlndXJlKHBsb3QsICJQQ19KYWNrU3RyYXdfcGxvdCIsIHdpZHRoID0gOCwgaGVpZ2h0ID0gMTApCgojUXVpY2tlciBhbHRlcm5hdGl2ZSEKcGxvdCA8LSBFbGJvd1Bsb3Qoc3JhdCxuZGltcyA9IDUwKQpTYXZlRmlndXJlKHBsb3QsICJQQ19lbGJvd19wbG90Iiwgd2lkdGggPSA4LCBoZWlnaHQgPSAxMCkKYGBgCgpDaG9zZSB0aGUgZmlyc3QgOSBQQ3MsIG5vdyB0aW1lIHRvIGNsdXN0ZXI6CmBgYHtyIENsdXN0ZXJpbmd9CgojIyMgTkI6IE5VTUJFUiBPRiBQQ3MgRk9SIENMVVNURVJJTkcgPSBOVU1CRVIgT0YgUENzIEZPUiBVTUFQCgoKI0ZpbmQgU05OCnNyYXQgPC0gU2V1cmF0Ojo6RmluZE5laWdoYm9ycyhzcmF0LCBkaW1zPTE6MzApCiNSdW4gTG91dmFpbiBjbHVzdGVyaW5nCnNyYXQgPC0gRmluZENsdXN0ZXJzKHNyYXQsIHJlc29sdXRpb24gPSAwLjgpCnNyYXQgPC0gRmluZENsdXN0ZXJzKHNyYXQsIHJlc29sdXRpb24gPSAwLjYpCnNyYXQgPC0gRmluZENsdXN0ZXJzKHNyYXQsIHJlc29sdXRpb24gPSAxKQpzcmF0IDwtIEZpbmRDbHVzdGVycyhzcmF0LCByZXNvbHV0aW9uID0gMS4yKQpzcmF0IDwtIEZpbmRDbHVzdGVycyhzcmF0LCByZXNvbHV0aW9uID0gMS40KQoKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKIyMjIyMgQ0xVU1RSRUUgIyMjIyMjIwojIyMjIyMjIyMjIyMjIyMjIyMjIyMjCiMKIyBSdW4gZmluZCBjbHVzdGVyIHN0ZXAgd2l0aCBhIHJhbmdlIG9mIHJlc29sdXRpb25zIAojIE9uIHRoZSBzcmF0IG9iaiwgaXQgd2lsbCBnZW5lcmF0ZSBhIGNvbHVtbiBmb3IgZWFjaApyZW52OjppbnN0YWxsKCdjbHVzdHJlZScpCmxpYnJhcnkoY2x1c3RyZWUpCgpwbG90IDwtIGNsdXN0cmVlKHNyYXQpClNhdmVGaWd1cmUocGxvdCwgImNsdXN0cmVlIiwgd2lkdGggPSAxMCwgaGVpZ2h0ID0gMTApCgojcmVudjo6aW5zdGFsbCgnYXBlJykKI2xpYnJhcnkoYXBlKQoKCmBgYAoKYGBge3IgUnVuIG5vbi1saW5lYXIgZGltZW5zaW9uYWxpdHkgcmVkdWN0aW9ufQoKIyMjIE5COiBOVU1CRVIgT0YgUENzIEZPUiBDTFVTVEVSSU5HID0gTlVNQkVSIE9GIFBDcyBGT1IgVU1BUAoKc3JhdCA8LSBSdW5VTUFQKHNyYXQsIGRpbXM9MTozMCkKcGxvdCA8LSBEaW1QbG90KHNyYXQsIHJlZHVjdGlvbiA9ICd1bWFwJykKU2F2ZUZpZ3VyZShwbG90LCAndW1hcF9sb3V2YWluX3Jlc19wMycsIHdpZHRoPTksIGhlaWdodD04KQoKI1NhdmUgb2JqZWN0ClNhdmVPYmplY3Qoc3JhdCwgInNldXJhdF9vYmpfY2x1c3RlcmVkIikKI3NyYXQgPC0gUmVhZE9iamVjdCgic2V1cmF0X29ial9jbHVzdGVyZWQiKQoKCgpgYGAKTk9URVMgRlJPTSBNQVJDRUxBOgpmdW5jdGlvbmFsIGFubm90YXRpb24KZ28gZ2Vub21lIGFubm90YXRpb24gdGVybXMKZ2VuZSBvbnRvbG9neSByZXNvdXJjZQpnb29kIGd1aWRlcyAmIGFubm90YXRpb24KCmNsdXN0ZXIgcHJvZmlsZXIgciBwYWNrYWdlCmdlbmVyYXRlcyBwbG90cyAmIHZpeiBmb3IgdGhpcyB0eXBlIG9mIGFuYWx5c2lzIGUuZy4KCnJlZmluZSBjbHVzdGVycwpjbHVzdGVyIHN0YWJpbGl0eQpvbnRvbG9neSBhbmFseXNpcwoKYGBge3IgRmluZCBjbHVzdGVyIG1hcmtlcnMgKERHRSl9CiNGaW5kIG1hcmtlcnMgcGVyIGNsdXN0ZXIKQmlvY01hbmFnZXI6Omluc3RhbGwoIk1BU1QiKQpsaWJyYXJ5KCdNQVNUJykKI3NyYXQgPC0gQnVpbGRDbHVzdGVyVHJlZShzcmF0LCByZW9yZGVyID0gVCwgcmVvcmRlci5udW1lcmljID0gVCkKc3JhdF9tYXJrZXJzIDwtIEZpbmRNYXJrZXJzKHNyYXQsIHRlc3QudXNlID0gJ01BU1QnLCBpZGVudC4xPTEpCgpjOF9vbnQgPC0gc3JhdF9tYXJrZXJzW3NyYXRfbWFya2VycyRjbHVzdGVyID09ICc4JyAmIHNyYXRfbWFya2VycyRwX3ZhbF9hZGogPDAuMDUgJiBzcmF0X21hcmtlcnMkYXZnX2xvZzJGQyA+IDAsXQoKd3JpdGVMaW5lcyhjOF9vbnQkZ2VuZSwgJ2M4X29udG9sb2d5LmNzdicpCgojRmluZCB1bmlxdWUgbWFya2VycyBwZXIgY2x1c3RlcgpzcmF0X2FsbF9tYXJrZXJzIDwtIEZpbmRBbGxNYXJrZXJzKHNyYXQsIG1pbi5wY3QgPSAwLjI1LCBsb2dmYy50aHJlc2hvbGQgPSAwLjI1KQpzcmF0X2FsbF9tYXJrZXJzICU+JSBncm91cF9ieShjbHVzdGVyKSAlPiUgdG9wX24obiA9IDIsIHd0ID0gYXZnX2xvZzJGQykKCiMjIyMjIwojIFVzZSBGaW5kTWFya2Vycywgbm90IEZpbmRBbGxNYXJrZXJzLCB1c2UgTUFTVCBtZXRob2QKIyMjIyMjCgojUGxvdCBleHByZXNzaW9uIHByb2JhYmlsaXR5IGRpc3RyaWJ1dGlvbnMgYWNyb3NzIGNsdXN0ZXJzCnBsb3QgPC0gVmxuUGxvdChzcmF0LCBmZWF0dXJlcyA9IGMoIk90b2ciLCAiQXJtYzQiKSwgZ3JvdXAuYnkgPSAidHJlZS5pZGVudCIpClNhdmVGaWd1cmUocGxvdCwgInZsbl9leHAxIiwgd2lkdGggPSAxNiwgaGVpZ2h0ID0gOCkKCiNQbG90IHJhdyBjb3VudHMKcGxvdCA8LSBWbG5QbG90KHNyYXQsIGZlYXR1cmVzID0gYygiT3RvZyIsICJBcm1jNCIpLCBzbG90ID0gImNvdW50cyIsIGxvZyA9IFRSVUUpClNhdmVGaWd1cmUocGxvdCwgInZsbl9leHAyIiwgd2lkdGggPSAxNiwgaGVpZ2h0ID0gOCkKYGBgCgpgYGB7ciBQbG90IHRvcCBuIGdlbmVzIHBlciBjbHVzdGVyfQp0b3A1IDwtIHNyYXRfbWFya2VycyAlPiUgZ3JvdXBfYnkoY2x1c3RlcikgJT4lIHRvcF9uKG4gPSA1LCB3dCA9IGF2Z19sb2cyRkMpCnRvX3Bsb3QgPC0gdW5pcXVlKHRvcDUkZ2VuZSkKcGxvdCA8LSBEb3RQbG90KHNyYXQsIGZlYXR1cmVzID0gdG9fcGxvdCwgZ3JvdXAuYnkgPSAidHJlZS5pZGVudCIpICsgY29vcmRfZmxpcCgpClNhdmVGaWd1cmUocGxvdCwgImRwbG90X3RvcDUiLCB3aWR0aCA9IDksIGhlaWdodCA9IDIwKQpgYGAKCmBgYHtyIE1lcmdpbmcgY2x1c3RlcnMgYW5kIGxhYmVsbGluZyBjZWxsIHR5cGVzfQojIFBsb3R0aW5nIFBCTUMgbWFya2VycwptYXJrZXJzIDwtIGMoIk90b2ciLCAiQXJtYzQiLCAiTWdhdDRjIiwgIktjbmg3IiwgIm10LVJucjEiLCAibXQtUm5yMiIsICJDb2NoIiwKIlRlY3RiIiwgIlNwYXJjbDEiLCAiTWlhdCIsICJVc2gyYSIsICJNYnAiKQoKc3JhdF9tYXJrZXJzIDwtIEZlYXR1cmVQbG90KHNyYXQsIGZlYXR1cmVzID0gbWFya2VycykKU2F2ZUZpZ3VyZShzcmF0X21hcmtlcnMsICJzcmF0X21hcmtlcnMiLCB3aWR0aCA9IDQwLCBoZWlnaHQgPSAzMCkKYGBgCgpgYGB7ciBQbG90IFVNQVAgd2l0aCBsYWJlbGxlZCBjbHVzdGVyc30KcGxvdCA8LSBEaW1QbG90KHNyYXQsIHJlZHVjdGlvbiA9ICJ1bWFwIiwgbGFiZWwgPSBUUlVFKSArIE5vQXhlcygpICsgTm9MZWdlbmQoKQpTYXZlRmlndXJlKHBsb3QsICJ1bWFwX2xvdXZhaW5fbm9sZWdlbmQiLCB3aWR0aCA9IDgsIGhlaWdodCA9IDcpCmBgYAoKYGBge3IgZ2VuZSBvbnRvbG9neSBhbmFseXNpc30KYzhfb250IDwtIHNyYXRfbWFya2Vyc1tzcmF0X21hcmtlcnMkY2x1c3RlciA9PSAnOCcgJiBzcmF0X21hcmtlcnMkcF92YWxfYWRqIDwwLjA1ICYgc3JhdF9tYXJrZXJzJGF2Z19sb2cyRkMgPiAwLF0KCndyaXRlTGluZXMoYzhfb250JGdlbmUsICdjOF9vbnRvbG9neS5jc3YnKQpgYGAKCgpgYGB7ciBQbG90IFVNQVAgd2l0aCBkZXNjcmlwdGl2ZSBsYWJlbGxlZCBjbHVzdGVyc30KI05COiBUYWtlbiBmcm9tIHR1dG9yaWFsLCBkb2Vzbid0IHdvcmsgZm9yIHRoaXMgZGF0YXNldCwgcmV2aXNpdCBhdCBhIGxhdGVyIGRhdGUhCgojbmV3X2lkcyA8LSBjKCJIQ3MiLCAiU0NzIFNwYXJjbDErIiwgIlNDcyBTcGFyY2wxLSIsICJtdCsgbXllbGluKyIsICJtdCsgbXllbGluLSIsICJMYXRlcmFsIHdhbGwiKQoKI25ld19pZF9saXN0IDwtIGxpc3QoSENzID0gYyg4LDksMTApLCBTQ3NQbHVzID0gYyg2LDcpLAojICBTQ3NNaW51cyA9IDUsIE10UGx1cyA9IDEsIE10TWludXMgPSAyLCBMYXRXYWxsID0gYygzLDQpKQoKI2ZvciAoaSBpbiAxOmxlbmd0aChuZXdfaWRfbGlzdCkpIHsKIyAgaW5kIDwtIHdoaWNoKHNyYXRAbWV0YS5kYXRhJHRyZWUuaWRlbnQgJWluJSBuZXdfaWRfbGlzdFtbaV1dKQojICBzcmF0QG1ldGEuZGF0YSRjb2xsYXBzZWRbaW5kXSA8LSBuYW1lcyhuZXdfaWRfbGlzdClbaV0KI30KCiNzcmF0QG1ldGEuZGF0YSRjb2xsYXBzZWQgPC0gZmFjdG9yKAojICBzcmF0QG1ldGEuZGF0YSRjb2xsYXBzZWQsIGxldmVscyA9IG5hbWVzKG5ld19pZF9saXN0KSwgb3JkZXJlZCA9IFRSVUUpCiNJZGVudHMoc3JhdCkgPC0gcGJtY0BtZXRhLmRhdGEkY29sbGFwc2VkCgojbmFtZXMobmV3X2lkcykgPC0gbGV2ZWxzKHNyYXQpCiNzcmF0IDwtIFJlbmFtZUlkZW50cyhzcmF0LCBuZXdfaWRzKQoKI3Bsb3QgPC0gRGltUGxvdChzcmF0LCByZWR1Y3Rpb24gPSAidW1hcCIsIGxhYmVsID0gVFJVRSkgKyBOb0F4ZXMoKSArIE5vTGVnZW5kKCkKI1NhdmVGaWd1cmUocGxvdCwgInVtYXBfbG91dmFpbl9ub2xlZ2VuZF9uYW1lcyIsIHdpZHRoID0gOCwgaGVpZ2h0ID0gNykKYGBgCgoKCmBgYHtyIFRyYWplY3RvcnkgYW5hbHlzaXN9CkJpb2NNYW5hZ2VyOjppbnN0YWxsKGMoJ0Jpb2NHZW5lcmljcycsICdEZWxheWVkQXJyYXknLCAnRGVsYXllZE1hdHJpeFN0YXRzJywKICAgICAgICAgICAgICAgICAgICAgICAnbGltbWEnLCAnbG1lNCcsICdTNFZlY3RvcnMnLCAnU2luZ2xlQ2VsbEV4cGVyaW1lbnQnLAogICAgICAgICAgICAgICAgICAgICAgICdTdW1tYXJpemVkRXhwZXJpbWVudCcsICdiYXRjaGVsb3InLCAnSERGNUFycmF5JywKICAgICAgICAgICAgICAgICAgICAgICAndGVycmEnLCAnZ2dyYXN0cicpKQoKcmVudjo6aW5zdGFsbCgnZGV2dG9vbHMnKQoKZGV2dG9vbHM6Omluc3RhbGxfZ2l0aHViKCdjb2xlLXRyYXBuZWxsLWxhYi9tb25vY2xlMycpCgpsaWJyYXJ5KG1vbm9jbGUzKQoKcmVtb3Rlczo6aW5zdGFsbF9naXRodWIoJ3NhdGlqYWxhYi9zZXVyYXQtd3JhcHBlcnMnKQoKCmBgYAo=</div>
+<div id="rmd-source-code">LS0tCnRpdGxlOiAiNjAwIGNlbGwgYW5hbHlzaXMiCm91dHB1dDogaHRtbF9ub3RlYm9vawotLS0KCmBgYHtyIFNldCB1cCBlbnZpcm9ubWVudH0KI0RlZmluZSBwYWNrYWdlcyBmb3IgaW5zdGFsbCBhbmQvb3IgbGlicmFyeSBsb2FkaW5nIApwa2dfbGlzdF9jcmFuIDwtIGMoJ0Jpb2NNYW5hZ2VyJywgJ2RwbHlyJywgJ01hdHJpeCcsICdnZ3Bsb3QyJywgJ3JtYXJrZG93bicpCnBrZ19saXN0X2Jpb2MgPC0gYygnU2V1cmF0JywgJ1NpbmdsZUNlbGxFeHBlcmltZW50JywgJ3NjYXRlcicpCnBrZ19saXN0X2FsbCA8LSBjKHBrZ19saXN0X2NyYW4sIHBrZ19saXN0X2Jpb2MpCgojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIwoKIyBPTkxZIFJVTiBUSElTIFNFQ1RJT04gSUYgSU5TVEFMTElORyBQQUNLQUdFUyBGUk9NIFNDUkFUQ0ggIwoKI0luc3RhbGwgcGFja2FnZXMKI2xhcHBseShwa2dfbGlzdF9jcmFuLCBpbnN0YWxsLnBhY2thZ2VzKQojbGFwcGx5KHBrZ19saXN0X2Jpb2MsIEJpb2NNYW5hZ2VyOjppbnN0YWxsKQojaW5zdGFsbC5wYWNrYWdlcygnaGVyZScpCgojU2F2ZSByZW52IHNlc3Npb24KI3JlbnY6OnNuYXBzaG90KCkKCiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjCgojUmVzdG9yZSByZW52IHNlc3Npb24KcmVudjo6cmVzdG9yZSgpCgojIFVwZGF0ZSBhbGwgcGFja2FnZXMgLSByZWNvbW1lbmRlZCBpZiBpdCdzIGJlZW4gYSB3aGlsZQojIHNpbmNlIHRoZSBjb2RlIHdhcyBsYXN0IHJ1bgojIHJlbnY6OnVwZGF0ZSgpCgojTG9hZCBsaWJyYXJpZXMKbGFwcGx5KHBrZ19saXN0X2FsbCwgbGlicmFyeSwgY2hhcmFjdGVyLm9ubHk9VFJVRSkKCiNTZXQgc2VlZCBmb3IgcmFuZG9tIG51bWJlciBnZW5lcmF0aW9uCnNldC5zZWVkKDQ0NCkKCmBgYAoKYGBge3IgRGVmaW5lIHBhdGhzfQoKI1NldCB0b3AtbGV2ZWwgZGlyZWN0b3J5IHVzaW5nIHRoZSBoZXJlIHBhY2thZ2UKaGVyZTo6aV9hbSgiNjAwX2NlbGxzX2FuYWx5c2lzLzYwMF9jZWxsc19hbmFseXNpcy5SbWQiKQpsaWJyYXJ5KGhlcmUpCmhlcmUoKQoKI1NlbGVjdCBleHBlcmltZW50IC0gQ0hBTkdFIFRISVMgRUFDSCBUSU1FCmV4cCA8LSAnMzEwNTIzX1BSMDk3OV92MicKCiNTZXQgcGF0aHMgdG8gc2F2ZSBhbmQgcmVhZCBTZXVyYXQgb2JqZWN0cwppZmVsc2UoIWRpci5leGlzdHMoaGVyZShleHAsICJyX29iamVjdHMiKSksIGRpci5jcmVhdGUoaGVyZShleHAsICJyX29iamVjdHMiKSksICJGb2xkZXIgZXhpc3RzIGFscmVhZHkiKQpkYXRhX3BhdGggPC0gaGVyZShleHAsICdyX29iamVjdHMnKQoKI01ha2UgYW5kL29yIHNldCBwYXRoIHRvIHNhdmUgZmlndXJlcwppZmVsc2UoIWRpci5leGlzdHMoaGVyZShleHAsICJyX2ZpZ3VyZXMiKSksIGRpci5jcmVhdGUoaGVyZShleHAsICJyX2ZpZ3VyZXMiKSksICJGb2xkZXIgZXhpc3RzIGFscmVhZHkiKQpmaWdfcGF0aCA8LSBoZXJlKGV4cCwgJ3JfZmlndXJlcycpCmBgYAoKYGBge3IgQ29udmVuaWVuY2UgZnVuY3Rpb25zfQojUmVhZFBhcnNlQmlvIHdpdGggY29ycmVjdCBjb3VudF9tYXRyaXggbmFtZQpSZWFkUGFyc2VCaW9fY291bnQgPC0gZnVuY3Rpb24oZGF0YS5kaXIsIC4uLikgewogIG10eCA8LSBmaWxlLnBhdGgoZGF0YS5kaXIsICJjb3VudF9tYXRyaXgubXR4IikKICBjZWxscyA8LSBmaWxlLnBhdGgoZGF0YS5kaXIsICJjZWxsX21ldGFkYXRhLmNzdiIpCiAgZmVhdHVyZXMgPC0gZmlsZS5wYXRoKGRhdGEuZGlyLCAiYWxsX2dlbmVzLmNzdiIpCiAgcmV0dXJuKFJlYWRNdHgoCiAgICBtdHggPSBtdHgsCiAgICBjZWxscyA9IGNlbGxzLAogICAgZmVhdHVyZXMgPSBmZWF0dXJlcywKICAgIGNlbGwuY29sdW1uID0gMSwKICAgIGZlYXR1cmUuY29sdW1uID0gMiwKICAgIGNlbGwuc2VwID0gIiwiLAogICAgZmVhdHVyZS5zZXAgPSAiLCIsCiAgICBza2lwLmNlbGwgPSAxLAogICAgc2tpcC5mZWF0dXJlID0gMSwKICAgIG10eC50cmFuc3Bvc2UgPSBUUlVFCiAgKSkKfQoKI1NhdmUgZmlndXJlcwpTYXZlRmlndXJlIDwtIGZ1bmN0aW9uKHBsb3RzLCBuYW1lLCB0eXBlID0gInBuZyIsIHdpZHRoLCBoZWlnaHQsIHJlcyl7CiAgaWYodHlwZSA9PSAicG5nIikgewogICAgcG5nKHBhc3RlMChmaWdfcGF0aCwgJy8nLCBuYW1lLCAiLiIsIHR5cGUpLAogICAgICB3aWR0aCA9IHdpZHRoLCBoZWlnaHQgPSBoZWlnaHQsIHVuaXRzID0gImluIiwgcmVzID0gMjAwKQogIH0gZWxzZSB7CiAgICBwZGYocGFzdGUwKGZpZ19wYXRoLCAnLycsIG5hbWUsICIuIiwgdHlwZSksCiAgICAgIHdpZHRoID0gd2lkdGgsIGhlaWdodCA9IGhlaWdodCkKfQpwcmludChwbG90cykKZGV2Lm9mZigpCn0KCiNTYXZlIFNldXJhdCBvYmplY3RzClNhdmVPYmplY3QgPC0gZnVuY3Rpb24ob2JqZWN0LCBuYW1lKXsKICBzYXZlUkRTKG9iamVjdCwgaGVyZShleHAsICdyX29iamVjdHMnLCBwYXN0ZTAobmFtZSwgIi5SRFMiKSkpCn0KCiNSZWFkIFNldXJhdCBvYmplY3RzClJlYWRPYmplY3QgPC0gZnVuY3Rpb24obmFtZSl7CiAgcmVhZFJEUyhoZXJlKGV4cCwgJ3Jfb2JqZWN0cycsIHBhc3RlMChuYW1lLCAiLlJEUyIpKSkKfQpgYGAKCmBgYHtyIFJlYWQgaW4gZGF0YX0KI0xvYWQgaW4gY291bnQgbWF0cml4CmRhdGFfZGlyIDwtIGhlcmUoZXhwLCAnYWxsLXNhbXBsZScsICdER0VfZmlsdGVyZWQnKQpjb3VudHMgPC0gUmVhZFBhcnNlQmlvX2NvdW50KGRhdGFfZGlyKQoKIyBDaGVjayB0byBzZWUgaWYgZW1wdHkgZ2VuZSBuYW1lcyBhcmUgcHJlc2VudCwgYWRkIG5hbWUgaWYgc28uCnRhYmxlKHJvd25hbWVzKGNvdW50cykgPT0gIiIpCnJvd25hbWVzKGNvdW50cylbcm93bmFtZXMoY291bnRzKSA9PSAiIl0gPC0gInVua25vd24iCgojIFJlYWQgaW4gY2VsbCBtZXRhIGRhdGEKY2VsbF9tZXRhIDwtIHJlYWQuY3N2KGhlcmUoZXhwLCAnYWxsLXNhbXBsZScsICdER0VfZmlsdGVyZWQnLCAiL2NlbGxfbWV0YWRhdGEuY3N2IiksIHJvdy5uYW1lcyA9IDEpCgojQ3JlYXRlIFNldXJhdCBvYmplY3QKc2V1cmF0X29iaiA8LSBDcmVhdGVTZXVyYXRPYmplY3QoY291bnRzID0gY291bnRzLCBuYW1lcy5maWVsZCA9IDAsIG1ldGEuZGF0YSA9IGNlbGxfbWV0YSkKYGBgCgpGUk9NIFBBUlNFIEJJTzoKV2hlbiB3ZSBjcmVhdGUgb3VyIFNldXJhdCBvYmplY3QgdGhlIHBsYXRlIHdlbGwgbnVtYmVycyAoY29sdW1uIG5hbWVzIGluIHRoZSBleHByZXNzaW9uIG1hdHJpeCkgZnJvbSB0aGUgZXhwZXJpbWVudCB3aWxsIGF1dG9tYXRpY2FsbHkgYmUgYXNzaWduZWQgdG8gdGhlIGNlbGwgaWRlbnRpdHkgc2xvdC4gSW4gb3RoZXIgd29yZHMsIHRoZSBwcm9ncmFtIGFzc3VtZXMgdGhpcyBob3cgd2Ugd2FudCB0byBpbml0aWFsbHkgY2xhc3NpZnkgb3VyIGNlbGxzLiBJbiBnZW5lcmFsLCB3ZSB3b3VsZCBsaWtlIHRvIGF2b2lkIHRoaXMgYmVoYXZpb3Igc28gdGhlcmUgaXNuJ3QgYSBiaWFzIHRvd2FyZHMgYSBwYXJ0aWN1bGFyIGNlbGwgY2xhc3Mgd2hlbiByZW1vdmluZyBvdXRsaWVycy4KCmBgYHtyIFdlbGwgbnVtYmVyc30KIyBTZXR0aW5nIG91ciBpbml0aWFsIGNlbGwgY2xhc3MgdG8gYSBzaW5nbGUgdHlwZSwgdGhpcyB3aWxsIGNoYW5nZSBhZnRlciBjbHVzdGVyaW5nLiAKc2V1cmF0X29iakBtZXRhLmRhdGEkb3JpZy5pZGVudCA8LSBmYWN0b3IocmVwKCJzZXVyYXRfb2JqIiwgbnJvdyhzZXVyYXRfb2JqQG1ldGEuZGF0YSkpKQpJZGVudHMoc2V1cmF0X29iaikgPC0gc2V1cmF0X29iakBtZXRhLmRhdGEkb3JpZy5pZGVudAoKI1NhdmUgcmF3IFNldXJhdCBvYmplY3QKU2F2ZU9iamVjdChzZXVyYXRfb2JqLCAncmF3X3NldXJhdF9vYmonKQojc2V1cmF0X29iaiA8LSBSZWFkT2JqZWN0KCdyYXdfc2V1cmF0X29iaicpCgojU2F2ZSByYXcgU2luZ2xlQ2VsbEV4cGVyaW1lbnQgb2JqZWN0CnNjZV9vYmogPC0gYXMuU2luZ2xlQ2VsbEV4cGVyaW1lbnQoc2V1cmF0X29iaikKU2F2ZU9iamVjdChzY2Vfb2JqLCAncmF3X3NjZV9vYmonKQpgYGAKCldlIG5lZWQgdG8gZXhjbHVkZSBtdWx0aXBsZXRzIGZyb20gYW5hbHlzaXMgLSB0aGVzZSBhcmUgY2VsbHMgd2l0aCBhYm5vcm1hbGx5IGhpZ2ggdHJhbnNjcmlwdCBvZiBnZW5lIGNvdW50cy4KCltGUk9NIEJJT1NUQVJTXShodHRwczovL3d3dy5iaW9zdGFycy5vcmcvcC80MDcwMzYvIzp+OnRleHQ9bkNvdW50X1JOQSUyMGlzJTIwdGhlJTIwdG90YWwlMjBudW1iZXIsYSUyMGRvdWJsZXQlMjAob3IlMjBtdWx0aXBsZXQpLikKCiJuRmVhdHVyZV9STkEgaXMgdGhlIG51bWJlciBvZiBnZW5lcyBkZXRlY3RlZCBpbiBlYWNoIGNlbGwuIG5Db3VudF9STkEgaXMgdGhlIHRvdGFsIG51bWJlciBvZiBtb2xlY3VsZXMgZGV0ZWN0ZWQgd2l0aGluIGEgY2VsbC4gTG93IG5GZWF0dXJlX1JOQSBmb3IgYSBjZWxsIGluZGljYXRlcyB0aGF0IGl0IG1heSBiZSBkZWFkL2R5aW5nIG9yIGFuIGVtcHR5IGRyb3BsZXQuIEhpZ2ggbkNvdW50X1JOQSBhbmQvb3IgbkZlYXR1cmVfUk5BIGluZGljYXRlcyB0aGF0IHRoZSAiY2VsbCIgbWF5IGluIGZhY3QgYmUgYSBkb3VibGV0IChvciBtdWx0aXBsZXQpLiBJbiBjb21iaW5hdGlvbiB3aXRoICVtaXRvY2hvbmRyaWFsIHJlYWRzLCByZW1vdmluZyBvdXRsaWVycyBmcm9tIHRoZXNlIGdyb3VwcyByZW1vdmVzIG1vc3QgZG91YmxldHMvZGVhZCBjZWxscy9lbXB0eSBkcm9wbGV0cywgaGVuY2Ugd2h5IGZpbHRlcmluZyBpcyBhIGNvbW1vbiBwcmUtcHJvY2Vzc2luZyBzdGVwLgoKVGhlIE5vcm1hbGl6ZURhdGEgc3RlcCBpcyBiYXNpY2FsbHkganVzdCBlbnN1cmluZyBleHByZXNzaW9uIHZhbHVlcyBhY3Jvc3MgY2VsbHMgYXJlIG9uIGEgY29tcGFyYWJsZSBzY2FsZS4gQnkgZGVmYXVsdCwgaXQgd2lsbCBkaXZpZGUgY291bnRzIGZvciBlYWNoIGdlbmUgYnkgdGhlIHRvdGFsIGNvdW50cyBpbiB0aGUgY2VsbCwgbXVsdGlwbHkgdGhhdCB2YWx1ZSBmb3IgZWFjaCBnZW5lIGJ5IHRoZSBzY2FsZS5mYWN0b3IgKDEwLDAwMCBieSBkZWZhdWx0KSwgYW5kIHRoZW4gbmF0dXJhbCBsb2ctdHJhbnNmb3JtIHRoZW0uIgoKVGhlIGNvbHVtbnMgYWRkZWQgYWZ0ZXIgcXVpY2twZXJjZWxsUUMgY2FuIGJlIGRlc2NyaWJlZCBhcyBmb2xsb3dzOgoKLSBzdW0gPSBuQ291bnRfUk5BID0gbGliX3NpemUgPSBudW1iZXIgb2YgbW9sZWN1bGVzIGluIHRoZSB3ZWxsCgotIGRldGVjdGVkID0gbkZlYXR1cmVfUk5BID0gbnVtYmVyIG9mIHVuaXF1ZSBnZW5lcyBpbiB0aGUgd2VsbAoKLSBsb3dfbGliX3NpemUgc3VnZ2VzdHMgUk5BIGhhcyBiZWVuIGxvc3QgYXQgc29tZSBwb2ludCBkdXJpbmcgbGlicmFyeSBwcmVwYXJhdGlvbiwgZWl0aGVyIGR1ZSB0byBjZWxsIGx5c2lzIG9yIGluZWZmaWNpZW50IGNETkEgY2FwdHVyZSBhbmQgYW1wbGlmaWNhdGlvbgoKLSBsb3dfbl9mZWF0dXJlcyBzdWdnZXN0cyBjZWxsIGlzIGRlYWQvZHlpbmcvImVtcHR5IGRyb3BsZXQiCgpgYGB7ciBDZWxsIHF1YWxpdHkgY29udHJvbH0KI0FkZCBxdWljayBwZXIgY2VsbCBRQwpzY2Vfb2JqIDwtIHNjdXR0bGU6OnF1aWNrUGVyQ2VsbFFDKHNjZV9vYmopCgojTG9hZCBzdHJpbmdyIGZvciBzdHJpbmcgZnVuY3Rpb25zCmxpYnJhcnkoc3RyaW5ncikKCiNBZGQgbWl0b0ROQSBwcm9wb3J0aW9uCmxvY2F0aW9uIDwtIHJvd1JhbmdlcyhzY2Vfb2JqKQppcy5taXRvIDwtIHNhcHBseShuYW1lcyhzZXFuYW1lcyhsb2NhdGlvbikpLCBzdHJfZGV0ZWN0LCAnXm10KicpCnNjZV9vYmogPC0gYWRkUGVyQ2VsbFFDTWV0cmljcyhzY2Vfb2JqLCBzdWJzZXRzID0gbGlzdChNaXRvID0gaXMubWl0bykpCnFjX2RmIDwtIHBlckNlbGxRQ01ldHJpY3Moc2NlX29iaiwgc3Vic2V0cyA9IGxpc3QoTWl0byA9IGlzLm1pdG8pKQoKI0dldCB0aGUgbnVtYmVyIG9mIGNlbGxzIGZvciB3aGljaCAlbWl0byBpcyBncmVhdGVyIHRoYW4gMTAKc3VtKHNjZV9vYmokc3Vic2V0c19NaXRvMl9wZXJjZW50ID4gMTApCmBgYAoKQWx0ZXJuYXRpdmVseSwgZG8gYSBxdWljayB2ZXJzaW9uIG9mIHRoaXMgUUMgd2l0aCBTZXVyYXQ6CmBgYHtyIFNldXJhdCBRQ30Kc2V1cmF0X29ialtbInBlcmNlbnQubXQiXV0gPC0gUGVyY2VudGFnZUZlYXR1cmVTZXQoc2V1cmF0X29iaiwgcGF0dGVybiA9ICJeTVQtIikKcGxvdCA8LSBWbG5QbG90KHNldXJhdF9vYmosIHB0LnNpemUgPSAwLjEwLApmZWF0dXJlcyA9IGMoIm5GZWF0dXJlX1JOQSIsICJuQ291bnRfUk5BIiwgInBlcmNlbnQubXQiKSwgbmNvbCA9IDMpCgpwbG90ClNhdmVGaWd1cmUocGxvdCwgInZsbl9RQyIsIHdpZHRoID0gMTIsIGhlaWdodCA9IDYpCgoKcGxvdDEgPC0gRmVhdHVyZVNjYXR0ZXIoc2V1cmF0X29iaiwgZmVhdHVyZTEgPSAibkNvdW50X1JOQSIsIGZlYXR1cmUyID0gInBlcmNlbnQubXQiKQpwbG90MiA8LSBGZWF0dXJlU2NhdHRlcihzZXVyYXRfb2JqLCBmZWF0dXJlMSA9ICJuQ291bnRfUk5BIiwgZmVhdHVyZTIgPSAibkZlYXR1cmVfUk5BIikKCnBsb3QxICsgcGxvdDIKU2F2ZUZpZ3VyZSgocGxvdDEgKyBwbG90MiksInNjYXR0ZXJfUUMiLCB3aWR0aCA9IDEyLCBoZWlnaHQgPSA2LCByZXMgPSAyMDApCmBgYAoKTm93IHRpbWUgdG8gZmluZCBoaWdobHkgdmFyaWFibGUgZmVhdHVyZXMgZm9yIHRoZSB3aG9sZSBkYXRhc2V0OgpgYGB7ciBOb3JtYWxpc2UgYW5kIGZpbmQgaGlnaGx5IHZhcmlhYmxlIGZlYXR1cmVzfQojTm9ybWFsaXNlCnNldXJhdF9vYmogPC0gTm9ybWFsaXplRGF0YShzZXVyYXRfb2JqLCBub3JtYWxpemF0aW9uLm1ldGhvZCA9ICJMb2dOb3JtYWxpemUiLCBzY2FsZS5mYWN0b3IgPSAxMDAwMCkKCiNGaW5kIEhWRnMKc2V1cmF0X29iaiA8LSBGaW5kVmFyaWFibGVGZWF0dXJlcyhzZXVyYXRfb2JqLCBzZWxlY3Rpb24ubWV0aG9kID0gInZzdCIsIG5mZWF0dXJlcyA9IDIwMDApCiMgSWRlbnRpZnkgdGhlIDEwIG1vc3QgaGlnaGx5IHZhcmlhYmxlIGdlbmVzCnRvcDEwIDwtIGhlYWQoVmFyaWFibGVGZWF0dXJlcyhzZXVyYXRfb2JqKSwgMTApCiMgcGxvdCB2YXJpYWJsZSBmZWF0dXJlcyB3aXRoIGFuZCB3aXRob3V0IGxhYmVscwpwbG90MSA8LSBWYXJpYWJsZUZlYXR1cmVQbG90KHNldXJhdF9vYmopCnBsb3QyIDwtIExhYmVsUG9pbnRzKHBsb3QgPSBwbG90MSwgcG9pbnRzID0gdG9wMTAsIHJlcGVsID0gVFJVRSkKCnBsb3QxICsgcGxvdDIKU2F2ZUZpZ3VyZSgocGxvdDEgKyBwbG90MiksICJ2YXJfZmVhdHVyZXMiLCB3aWR0aCA9IDEyLCBoZWlnaHQgPSA2KQpgYGAKCmBgYHtyIFNjYWxlIGFuZCBkaW1lbnNpb25hbGl0eSByZWR1Y3Rpb259CiNTY2FsZSAKc2V1cmF0X29iaiA8LSBTY2FsZURhdGEoc2V1cmF0X29iaikKCiNEaW1lbnNpb25hbGl0eSByZWR1Y3Rpb24Kc2V1cmF0X29iaiA8LSBSdW5QQ0Eoc2V1cmF0X29iaikKU2F2ZU9iamVjdChzZXVyYXRfb2JqLCAic2V1cmF0X29ial9hZnRlcl9QQ0EiKQoKI0xvYWQgb2JqCnNyYXQgPC0gUmVhZE9iamVjdCgic2V1cmF0X29ial9hZnRlcl9QQ0EiKQoKIyBFeGFtaW5lIGFuZCB2aXN1YWxpemUgUENBIHJlc3VsdHMgYSBmZXcgZGlmZmVyZW50IHdheXMKcHJpbnQoc3JhdFtbInBjYSJdXSwgZGltcyA9IDE6NSwgbmZlYXR1cmVzID0gNSkKCiNQbG90IQpwbG90IDwtIFZpekRpbUxvYWRpbmdzKHNyYXQsIGRpbXMgPSAxOjIsIHJlZHVjdGlvbiA9ICJwY2EiKQpTYXZlRmlndXJlKHBsb3QsICJ2aXpfUENBX2xvYWRpbmdzIiwgd2lkdGggPSAxMCwgaGVpZ2h0ID0gOCkKCnBsb3QgPC0gRGltUGxvdChzcmF0LCByZWR1Y3Rpb24gPSAicGNhIiwgZ3JvdXAuYnkgPSAib3JpZy5pZGVudCIpClNhdmVGaWd1cmUocGxvdCwgInBjMV8yX3NjYXR0ZXIiLCB3aWR0aCA9IDgsIGhlaWdodCA9IDYpCmBgYAoKTm93IGxldCdzIGxvb2sgYXQgaGV0ZXJvZ2VuZWl0eSBpbiB0aGUgZGF0YXNldCB3aXRoIERpbUhlYXRtYXAKYGBge3IgRGltSGVhdG1hcH0KI1Bsb3QgRGltSGVhdG1hcCBmb3IgUEMxCiMgTkI6IEZvciBsYXJnZSBkYXRhc2V0cywgc2V0IGNlbGxzID0gNTAwCnBsb3QgPC0gRGltSGVhdG1hcChzcmF0LCBkaW1zID0gMSwgYmFsYW5jZWQgPSBUUlVFLCBmYXN0ID0gRkFMU0UpClNhdmVGaWd1cmUocGxvdCwgImRpbV9oZWF0bWFwMSIsIHdpZHRoID0gOCwgaGVpZ2h0ID0gNikKCiNQbG90IERpbUhlYXRtYXAgZm9yIFBDMgojIE5COiBGb3IgbGFyZ2UgZGF0YXNldHMsIHNldCBjZWxscyA9IDUwMApwbG90IDwtIERpbUhlYXRtYXAoc3JhdCwgZGltcyA9IDE6MTUsIGJhbGFuY2VkID0gVFJVRSwgZmFzdCA9IEZBTFNFKQpTYXZlRmlndXJlKHBsb3QsICJkaW1faGVhdG1hcDFfMTUiLCB3aWR0aCA9IDEyLCBoZWlnaHQgPSAxOCkKYGBgCgpgYGB7ciBEZXRlcm1pbmUgZGltZW5zaW9uYWxpdHkgb2YgdGhlIGRhdGFzZXR9CiMgTk9URTogVGhpcyBwcm9jZXNzIGNhbiB0YWtlIGEgbG9uZyB0aW1lIGZvciBiaWcgZGF0YXNldHMsIGNvbW1lbnQgb3V0IGZvciBleHBlZGllbmN5LiBNb3JlCiMgYXBwcm94aW1hdGUgdGVjaG5pcXVlcyBzdWNoIGFzIHRob3NlIGltcGxlbWVudGVkIGluIEVsYm93UGxvdCgpIGNhbiBiZSB1c2VkIHRvIHJlZHVjZQojIGNvbXB1dGF0aW9uIHRpbWUKc3JhdCA8LSBKYWNrU3RyYXcoc3JhdCwgbnVtLnJlcGxpY2F0ZSA9IDEwMCkKc3JhdCA8LSBTY29yZUphY2tTdHJhdyhzcmF0LCBkaW1zID0gMToyMCkKcGxvdCA8LSBKYWNrU3RyYXdQbG90KHNyYXQsIGRpbT0xOjIwKQpTYXZlRmlndXJlKHBsb3QsICJQQ19KYWNrU3RyYXdfcGxvdCIsIHdpZHRoID0gOCwgaGVpZ2h0ID0gMTApCgojUXVpY2tlciBhbHRlcm5hdGl2ZSEKcGxvdCA8LSBFbGJvd1Bsb3Qoc3JhdCxuZGltcyA9IDUwKQpTYXZlRmlndXJlKHBsb3QsICJQQ19lbGJvd19wbG90Iiwgd2lkdGggPSA4LCBoZWlnaHQgPSAxMCkKYGBgCgpDaG9zZSB0aGUgZmlyc3QgMjEgUENzLCBub3cgdGltZSB0byBjbHVzdGVyOgpgYGB7ciBDbHVzdGVyaW5nfQoKIyMjIE5COiBOVU1CRVIgT0YgUENzIEZPUiBDTFVTVEVSSU5HID0gTlVNQkVSIE9GIFBDcyBGT1IgVU1BUAoKCiNGaW5kIFNOTgpzcmF0IDwtIFNldXJhdDo6OkZpbmROZWlnaGJvcnMoc3JhdCwgZGltcz0xOjIxKQojUnVuIExvdXZhaW4gY2x1c3RlcmluZwpzcmF0IDwtIEZpbmRDbHVzdGVycyhzcmF0LCByZXNvbHV0aW9uID0gMC44KQpzcmF0IDwtIEZpbmRDbHVzdGVycyhzcmF0LCByZXNvbHV0aW9uID0gMC42KQpzcmF0IDwtIEZpbmRDbHVzdGVycyhzcmF0LCByZXNvbHV0aW9uID0gMSkKc3JhdCA8LSBGaW5kQ2x1c3RlcnMoc3JhdCwgcmVzb2x1dGlvbiA9IDEuMikKc3JhdCA8LSBGaW5kQ2x1c3RlcnMoc3JhdCwgcmVzb2x1dGlvbiA9IDEuNCkKc3JhdCA8LSBGaW5kQ2x1c3RlcnMoc3JhdCwgcmVzb2x1dGlvbiA9IDAuNCkKc3JhdCA8LSBGaW5kQ2x1c3RlcnMoc3JhdCwgcmVzb2x1dGlvbiA9IDAuMikKIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKIyMjIyMgQ0xVU1RSRUUgIyMjIyMjIwojIyMjIyMjIyMjIyMjIyMjIyMjIyMjCiMKIyBSdW4gZmluZCBjbHVzdGVyIHN0ZXAgd2l0aCBhIHJhbmdlIG9mIHJlc29sdXRpb25zIAojIE9uIHRoZSBzcmF0IG9iaiwgaXQgd2lsbCBnZW5lcmF0ZSBhIGNvbHVtbiBmb3IgZWFjaApyZW52OjppbnN0YWxsKCdjbHVzdHJlZScpCmxpYnJhcnkoY2x1c3RyZWUpCgpwbG90IDwtIGNsdXN0cmVlKHNyYXQpClNhdmVGaWd1cmUocGxvdCwgImNsdXN0cmVlIiwgd2lkdGggPSAxMCwgaGVpZ2h0ID0gMTApCgojcmVudjo6aW5zdGFsbCgnYXBlJykKI2xpYnJhcnkoYXBlKQoKCmBgYAoKYGBge3IgUnVuIG5vbi1saW5lYXIgZGltZW5zaW9uYWxpdHkgcmVkdWN0aW9ufQoKIyMjIE5COiBOVU1CRVIgT0YgUENzIEZPUiBDTFVTVEVSSU5HID0gTlVNQkVSIE9GIFBDcyBGT1IgVU1BUAoKc3JhdCA8LSBSdW5VTUFQKHNyYXQsIGRpbXM9MToyMSkKcGxvdCA8LSBEaW1QbG90KHNyYXQsIHJlZHVjdGlvbiA9ICd1bWFwJywgZ3JvdXAuYnkgPSAnUk5BX3Nubl9yZXMuMC42JykKU2F2ZUZpZ3VyZShwbG90LCAndW1hcF9sb3V2YWluX3Jlc19wNicsIHdpZHRoPTksIGhlaWdodD04KQoKI1NhdmUgb2JqZWN0ClNhdmVPYmplY3Qoc3JhdCwgInNldXJhdF9vYmpfY2x1c3RlcmVkXzIxcGNzIikKI3NyYXQgPC0gUmVhZE9iamVjdCgic2V1cmF0X29ial9jbHVzdGVyZWRfMjFwY3MiKQoKCgpgYGAKTk9URVMgRlJPTSBNQVJDRUxBOgpmdW5jdGlvbmFsIGFubm90YXRpb24KZ28gZ2Vub21lIGFubm90YXRpb24gdGVybXMKZ2VuZSBvbnRvbG9neSByZXNvdXJjZQpnb29kIGd1aWRlcyAmIGFubm90YXRpb24KCmNsdXN0ZXIgcHJvZmlsZXIgciBwYWNrYWdlCmdlbmVyYXRlcyBwbG90cyAmIHZpeiBmb3IgdGhpcyB0eXBlIG9mIGFuYWx5c2lzIGUuZy4KCnJlZmluZSBjbHVzdGVycwpjbHVzdGVyIHN0YWJpbGl0eQpvbnRvbG9neSBhbmFseXNpcwoKYGBge3IgRmluZCBjbHVzdGVyIG1hcmtlcnMgKERHRSl9CiNGaW5kIG1hcmtlcnMgcGVyIGNsdXN0ZXIKI0Jpb2NNYW5hZ2VyOjppbnN0YWxsKCJNQVNUIikKbGlicmFyeSgnTUFTVCcpCiNzcmF0IDwtIEJ1aWxkQ2x1c3RlclRyZWUoc3JhdCwgcmVvcmRlciA9IFQsIHJlb3JkZXIubnVtZXJpYyA9IFQpCnNyYXRfbWFya2VycyA8LSBsYXBwbHkobGV2ZWxzKHNyYXRAbWV0YS5kYXRhJFJOQV9zbm5fcmVzLjAuNiksIGZ1bmN0aW9uKHgpIEZpbmRNYXJrZXJzKHNyYXQsIHRlc3QudXNlID0gJ01BU1QnLCBpZGVudC4xPXgsIGdyb3VwLmJ5ID0gJ1JOQV9zbm5fcmVzLjAuNicpKQoKI2M4X29udCA8LSBzcmF0X21hcmtlcnNbc3JhdF9tYXJrZXJzJGNsdXN0ZXIgPT0gJzgnICYgc3JhdF9tYXJrZXJzJHBfdmFsX2FkaiA8MC4wNSAmIHNyYXRfbWFya2VycyRhdmdfbG9nMkZDID4gMCxdCiN3cml0ZUxpbmVzKGM4X29udCRnZW5lLCAnYzhfb250b2xvZ3kuY3N2JykKCiMjIyMjIwojIFVzZSBGaW5kTWFya2Vycywgbm90IEZpbmRBbGxNYXJrZXJzLCB1c2UgTUFTVCBtZXRob2QKIyMjIyMjCgojUGxvdCBleHByZXNzaW9uIHByb2JhYmlsaXR5IGRpc3RyaWJ1dGlvbnMgYWNyb3NzIGNsdXN0ZXJzCnBsb3QgPC0gVmxuUGxvdChzcmF0LCBmZWF0dXJlcyA9IGMoIk90b2ciLCAiTWJwIiksIGdyb3VwLmJ5ID0gJ1JOQV9zbm5fcmVzLjAuNicpClNhdmVGaWd1cmUocGxvdCwgInZsbl9leHAxIiwgd2lkdGggPSAxNiwgaGVpZ2h0ID0gOCkKCiNQbG90IHJhdyBjb3VudHMKcGxvdCA8LSBWbG5QbG90KHNyYXQsIGZlYXR1cmVzID0gYygiT3RvZyIsICJNYnAiKSwgc2xvdCA9ICJjb3VudHMiLCBsb2cgPSBUUlVFLCBncm91cC5ieSA9ICdSTkFfc25uX3Jlcy4wLjYnKQpTYXZlRmlndXJlKHBsb3QsICJ2bG5fZXhwMiIsIHdpZHRoID0gMTYsIGhlaWdodCA9IDgpCmBgYAoKYGBge3IgUGxvdCB0b3AgbiBnZW5lcyBwZXIgY2x1c3Rlcn0Kc3JhdF9tYXJrZXJzX3RvcCA8LSBsYXBwbHkoc3JhdF9tYXJrZXJzLCBmdW5jdGlvbih4KSB0b3Bfbih4LCBuPTUsIHd0PWF2Z19sb2cyRkMpKQpzcmF0X21hcmtlcnNfdG9wIDwtIGJpbmRfcm93cyhzcmF0X21hcmtlcnNfdG9wLCAuaWQgPSAiaWQiKQoKdG9fcGxvdCA8LSB1bmlxdWUocm93bmFtZXMoc3JhdF9tYXJrZXJzX3RvcCkpCgpwbG90IDwtIERvdFBsb3Qoc3JhdCwgZmVhdHVyZXMgPSB0b19wbG90LCBncm91cC5ieSA9ICJSTkFfc25uX3Jlcy4wLjYiKSArIGNvb3JkX2ZsaXAoKQpTYXZlRmlndXJlKHBsb3QsICJkcGxvdF90b3A1Iiwgd2lkdGggPSA5LCBoZWlnaHQgPSAyMCkKCnBsb3QgPC0gRG9IZWF0bWFwKHNyYXQsIGZlYXR1cmVzPXJvd25hbWVzKHNyYXRfbWFya2Vyc190b3ApLCBncm91cC5ieSA9ICdSTkFfc25uX3Jlcy4wLjYnKQpTYXZlRmlndXJlKHBsb3QsICJobWFwX3RvcDUiLCB3aWR0aD01LCBoZWlnaHQgPSA3KQpgYGAKCmBgYHtyIE1lcmdpbmcgY2x1c3RlcnMgYW5kIGxhYmVsbGluZyBjZWxsIHR5cGVzfQojIFBsb3R0aW5nIFBCTUMgbWFya2VycwptYXJrZXJzIDwtIGMoIk90b2ciLCAiQXJtYzQiLCAiTWdhdDRjIiwgIktjbmg3IiwgIm10LVJucjEiLCAibXQtUm5yMiIsICJDb2NoIiwKIlRlY3RiIiwgIlNwYXJjbDEiLCAiTWlhdCIsICJVc2gyYSIsICJNYnAiKQoKcGxvdCA8LSBGZWF0dXJlUGxvdChzcmF0LCBmZWF0dXJlcyA9IG1hcmtlcnMpClNhdmVGaWd1cmUocGxvdCwgInNyYXRfbWFya2VycyIsIHdpZHRoID0gNDAsIGhlaWdodCA9IDMwKQpgYGAKCmBgYHtyIFBsb3QgVU1BUCB3aXRoIGxhYmVsbGVkIGNsdXN0ZXJzfQpwbG90IDwtIERpbVBsb3Qoc3JhdCwgcmVkdWN0aW9uID0gInVtYXAiLCBsYWJlbCA9IFRSVUUsIGdyb3VwLmJ5ID0gJ1JOQV9zbm5fcmVzLjAuNicpICsgTm9BeGVzKCkgKyBOb0xlZ2VuZCgpClNhdmVGaWd1cmUocGxvdCwgInVtYXBfbG91dmFpbl9ub2xlZ2VuZCIsIHdpZHRoID0gOCwgaGVpZ2h0ID0gNykKYGBgCgpgYGB7ciBPbnRvbG9neSBhbmFseXNpcyB3aXRoIGNsdXN0ZXIgcHJvZmlsZXJ9CkJpb2NNYW5hZ2VyOjppbnN0YWxsKCdnZ3RyZWUnKQpCaW9jTWFuYWdlcjo6aW5zdGFsbCgiY2x1c3RlclByb2ZpbGVyIikKI2RldnRvb2xzOjppbnN0YWxsX2dpdGh1YignY29sZS10cmFwbmVsbC1sYWIvbW9ub2NsZTMnKQoKbGlicmFyeShjbHVzdGVyUHJvZmlsZXIpCmxpYnJhcnkobW9ub2NsZTMpCgoKYGBgCgoKCgoKCiMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMKIyMjIEdSQVZFWUFSRCAjIyMjIyMjIyMjIyMjIwojIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjCgpgYGB7ciBtYW51YWwgZ2VuZSBvbnRvbG9neSBhbmFseXNpc30KI2M4X29udCA8LSBzcmF0X21hcmtlcnNbc3JhdF9tYXJrZXJzJGNsdXN0ZXIgPT0gJzgnICYgc3JhdF9tYXJrZXJzJHBfdmFsX2FkaiA8MC4wNSAmIHNyYXRfbWFya2VycyRhdmdfbG9nMkZDID4gMCxdCgojd3JpdGVMaW5lcyhjOF9vbnQkZ2VuZSwgJ2M4X29udG9sb2d5LmNzdicpCmBgYAoKYGBge3IgUGxvdCBVTUFQIHdpdGggZGVzY3JpcHRpdmUgbGFiZWxsZWQgY2x1c3RlcnN9CiNOQjogVGFrZW4gZnJvbSB0dXRvcmlhbCwgZG9lc24ndCB3b3JrIGZvciB0aGlzIGRhdGFzZXQsIHJldmlzaXQgYXQgYSBsYXRlciBkYXRlIQoKI25ld19pZHMgPC0gYygiSENzIiwgIlNDcyBTcGFyY2wxKyIsICJTQ3MgU3BhcmNsMS0iLCAibXQrIG15ZWxpbisiLCAibXQrIG15ZWxpbi0iLCAiTGF0ZXJhbCB3YWxsIikKCiNuZXdfaWRfbGlzdCA8LSBsaXN0KEhDcyA9IGMoOCw5LDEwKSwgU0NzUGx1cyA9IGMoNiw3KSwKIyAgU0NzTWludXMgPSA1LCBNdFBsdXMgPSAxLCBNdE1pbnVzID0gMiwgTGF0V2FsbCA9IGMoMyw0KSkKCiNmb3IgKGkgaW4gMTpsZW5ndGgobmV3X2lkX2xpc3QpKSB7CiMgIGluZCA8LSB3aGljaChzcmF0QG1ldGEuZGF0YSR0cmVlLmlkZW50ICVpbiUgbmV3X2lkX2xpc3RbW2ldXSkKIyAgc3JhdEBtZXRhLmRhdGEkY29sbGFwc2VkW2luZF0gPC0gbmFtZXMobmV3X2lkX2xpc3QpW2ldCiN9Cgojc3JhdEBtZXRhLmRhdGEkY29sbGFwc2VkIDwtIGZhY3RvcigKIyAgc3JhdEBtZXRhLmRhdGEkY29sbGFwc2VkLCBsZXZlbHMgPSBuYW1lcyhuZXdfaWRfbGlzdCksIG9yZGVyZWQgPSBUUlVFKQojSWRlbnRzKHNyYXQpIDwtIHBibWNAbWV0YS5kYXRhJGNvbGxhcHNlZAoKI25hbWVzKG5ld19pZHMpIDwtIGxldmVscyhzcmF0KQojc3JhdCA8LSBSZW5hbWVJZGVudHMoc3JhdCwgbmV3X2lkcykKCiNwbG90IDwtIERpbVBsb3Qoc3JhdCwgcmVkdWN0aW9uID0gInVtYXAiLCBsYWJlbCA9IFRSVUUpICsgTm9BeGVzKCkgKyBOb0xlZ2VuZCgpCiNTYXZlRmlndXJlKHBsb3QsICJ1bWFwX2xvdXZhaW5fbm9sZWdlbmRfbmFtZXMiLCB3aWR0aCA9IDgsIGhlaWdodCA9IDcpCmBgYAoKYGBge3IgVHJhamVjdG9yeSBhbmFseXNpc30KQmlvY01hbmFnZXI6Omluc3RhbGwoYygnQmlvY0dlbmVyaWNzJywgJ0RlbGF5ZWRBcnJheScsICdEZWxheWVkTWF0cml4U3RhdHMnLAogICAgICAgICAgICAgICAgICAgICAgICdsaW1tYScsICdsbWU0JywgJ1M0VmVjdG9ycycsICdTaW5nbGVDZWxsRXhwZXJpbWVudCcsCiAgICAgICAgICAgICAgICAgICAgICAgJ1N1bW1hcml6ZWRFeHBlcmltZW50JywgJ2JhdGNoZWxvcicsICdIREY1QXJyYXknLAogICAgICAgICAgICAgICAgICAgICAgICd0ZXJyYScsICdnZ3Jhc3RyJykpCgpyZW52OjppbnN0YWxsKCdkZXZ0b29scycpCgpkZXZ0b29sczo6aW5zdGFsbF9naXRodWIoJ2NvbGUtdHJhcG5lbGwtbGFiL21vbm9jbGUzJykKCmxpYnJhcnkobW9ub2NsZTMpCgpyZW1vdGVzOjppbnN0YWxsX2dpdGh1Yignc2F0aWphbGFiL3NldXJhdC13cmFwcGVycycpCgoKYGBgCg==</div>
 
 
 

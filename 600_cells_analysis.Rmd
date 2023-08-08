@@ -252,21 +252,22 @@ plot <- ElbowPlot(srat,ndims = 50)
 SaveFigure(plot, "PC_elbow_plot", width = 8, height = 10)
 ```
 
-Chose the first 9 PCs, now time to cluster:
+Chose the first 21 PCs, now time to cluster:
 ```{r Clustering}
 
 ### NB: NUMBER OF PCs FOR CLUSTERING = NUMBER OF PCs FOR UMAP
 
 
 #Find SNN
-srat <- Seurat:::FindNeighbors(srat, dims=1:30)
+srat <- Seurat:::FindNeighbors(srat, dims=1:21)
 #Run Louvain clustering
 srat <- FindClusters(srat, resolution = 0.8)
 srat <- FindClusters(srat, resolution = 0.6)
 srat <- FindClusters(srat, resolution = 1)
 srat <- FindClusters(srat, resolution = 1.2)
 srat <- FindClusters(srat, resolution = 1.4)
-
+srat <- FindClusters(srat, resolution = 0.4)
+srat <- FindClusters(srat, resolution = 0.2)
 ############################################
 ##### CLUSTREE #######
 ######################
@@ -289,13 +290,13 @@ SaveFigure(plot, "clustree", width = 10, height = 10)
 
 ### NB: NUMBER OF PCs FOR CLUSTERING = NUMBER OF PCs FOR UMAP
 
-srat <- RunUMAP(srat, dims=1:30)
-plot <- DimPlot(srat, reduction = 'umap')
-SaveFigure(plot, 'umap_louvain_res_p3', width=9, height=8)
+srat <- RunUMAP(srat, dims=1:21)
+plot <- DimPlot(srat, reduction = 'umap', group.by = 'RNA_snn_res.0.6')
+SaveFigure(plot, 'umap_louvain_res_p6', width=9, height=8)
 
 #Save object
-SaveObject(srat, "seurat_obj_clustered")
-#srat <- ReadObject("seurat_obj_clustered")
+SaveObject(srat, "seurat_obj_clustered_21pcs")
+#srat <- ReadObject("seurat_obj_clustered_21pcs")
 
 
 
@@ -315,37 +316,38 @@ ontology analysis
 
 ```{r Find cluster markers (DGE)}
 #Find markers per cluster
-BiocManager::install("MAST")
+#BiocManager::install("MAST")
 library('MAST')
 #srat <- BuildClusterTree(srat, reorder = T, reorder.numeric = T)
-srat_markers <- FindMarkers(srat, test.use = 'MAST', ident.1=1)
+srat_markers <- lapply(levels(srat@meta.data$RNA_snn_res.0.6), function(x) FindMarkers(srat, test.use = 'MAST', ident.1=x, group.by = 'RNA_snn_res.0.6'))
 
-c8_ont <- srat_markers[srat_markers$cluster == '8' & srat_markers$p_val_adj <0.05 & srat_markers$avg_log2FC > 0,]
-
-writeLines(c8_ont$gene, 'c8_ontology.csv')
-
-#Find unique markers per cluster
-srat_all_markers <- FindAllMarkers(srat, min.pct = 0.25, logfc.threshold = 0.25)
-srat_all_markers %>% group_by(cluster) %>% top_n(n = 2, wt = avg_log2FC)
+#c8_ont <- srat_markers[srat_markers$cluster == '8' & srat_markers$p_val_adj <0.05 & srat_markers$avg_log2FC > 0,]
+#writeLines(c8_ont$gene, 'c8_ontology.csv')
 
 ######
 # Use FindMarkers, not FindAllMarkers, use MAST method
 ######
 
 #Plot expression probability distributions across clusters
-plot <- VlnPlot(srat, features = c("Otog", "Armc4"), group.by = "tree.ident")
+plot <- VlnPlot(srat, features = c("Otog", "Mbp"), group.by = 'RNA_snn_res.0.6')
 SaveFigure(plot, "vln_exp1", width = 16, height = 8)
 
 #Plot raw counts
-plot <- VlnPlot(srat, features = c("Otog", "Armc4"), slot = "counts", log = TRUE)
+plot <- VlnPlot(srat, features = c("Otog", "Mbp"), slot = "counts", log = TRUE, group.by = 'RNA_snn_res.0.6')
 SaveFigure(plot, "vln_exp2", width = 16, height = 8)
 ```
 
 ```{r Plot top n genes per cluster}
-top5 <- srat_markers %>% group_by(cluster) %>% top_n(n = 5, wt = avg_log2FC)
-to_plot <- unique(top5$gene)
-plot <- DotPlot(srat, features = to_plot, group.by = "tree.ident") + coord_flip()
+srat_markers_top <- lapply(srat_markers, function(x) top_n(x, n=5, wt=avg_log2FC))
+srat_markers_top <- bind_rows(srat_markers_top, .id = "id")
+
+to_plot <- unique(rownames(srat_markers_top))
+
+plot <- DotPlot(srat, features = to_plot, group.by = "RNA_snn_res.0.6") + coord_flip()
 SaveFigure(plot, "dplot_top5", width = 9, height = 20)
+
+plot <- DoHeatmap(srat, features=rownames(srat_markers_top), group.by = 'RNA_snn_res.0.6')
+SaveFigure(plot, "hmap_top5", width=5, height = 7)
 ```
 
 ```{r Merging clusters and labelling cell types}
@@ -353,21 +355,40 @@ SaveFigure(plot, "dplot_top5", width = 9, height = 20)
 markers <- c("Otog", "Armc4", "Mgat4c", "Kcnh7", "mt-Rnr1", "mt-Rnr2", "Coch",
 "Tectb", "Sparcl1", "Miat", "Ush2a", "Mbp")
 
-srat_markers <- FeaturePlot(srat, features = markers)
-SaveFigure(srat_markers, "srat_markers", width = 40, height = 30)
+plot <- FeaturePlot(srat, features = markers)
+SaveFigure(plot, "srat_markers", width = 40, height = 30)
 ```
 
 ```{r Plot UMAP with labelled clusters}
-plot <- DimPlot(srat, reduction = "umap", label = TRUE) + NoAxes() + NoLegend()
+plot <- DimPlot(srat, reduction = "umap", label = TRUE, group.by = 'RNA_snn_res.0.6') + NoAxes() + NoLegend()
 SaveFigure(plot, "umap_louvain_nolegend", width = 8, height = 7)
 ```
 
-```{r gene ontology analysis}
-c8_ont <- srat_markers[srat_markers$cluster == '8' & srat_markers$p_val_adj <0.05 & srat_markers$avg_log2FC > 0,]
+```{r Ontology analysis with cluster profiler}
+BiocManager::install('ggtree')
+BiocManager::install("clusterProfiler")
+#devtools::install_github('cole-trapnell-lab/monocle3')
 
-writeLines(c8_ont$gene, 'c8_ontology.csv')
+library(clusterProfiler)
+library(monocle3)
+
+
 ```
 
+
+
+
+
+
+############################
+### GRAVEYARD ##############
+############################
+
+```{r manual gene ontology analysis}
+#c8_ont <- srat_markers[srat_markers$cluster == '8' & srat_markers$p_val_adj <0.05 & srat_markers$avg_log2FC > 0,]
+
+#writeLines(c8_ont$gene, 'c8_ontology.csv')
+```
 
 ```{r Plot UMAP with descriptive labelled clusters}
 #NB: Taken from tutorial, doesn't work for this dataset, revisit at a later date!
@@ -392,8 +413,6 @@ writeLines(c8_ont$gene, 'c8_ontology.csv')
 #plot <- DimPlot(srat, reduction = "umap", label = TRUE) + NoAxes() + NoLegend()
 #SaveFigure(plot, "umap_louvain_nolegend_names", width = 8, height = 7)
 ```
-
-
 
 ```{r Trajectory analysis}
 BiocManager::install(c('BiocGenerics', 'DelayedArray', 'DelayedMatrixStats',
