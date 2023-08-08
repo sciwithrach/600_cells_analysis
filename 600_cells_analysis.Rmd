@@ -7,7 +7,8 @@ output: html_notebook
 #Define packages for install and/or library loading 
 pkg_list_cran <- c('BiocManager', 'dplyr', 'Matrix', 'ggplot2', 'rmarkdown')
 pkg_list_bioc <- c('Seurat', 'SingleCellExperiment', 'scater')
-pkg_list_all <- c(pkg_list_cran, pkg_list_bioc)
+pkg_list_extra <- c('MAST', 'scuttle', "clusterProfiler", 'monocle3')
+pkg_list_all <- c(pkg_list_cran, pkg_list_bioc, pkg_list_extra)
 
 ##############################################################
 
@@ -18,13 +19,19 @@ pkg_list_all <- c(pkg_list_cran, pkg_list_bioc)
 #lapply(pkg_list_bioc, BiocManager::install)
 #install.packages('here')
 
+#BiocManager::install(c('MAST', 'scuttle', "clusterProfiler"))
+
+#BiocManager::install('clusterProfiler')
+#install.packages("devtools")
+#devtools::install_github('cole-trapnell-lab/monocle3')
+
 #Save renv session
-#renv::snapshot()
+renv::snapshot()
 
 ##############################################################
 
 #Restore renv session
-renv::restore()
+#renv::restore()
 
 # Update all packages - recommended if it's been a while
 # since the code was last run
