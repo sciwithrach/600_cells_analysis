@@ -407,8 +407,10 @@ eGO <- lapply(GO.genes, function (x)
 
 #SaveObject(eGO, 'eGO')
 
-plots <- lapply(eGO, dotplot)
-p <- gridExtra::grid.arrange(globs = plots, ncol=4)
+#plots <- lapply(eGO, dotplot)
+#p <- gridExtra::grid.arrange(globs = plots, ncol=4)
+
+
 
 ```
 
