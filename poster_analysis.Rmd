@@ -114,44 +114,68 @@ ReadObject <- function(name){
 #Load in count matrix
 #P5K <- ReadParseBio_count(here('PR0979_5000', 'all-sample', 'DGE_filtered'))
 #P500 <- ReadParseBio_count(here('310523_PR0979_v2', 'all-sample', 'DGE_filtered'))
-P1K <- ReadParseBio_count(here('PR1044_1000_chick', 'all-sample', 'DGE_filtered'))
+P2K_chick <- ReadParseBio_count(here('PR1044_2000_chick', 'all-sample', 'DGE_filtered'))
+P2K_mouse <- ReadParseBio_count(here('PR1044_2000_mouse', 'all-sample', 'DGE_filtered'))
 
-#Read objects
-P5K <- ReadObject('srat_P5K')
-P500 <- ReadObject('srat_P500')
+cell.meta.chick <- read.csv(here('PR1044_2000_chick', 'all-sample', 'DGE_filtered', "cell_metadata.csv"), row.names = 1)
+cell.meta.mouse <- read.csv(here('PR1044_2000_mouse', 'all-sample', 'DGE_filtered', "cell_metadata.csv"), row.names = 1)
 
-cell.meta.5k <- read.csv(here('PR0979_5000', 'all-sample', 'DGE_filtered', "cell_metadata.csv"), row.names = 1)
+chick.2k <- CreateSeuratObject(P2K_chick, min.features = 100, min.cells = 100, names.field = 0, meta.data = cell.meta.chick)
+chick.2k$orig.ident <- 'P2K_chick'
 
-P5K <- CreateSeuratObject(P5K, min.features = 100, min.cells = 100, names.field = 0, meta.data = cell.meta.5k)
-P5K$orig.ident <- '5k'
+mouse.2k <- CreateSeuratObject(P2K_mouse, min.features = 100, min.cells = 100, names.field = 0, meta.data = cell.meta.mouse)
+mouse.2k$orig.ident <- 'P2K_mouse'
 
-cell.meta.500 <- read.csv(here('310523_PR0979_v2', 'all-sample', 'DGE_filtered', "cell_metadata.csv"), row.names = 1)
-
-P500 <- CreateSeuratObject(P500, min.features = 100, min.cells = 100, names.field = 0, meta.data = cell.meta.500)
-P500$orig.ident <- '500'
-
-cell.meta.1k <- read.csv(here('PR1044_1000_chick', 'all-sample', 'DGE_filtered', "cell_metadata.csv"), row.names = 1)
-
-P1K <- CreateSeuratObject(P1K, min.features = 100, min.cells = 100, names.field = 0, meta.data = cell.meta.1k)
-P1K$orig.ident <- '1k'
 #Save objects
-SaveObject(P5K, 'srat_P5K')
-SaveObject(P500, 'srat_P500')
-SaveObject(P1K, 'srat_P1K')
-
-#Merge objects
-P5500 <- merge(P5K, P500, add.cell.ids = c('P5K', 'P500'), project = 'PR0979', merge.data = T)
-P6000 <- merge(P5K, P1K, add.cell.ids = c('P5K', 'P1K'), merge.data = T)
+SaveObject(chick.2k, 'srat_P2K_chick')
+SaveObject(mouse.2k, 'srat_P2K_mouse')
 ```
 
-```{r check integration}
-P5500 <- ScaleData(P5500, verbose = F)
-P5500 <- NormalizeData(P5500)
-P5500 <- FindVariableFeatures(P5500)
-P5500 <- RunPCA(P5500, npcs = 30, verbose=F)
-P5500 <- RunUMAP(P5500, reduction = 'pca', dims = 1:30)
-p <- DimPlot(P5500, reduction='umap', group.by = 'orig.ident')
+```{r chick umap}
+mouse.2k <- ScaleData(mouse.2k, verbose = F)
+mouse.2k <- NormalizeData(mouse.2k)
+mouse.2k <- FindVariableFeatures(mouse.2k)
+mouse.2k <- RunPCA(mouse.2k, npcs = 30, verbose=F)
+
+#Get number of PCs
+plot <- ElbowPlot(mouse.2k,ndims = 50)
+#20 PCs taken
+
+mouse.2k <- RunUMAP(mouse.2k, reduction = 'pca', dims = 1:20)
+p <- DimPlot(mouse.2k, reduction='umap', group.by = 'sample')
 p
+```
+
+```{r chick clustering}
+#Find SNN
+mouse.2k <- Seurat:::FindNeighbors(mouse.2k, dims=1:20)
+#Run Louvain clustering
+mouse.2k <- FindClusters(mouse.2k, resolution = 0.8)
+mouse.2k <- FindClusters(mouse.2k, resolution = 1.0)
+mouse.2k <- FindClusters(mouse.2k, resolution = 0.2)
+mouse.2k <- FindClusters(mouse.2k, resolution = 0.6)
+mouse.2k <- FindClusters(mouse.2k, resolution = 0.06)
+mouse.2k <- FindClusters(mouse.2k, resolution = 0.07)
+#Cluster stability
+library(clustree)
+p <- clustree(mouse.2k)
+p
+#Resolution is 0.1, k=7
+
+#Plot clusters
+plot <- DimPlot(mouse.2k, reduction = 'umap', group.by = 'RNA_snn_res.0.1')
+plot
+
+#Get trajectory
+library(slingshot)
+library(SingleCellExperiment)
+sce_mouse <- as.SingleCellExperiment(mouse.2k)
+sce_mouse <- slingshot(sce_mouse, clusterLabels = 'RNA_snn_res.0.1', reducedDim = 'UMAP')
+
+summary(sce_mouse$slingPseudotime_1)
+
+plot(reducedDims(sce_mouse)$UMAP, asp=1, pch=19)
+lines(SlingshotDataSet(sce_mouse), lwd=2, col='black', asp=1)
 ```
 
 ```{r pipe seurat}
