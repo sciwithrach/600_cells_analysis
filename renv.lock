@@ -141,13 +141,13 @@
     },
     "BiocManager": {
       "Package": "BiocManager",
-      "Version": "1.30.21.1",
+      "Version": "1.30.22",
       "Source": "Repository",
       "Repository": "RSPM",
       "Requirements": [
         "utils"
       ],
-      "Hash": "85afdfb6010b8eb074f8d28ce4596bd7"
+      "Hash": "d57e43105a1aa9cb54fdb4629725acb1"
     },
     "BiocNeighbors": {
       "Package": "BiocNeighbors",
@@ -568,6 +568,45 @@
       ],
       "Hash": "10a6bd0dcabaeede87616e4465b6ac6f"
     },
+    "R.methodsS3": {
+      "Package": "R.methodsS3",
+      "Version": "1.8.2",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "utils"
+      ],
+      "Hash": "278c286fd6e9e75d0c2e8f731ea445c8"
+    },
+    "R.oo": {
+      "Package": "R.oo",
+      "Version": "1.25.0",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "R.methodsS3",
+        "methods",
+        "utils"
+      ],
+      "Hash": "a0900a114f4f0194cf4aa8cd4a700681"
+    },
+    "R.utils": {
+      "Package": "R.utils",
+      "Version": "2.12.2",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "R.methodsS3",
+        "R.oo",
+        "methods",
+        "tools",
+        "utils"
+      ],
+      "Hash": "325f01db13da12c04d8f6e7be36ff514"
+    },
     "R6": {
       "Package": "R6",
       "Version": "2.5.1",
@@ -919,6 +958,34 @@
       ],
       "Hash": "31a87fa60eee00965ec7b5a5f56869b0"
     },
+    "SeuratWrappers": {
+      "Package": "SeuratWrappers",
+      "Version": "0.3.1",
+      "Source": "GitHub",
+      "Remotes": "welch-lab/liger, hms-dbmi/conos, immunogenomics/harmony, immunogenomics/presto, satijalab/seurat-data, velocyto-team/velocyto.R, SaskiaFreytag/schex@031320d, cole-trapnell-lab/monocle3, mojaveazure/seurat-disk, powellgenomicslab/Nebulosa, atakanekiz/CIPR-Package, prabhakarlab/Banksy",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteRepo": "seurat-wrappers",
+      "RemoteUsername": "satijalab",
+      "RemoteRef": "HEAD",
+      "RemoteSha": "d28512f804d5fe05e6d68900ca9221020d52cf1d",
+      "Requirements": [
+        "BiocManager",
+        "Matrix",
+        "R",
+        "Seurat",
+        "cowplot",
+        "ggplot2",
+        "igraph",
+        "methods",
+        "remotes",
+        "rlang",
+        "rsvd",
+        "stats",
+        "utils"
+      ],
+      "Hash": "f983e3ae587be8158b48838f9049bb26"
+    },
     "SingleCellExperiment": {
       "Package": "SingleCellExperiment",
       "Version": "1.22.0",
@@ -957,6 +1024,21 @@
         "utils"
       ],
       "Hash": "6af56fbcb57deb9b094a352beee9a202"
+    },
+    "TrajectoryUtils": {
+      "Package": "TrajectoryUtils",
+      "Version": "1.8.0",
+      "Source": "Bioconductor",
+      "Requirements": [
+        "Matrix",
+        "S4Vectors",
+        "SingleCellExperiment",
+        "SummarizedExperiment",
+        "igraph",
+        "methods",
+        "stats"
+      ],
+      "Hash": "6c7a9dea3d8cdb228fd860739a902378"
     },
     "XML": {
       "Package": "XML",
@@ -3168,6 +3250,20 @@
       "Repository": "RSPM",
       "Hash": "95ef9167b75dde9d2ccc3c7528393e7e"
     },
+    "princurve": {
+      "Package": "princurve",
+      "Version": "2.1.6",
+      "Source": "Repository",
+      "Repository": "RSPM",
+      "Requirements": [
+        "R",
+        "Rcpp",
+        "grDevices",
+        "graphics",
+        "stats"
+      ],
+      "Hash": "1e3d2690c203c82497e5520ba152d094"
+    },
     "processx": {
       "Package": "processx",
       "Version": "3.8.2",
@@ -3850,6 +3946,26 @@
         "warp"
       ],
       "Hash": "c1c73df260af9e1e3692eb3b8e1ecb88"
+    },
+    "slingshot": {
+      "Package": "slingshot",
+      "Version": "2.8.0",
+      "Source": "Bioconductor",
+      "Requirements": [
+        "R",
+        "S4Vectors",
+        "SingleCellExperiment",
+        "SummarizedExperiment",
+        "TrajectoryUtils",
+        "grDevices",
+        "graphics",
+        "igraph",
+        "matrixStats",
+        "methods",
+        "princurve",
+        "stats"
+      ],
+      "Hash": "6f00e8635e836afcf3b5f10e418342a3"
     },
     "snow": {
       "Package": "snow",

@@ -1,9 +1,9 @@
 ---
-title: "600 cell analysis"
+title: "all cell analysis"
 output: html_notebook
 ---
 
-```{r Set up environment}
+```{r, Set up environment, message=FALSE, warning=FALSE}
 #Define packages for install and/or library loading 
 pkg_list_cran <- c('BiocManager', 'dplyr', 'Matrix', 'ggplot2', 'rmarkdown')
 pkg_list_bioc <- c('Seurat', 'SingleCellExperiment', 'scater')
@@ -26,7 +26,7 @@ pkg_list_all <- c(pkg_list_cran, pkg_list_bioc, pkg_list_extra)
 #devtools::install_github('cole-trapnell-lab/monocle3')
 
 #Save renv session
-renv::snapshot()
+#renv::snapshot()
 
 ##############################################################
 
@@ -51,17 +51,19 @@ set.seed(444)
 here::i_am("600_cells_analysis/600_cells_analysis.Rmd")
 library(here)
 here()
+setwd(here())
 
-#Select experiment - CHANGE THIS EACH TIME
-exp <- '310523_PR0979_v2'
+#Set path for outputs
+ifelse(!dir.exists(here('all_cells_analysis')), dir.create('all_cells_analysis'), "Folder exists already")
+out_dir <- 'all_cells_analysis'
 
 #Set paths to save and read Seurat objects
-ifelse(!dir.exists(here(exp, "r_objects")), dir.create(here(exp, "r_objects")), "Folder exists already")
-data_path <- here(exp, 'r_objects')
+ifelse(!dir.exists(here(out_dir, "r_objects")), dir.create(here(out_dir, "r_objects")), "Folder exists already")
+data_path <- here(out_dir, 'r_objects')
 
 #Make and/or set path to save figures
-ifelse(!dir.exists(here(exp, "r_figures")), dir.create(here(exp, "r_figures")), "Folder exists already")
-fig_path <- here(exp, 'r_figures')
+ifelse(!dir.exists(here(out_dir, "r_figures")), dir.create(here(out_dir, "r_figures")), "Folder exists already")
+fig_path <- here(out_dir, 'r_figures')
 ```
 
 ```{r Convenience functions}
@@ -99,19 +101,30 @@ dev.off()
 
 #Save Seurat objects
 SaveObject <- function(object, name){
-  saveRDS(object, here(exp, 'r_objects', paste0(name, ".RDS")))
+  saveRDS(object, here(out_dir, 'r_objects', paste0(name, ".RDS")))
 }
 
 #Read Seurat objects
 ReadObject <- function(name){
-  readRDS(here(exp, 'r_objects', paste0(name, ".RDS")))
+  readRDS(here(out_dir, 'r_objects', paste0(name, ".RDS")))
 }
 ```
 
 ```{r Read in data}
 #Load in count matrix
-data_dir <- here(exp, 'all-sample', 'DGE_filtered')
-counts <- ReadParseBio_count(data_dir)
+#P5K <- ReadParseBio_count(here('PR0979_5000', 'all-sample', 'DGE_filtered'))
+#P500 <- ReadParseBio_count(here('310523_PR0979_v2', 'all-sample', 'DGE_filtered'))
+
+#Save objects
+#SaveObject(P5K, 'srat_P5K')
+#SaveObject(P500, 'srat_P500')
+
+#Read objects
+P5K <- ReadObject('srat_P5K')
+P500 <- ReadObject('srat_P500')
+
+#Merge objects
+P5500 <- merge(P5K, P500, add.cell.ids = c('P5K', 'P500'), project = 'PR0979')
 
 # Check to see if empty gene names are present, add name if so.
 table(rownames(counts) == "")
