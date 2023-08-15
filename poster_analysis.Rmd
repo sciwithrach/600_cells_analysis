@@ -131,7 +131,7 @@ SaveObject(chick.2k, 'srat_P2K_chick')
 SaveObject(mouse.2k, 'srat_P2K_mouse')
 ```
 
-```{r chick umap}
+```{r mouse umap}
 mouse.2k <- ScaleData(mouse.2k, verbose = F)
 mouse.2k <- NormalizeData(mouse.2k)
 mouse.2k <- FindVariableFeatures(mouse.2k)
@@ -174,8 +174,32 @@ sce_mouse <- slingshot(sce_mouse, clusterLabels = 'RNA_snn_res.0.1', reducedDim 
 
 summary(sce_mouse$slingPseudotime_1)
 
-plot(reducedDims(sce_mouse)$UMAP, asp=1, pch=19)
-lines(SlingshotDataSet(sce_mouse), lwd=2, col='black', asp=1)
+#Three unique trajectories
+plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_1')
+plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_2') 
+plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_3') 
+
+embedded <- embedCurves(sce_mouse, "UMAP")
+
+embedded.1 <- slingCurves(embedded)[[1]] # only 1 path.
+embedded.1 <- data.frame(embedded.1$s[embedded.1$ord,])
+
+embedded.2 <- slingCurves(embedded)[[2]] # only 1 path.
+embedded.2 <- data.frame(embedded.2$s[embedded.2$ord,])
+
+embedded.3 <- slingCurves(embedded)[[3]] # only 1 path.
+embedded.3 <- data.frame(embedded.3$s[embedded.3$ord,])
+
+traj.1 <- plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_1') +
+  geom_path(data=embedded.1, aes(x=UMAP_1, y=UMAP_2), size=1.2)
+
+traj.2 <- plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_2') +
+  geom_path(data=embedded.2, aes(x=UMAP_1, y=UMAP_2), size=1.2)
+
+traj.3 <- plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_3') +
+  geom_path(data=embedded.3, aes(x=UMAP_1, y=UMAP_2), size=1.2)
+
+plot_grid(plotlist = list(traj.1, traj.2, traj.3), nrow=1)
 ```
 
 ```{r pipe seurat}
