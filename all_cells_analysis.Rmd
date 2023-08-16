@@ -313,7 +313,7 @@ SaveFigure(plot, "srat_markers", width = 40, height = 30)
 
 ```
 
-```{r GO analysis}
+```{r GO analysis mouse }
 library(AnnotationHub)
 library(clusterProfiler)
 library(rtracklayer)
@@ -337,18 +337,48 @@ m.eGO <- lapply(m3k.GO.genes, function (x)
              verbose = T)
             )
 
-#SaveObject(eGO, 'eGO')
+SaveObject(m.eGO, 'mouse_eGO_analysis')
 #eGO <- ReadObject('eGO')
 
 plots <- lapply(m.eGO, dotplot)
 p <- plot_grid(plotlist = plots, nrow=2)
-
+SaveFigure(p, 'm3k_GO_analysis', width = 16, height = 9)
 
 #cnets <- lapply(eGO, cnetplot)
 #c0 <- cnetplot(eGO[[1]], colorEdge = T, node_label = 'gene') + ggtitle('Cluster 0')
 #SaveFigure(c0, 'cnet_c0', width=15, height = 10)
 ```
 
+```{r GO analysis chick }
+
+BiocManager::install('org.Gg.eg.db')
+library(org.Gg.eg.db)
+
+c3k.GO.genes <- lapply(c3k_markers, function(x) tibble(gene_name = rownames(x), avg_log2FC = x$avg_log2FC))
+c3k.GO.genes <- lapply(c3k.GO.genes, deframe)
+c3k.GO.genes <- lapply(c3k.GO.genes, sort, decreasing = T)
+
+c.eGO <- lapply(c3k.GO.genes, function (x) 
+            gseGO(geneList = x,
+             OrgDb = org.Gg.eg.db,
+             keyType = 'SYMBOL',
+             ont = 'ALL',
+             minGSSize = 100,
+             maxGSSize = 500,
+             pvalueCutoff = 0.05,
+             verbose = T)
+            )
+
+SaveObject(c.eGO, 'chick_eGO_analysis')
+
+plots <- lapply(m.eGO, dotplot)
+p <- plot_grid(plotlist = plots, nrow=2)
+SaveFigure(p, 'm3k_GO_analysis', width = 16, height = 9)
+
+#cnets <- lapply(eGO, cnetplot)
+#c0 <- cnetplot(eGO[[1]], colorEdge = T, node_label = 'gene') + ggtitle('Cluster 0')
+#SaveFigure(c0, 'cnet_c0', width=15, height = 10)
+```
 
 ```{r Poster plots}
 #Feature Count Plots
