@@ -164,6 +164,161 @@ P6000 <- RunUMAP(P6000, reduction = 'pca', dims = 1:30)
 p <- DimPlot(P6000, reduction='umap', group.by = 'orig.ident')
 p
 ```
+
+```{r Merge 1k and 2k}
+m2k <- ReadObject('srat_P2K_mouse')
+c2k <- ReadObject('srat_P2K_chick')
+
+m1k <- ReadParseBio_count(here('PR1044_1000_mouse', 'all-sample', 'DGE_filtered'))
+c1k <- ReadParseBio_count(here('PR1044_1000_chick_gG5', 'all-sample', 'DGE_filtered'))
+c2k <- ReadParseBio_count(here('PR1044_2000_chick_gG5', 'all-sample', 'DGE_filtered'))
+
+#cell.meta.m1k <- read.csv(here('PR1044_1000_mouse', 'all-sample', 'DGE_filtered', "cell_metadata.csv"), row.names = 1)
+cell.meta.c1k <- read.csv(here('PR1044_1000_chick_gG5', 'all-sample', 'DGE_filtered', "cell_metadata.csv"), row.names = 1)
+cell.meta.c2k <- read.csv(here('PR1044_2000_chick_gG5', 'all-sample', 'DGE_filtered', "cell_metadata.csv"), row.names = 1)
+
+c1k <- CreateSeuratObject(c1k, min.features = 100, min.cells = 100, names.field = 0, meta.data = cell.meta.c1k)
+c1k$orig.ident <- 'c1k'
+
+c2k <- CreateSeuratObject(c2k, min.features = 100, min.cells = 100, names.field = 0, meta.data = cell.meta.c2k)
+c2k$orig.ident <- 'c2k'
+
+m1k <- CreateSeuratObject(m1k, min.features = 100, min.cells = 100, names.field = 0, meta.data = cell.meta.m1k)
+m1k$orig.ident <- 'm1k'
+
+m3k <- merge(m1k, m2k, merge.data = T)
+c3k <- merge(c1k, c2k, merge.data = T)
+SaveObject(c3k, 'srat_c3k_raw')
+SaveObject(c2k, 'srat_P2K_chick')
+
+SaveObject(c1k, 'srat_P1K_chick')
+SaveObject(m1k, 'srat_P1K_mouse')
+```
+
+```{r Combined mouse UMAP}
+m3k <- ScaleData(m3k, verbose = F)
+m3k <- NormalizeData(m3k)
+m3k <- FindVariableFeatures(m3k)
+m3k <- RunPCA(m3k, npcs = 30, verbose=F)
+ElbowPlot(m3k, ndims=30)
+#20PCs chosen for UMAP
+
+m3k <- RunUMAP(m3k, reduction = 'pca', dims = 1:20)
+p <- DimPlot(m3k, reduction='umap', group.by = 'orig.ident')
+p
+```
+
+```{r Combined chick UMAP}
+c3k <- ScaleData(c3k, verbose = F)
+c3k <- NormalizeData(c3k)
+c3k <- FindVariableFeatures(c3k)
+c3k <- RunPCA(c3k, npcs = 30, verbose=F)
+ElbowPlot(c3k, ndims=30)
+#23PCs chosen for UMAP
+
+c3k <- RunUMAP(c3k, reduction = 'pca', dims = 1:23)
+p <- DimPlot(c3k, reduction='umap', group.by = 'orig.ident')
+p
+
+SaveObject(m3k, 'srat_m3k_after_umap')
+SaveObject(c3k, 'srat_c3k_after_umap')
+```
+
+```{r Combined mouse clustering}
+#Find SNN
+m3k <- Seurat:::FindNeighbors(m3k, dims=1:20)
+
+#Cluster stability analysis
+m3k <- FindClusters(m3k, resolution = 0.01)
+m3k <- FindClusters(m3k, resolution = 0.02)
+m3k <- FindClusters(m3k, resolution = 0.03)
+m3k <- FindClusters(m3k, resolution = 0.04)
+
+library(clustree)
+plot <- clustree(m3k)
+SaveFigure(plot, "ClustreeMouse", width = 5, height = 8)
+
+#Run Louvain clustering
+m3k <- FindClusters(m3k, resolution = 0.03)
+
+```
+
+```{r Combined chick clustering}
+#Find SNN
+c3k <- Seurat:::FindNeighbors(c3k, dims=1:23)
+
+#Cluster stability analysis
+c3k <- FindClusters(c3k, resolution = 0.04)
+c3k <- FindClusters(c3k, resolution = 0.01)
+c3k <- FindClusters(c3k, resolution = 0.06)
+
+#library(clustree)
+plot <- clustree(c3k)
+plot
+SaveFigure(plot, "ClustreeChick", width = 5, height = 8)
+
+#Run Louvain clustering
+c3k <- FindClusters(c3k, resolution = 0.04)
+
+```
+
+``` {r Find cluster markers}
+library('MAST')
+
+#Find markers for mouse
+m3k_markers <- lapply(levels(m3k@meta.data$RNA_snn_res.0.03), function(x) FindMarkers(m3k, test.use = 'MAST', ident.1=x, group.by = 'RNA_snn_res.0.03'))
+
+#Find markers for chick
+c3k_markers <- lapply(levels(c3k@meta.data$RNA_snn_res.0.04), function(x) FindMarkers(c3k, test.use = 'MAST', ident.1=x, group.by = 'RNA_snn_res.0.04'))
+
+#Get top 5 markers for mouse
+m3k_top_markers <- lapply(m3k_markers, function(x) top_n(x, n=5, wt=avg_log2FC))
+m3k_top_markers <- bind_rows(m3k_top_markers, .id = "id")
+
+#Plot top 5 markers for mouse
+m3k_top_plot <- unique(rownames(m3k_top_markers))
+plot1 <- DotPlot(m3k, features = m3k_top_plot, group.by = "RNA_snn_res.0.03") + coord_flip()
+
+SaveFigure(plot, "m3k_top5_markers", width = 9, height = 20)
+
+#Get top 5 markers for chick
+c3k_top_markers <- lapply(c3k_markers, function(x) top_n(x, n=5, wt=avg_log2FC))
+c3k_top_markers <- bind_rows(c3k_top_markers, .id = "id")
+
+#Plot top 5 markers for chick
+c3k_top_plot <- unique(rownames(c3k_top_markers))
+plot2 <- DotPlot(c3k, features = c3k_top_plot, group.by = "RNA_snn_res.0.04") + coord_flip()
+
+plot 1 + plot 2
+
+SaveFigure(plot, "c3k_top5_markers", width = 9, height = 20)
+```
+
+
+```{r Poster plots}
+#Feature Count Plots
+plot1 <- FeatureScatter(m3k, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") + NoLegend() + ggtitle('mouse, cor = 0.69')
+plot2 <- FeatureScatter(c3k, feature1 = "nCount_RNA", feature2 = "nFeature_RNA") + NoLegend() + ggtitle('chick, cor = 0.68')
+
+plot1 + plot2
+SaveFigure(plot1 + plot2, 'FeatureCountPlots', width = 10, height = 5)
+
+#Feature Count Plots combined mouse and chick
+mc6k <- merge(m3k, c3k, merge.data = T)
+p <- FeatureScatter(mc6k, feature1 = "nCount_RNA", feature2 = "nFeature_RNA", group.by = 'species')
+
+#UMAP by age and cluster
+p1 <- DimPlot(m3k, reduction = 'umap', group.by = 'sample') + NoAxes() + ggtitle('Mouse UMAP by age')
+p2 <- DimPlot(m3k, reduction = 'umap', group.by = 'RNA_snn_res.0.03') + NoAxes() + ggtitle('Mouse UMAP by cluster')
+
+p3 <- DimPlot(c3k, reduction = 'umap', group.by = 'sample') + NoAxes() + ggtitle('Chick UMAP by age')
+p4 <- DimPlot(c3k, reduction = 'umap', group.by = 'RNA_snn_res.0.04') + NoAxes() + ggtitle('Chick UMAP by cluster')
+
+SaveFigure(p1 + p2, 'MouseUmapAgeCluster', width = 10, height = 5)
+SaveFigure(p3 + p4, 'ChickUmapAgeCluster', width = 10, height = 5)
+```
+
+
 FROM PARSE BIO:
 When we create our Seurat object the plate well numbers (column names in the expression matrix) from the experiment will automatically be assigned to the cell identity slot. In other words, the program assumes this how we want to initially classify our cells. In general, we would like to avoid this behavior so there isn't a bias towards a particular cell class when removing outliers.
 
