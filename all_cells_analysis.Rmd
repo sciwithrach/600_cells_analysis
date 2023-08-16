@@ -241,6 +241,8 @@ SaveFigure(plot, "ClustreeMouse", width = 5, height = 8)
 #Run Louvain clustering
 m3k <- FindClusters(m3k, resolution = 0.03)
 
+SaveObject(c3k, 'srat_m3k_after_clustering')
+
 ```
 
 ```{r Combined chick clustering}
@@ -259,6 +261,8 @@ SaveFigure(plot, "ClustreeChick", width = 5, height = 8)
 
 #Run Louvain clustering
 c3k <- FindClusters(c3k, resolution = 0.04)
+
+SaveObject(c3k, 'srat_c3k_after_clustering')
 
 ```
 
@@ -366,14 +370,15 @@ c.eGO <- lapply(c3k.GO.genes, function (x)
              minGSSize = 100,
              maxGSSize = 500,
              pvalueCutoff = 0.05,
+             pAdjustMethod = 'BH',
              verbose = T)
             )
 
 SaveObject(c.eGO, 'chick_eGO_analysis')
 
-plots <- lapply(m.eGO, dotplot)
-p <- plot_grid(plotlist = plots, nrow=2)
-SaveFigure(p, 'm3k_GO_analysis', width = 16, height = 9)
+plots <- lapply(list(c.eGO[[3]], c.eGO[[4]], c.eGO[[5]]), dotplot)
+p <- plot_grid(plotlist = plots, nrow=1)
+SaveFigure(p, 'c3k_GO_analysis_clusters345', width = 16, height = 9)
 
 #cnets <- lapply(eGO, cnetplot)
 #c0 <- cnetplot(eGO[[1]], colorEdge = T, node_label = 'gene') + ggtitle('Cluster 0')
@@ -402,6 +407,51 @@ p4 <- DimPlot(c3k, reduction = 'umap', group.by = 'RNA_snn_res.0.04') + NoAxes()
 SaveFigure(p1 + p2, 'MouseUmapAgeCluster', width = 10, height = 5)
 SaveFigure(p3 + p4, 'ChickUmapAgeCluster', width = 10, height = 5)
 ```
+
+```{r Trajectory analysis mouse}
+#Get trajectory
+library(slingshot)
+library(SingleCellExperiment)
+sce_m3k <- as.SingleCellExperiment(m3k)
+sce_m3k <- slingshot(sce_m3k, clusterLabels = 'RNA_snn_res.0.03', reducedDim = 'UMAP')
+
+summary(sce_m3k$slingPseudotime_1)
+
+#Three unique trajectories
+plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_1')
+plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_2') 
+plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_3') 
+
+embedded <- embedCurves(sce_mouse, "UMAP")
+
+embedded.1 <- slingCurves(embedded)[[1]] # only 1 path.
+embedded.1 <- data.frame(embedded.1$s[embedded.1$ord,])
+
+embedded.2 <- slingCurves(embedded)[[2]] # only 1 path.
+embedded.2 <- data.frame(embedded.2$s[embedded.2$ord,])
+
+embedded.3 <- slingCurves(embedded)[[3]] # only 1 path.
+embedded.3 <- data.frame(embedded.3$s[embedded.3$ord,])
+
+traj.1 <- plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_1') +
+  geom_path(data=embedded.1, aes(x=UMAP_1, y=UMAP_2), size=1.2)
+
+traj.2 <- plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_2') +
+  geom_path(data=embedded.2, aes(x=UMAP_1, y=UMAP_2), size=1.2)
+
+traj.3 <- plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_3') +
+  geom_path(data=embedded.3, aes(x=UMAP_1, y=UMAP_2), size=1.2)
+
+plot_grid(plotlist = list(traj.1, traj.2, traj.3), nrow=1)
+
+```
+
+
+
+
+
+
+
 
 
 FROM PARSE BIO:
