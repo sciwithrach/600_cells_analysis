@@ -225,6 +225,8 @@ SaveObject(c3k, 'srat_c3k_after_umap')
 ```
 
 ```{r Combined mouse clustering}
+m3k <- ReadObject('srat_m3k_after_umap')
+
 #Find SNN
 m3k <- Seurat:::FindNeighbors(m3k, dims=1:20)
 
@@ -241,7 +243,7 @@ SaveFigure(plot, "ClustreeMouse", width = 5, height = 8)
 #Run Louvain clustering
 m3k <- FindClusters(m3k, resolution = 0.03)
 
-SaveObject(c3k, 'srat_m3k_after_clustering')
+SaveObject(m3k, 'srat_m3k_after_clustering')
 
 ```
 
@@ -409,6 +411,9 @@ SaveFigure(p3 + p4, 'ChickUmapAgeCluster', width = 10, height = 5)
 ```
 
 ```{r Trajectory analysis mouse}
+c3k <- ReadObject('srat_c3k_after_clustering')
+m3k <- ReadObject('srat_m3k_after_clustering')
+
 #Get trajectory
 library(slingshot)
 library(SingleCellExperiment)
@@ -418,11 +423,10 @@ sce_m3k <- slingshot(sce_m3k, clusterLabels = 'RNA_snn_res.0.03', reducedDim = '
 summary(sce_m3k$slingPseudotime_1)
 
 #Three unique trajectories
-plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_1')
-plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_2') 
-plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_3') 
+plotReducedDim(sce_m3k, dimred='UMAP', colour_by = 'slingPseudotime_1')
+plotReducedDim(sce_m3k, dimred='UMAP', colour_by = 'slingPseudotime_2') 
 
-embedded <- embedCurves(sce_mouse, "UMAP")
+embedded <- embedCurves(sce_m3k, "UMAP")
 
 embedded.1 <- slingCurves(embedded)[[1]] # only 1 path.
 embedded.1 <- data.frame(embedded.1$s[embedded.1$ord,])
@@ -430,22 +434,38 @@ embedded.1 <- data.frame(embedded.1$s[embedded.1$ord,])
 embedded.2 <- slingCurves(embedded)[[2]] # only 1 path.
 embedded.2 <- data.frame(embedded.2$s[embedded.2$ord,])
 
-embedded.3 <- slingCurves(embedded)[[3]] # only 1 path.
-embedded.3 <- data.frame(embedded.3$s[embedded.3$ord,])
-
-traj.1 <- plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_1') +
+traj.1 <- plotReducedDim(sce_m3k, dimred='UMAP', colour_by = 'slingPseudotime_1') +
   geom_path(data=embedded.1, aes(x=UMAP_1, y=UMAP_2), size=1.2)
 
-traj.2 <- plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_2') +
+traj.2 <- plotReducedDim(sce_m3k, dimred='UMAP', colour_by = 'slingPseudotime_2') +
   geom_path(data=embedded.2, aes(x=UMAP_1, y=UMAP_2), size=1.2)
 
-traj.3 <- plotReducedDim(sce_mouse, dimred='UMAP', colour_by = 'slingPseudotime_3') +
-  geom_path(data=embedded.3, aes(x=UMAP_1, y=UMAP_2), size=1.2)
+p <- plot_grid(plotlist = list(traj.1, traj.2), nrow=1)
 
-plot_grid(plotlist = list(traj.1, traj.2, traj.3), nrow=1)
-
+SaveFigure(p, 'm3k_trajectories', width =10, height= 5)
 ```
+```{r Trajectory analysis chick}
+#Get trajectory
+#library(slingshot)
+#library(SingleCellExperiment)
+sce_c3k <- as.SingleCellExperiment(c3k)
+sce_c3k <- slingshot(sce_c3k, clusterLabels = 'RNA_snn_res.0.04', reducedDim = 'UMAP')
 
+summary(sce_c3k$slingPseudotime_1)
+
+#Three unique trajectories
+plotReducedDim(sce_c3k, dimred='UMAP', colour_by = 'slingPseudotime_1')
+
+embedded <- embedCurves(sce_c3k, "UMAP")
+
+embedded.1 <- slingCurves(embedded)[[1]] # only 1 path.
+embedded.1 <- data.frame(embedded.1$s[embedded.1$ord,])
+
+traj.1 <- plotReducedDim(sce_c3k, dimred='UMAP', colour_by = 'slingPseudotime_1') +
+  geom_path(data=embedded.1, aes(x=UMAP_1, y=UMAP_2), size=1.2)
+
+SaveFigure(traj.1, 'c3k_trajectory', width =5, height= 5)
+```
 
 
 
