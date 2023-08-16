@@ -272,6 +272,7 @@ m3k_markers <- lapply(levels(m3k@meta.data$RNA_snn_res.0.03), function(x) FindMa
 c3k_markers <- lapply(levels(c3k@meta.data$RNA_snn_res.0.04), function(x) FindMarkers(c3k, test.use = 'MAST', ident.1=x, group.by = 'RNA_snn_res.0.04'))
 
 #Get top 5 markers for mouse
+#library(dplyr)
 m3k_top_markers <- lapply(m3k_markers, function(x) top_n(x, n=5, wt=avg_log2FC))
 m3k_top_markers <- bind_rows(m3k_top_markers, .id = "id")
 
@@ -289,9 +290,63 @@ c3k_top_markers <- bind_rows(c3k_top_markers, .id = "id")
 c3k_top_plot <- unique(rownames(c3k_top_markers))
 plot2 <- DotPlot(c3k, features = c3k_top_plot, group.by = "RNA_snn_res.0.04") + coord_flip()
 
-plot 1 + plot 2
-
 SaveFigure(plot, "c3k_top5_markers", width = 9, height = 20)
+
+plot1a <- plot1 <- DotPlot(m3k, features = m3k_top_plot, group.by = "RNA_snn_res.0.03") + coord_flip() + NoLegend() + ggtitle('Mouse')
+plot2a <- plot2 <- DotPlot(c3k, features = c3k_top_plot, group.by = "RNA_snn_res.0.04") + coord_flip() + ggtitle('Chick')
+  
+plot1a + plot2a
+
+SaveFigure(plot1a + plot2a, 'Top5Markers_MouseChick', width = 10, height = 8)
+```
+
+```{r Plot feature plots for markers}
+# Plotting HC, SC, and mesenchymal markers for MOUSE
+markers <- c("Otog", "Armc4", "Mgat4c", "Kcnh7", "mt-Rnr1", "mt-Rnr2", "Coch",
+"Tectb", "Sparcl1", "Miat", "Ush2a", "Mbp")
+
+plot <- FeaturePlot(m3k, features = markers)
+SaveFigure(plot, "srat_markers", width = 40, height = 30)
+
+# Plotting HC, SC, and mesenchymal markers for CHICK
+
+
+```
+
+```{r GO analysis}
+library(AnnotationHub)
+library(clusterProfiler)
+library(rtracklayer)
+library(org.Mm.eg.db)
+library(enrichplot)
+
+m3k.GO.genes <- lapply(m3k_markers, function(x) tibble(gene_name = rownames(x), avg_log2FC = x$avg_log2FC))
+m3k.GO.genes <- lapply(m3k.GO.genes, deframe)
+m3k.GO.genes <- lapply(m3k.GO.genes, sort, decreasing = T)
+
+#OrgDB <- org.Mm.eg.db
+
+m.eGO <- lapply(m3k.GO.genes, function (x) 
+            gseGO(geneList = x,
+             OrgDb = org.Mm.eg.db,
+             keyType = 'SYMBOL',
+             ont = 'ALL',
+             minGSSize = 100,
+             maxGSSize = 500,
+             pvalueCutoff = 0.05,
+             verbose = T)
+            )
+
+#SaveObject(eGO, 'eGO')
+#eGO <- ReadObject('eGO')
+
+plots <- lapply(m.eGO, dotplot)
+p <- plot_grid(plotlist = plots, nrow=2)
+
+
+#cnets <- lapply(eGO, cnetplot)
+#c0 <- cnetplot(eGO[[1]], colorEdge = T, node_label = 'gene') + ggtitle('Cluster 0')
+#SaveFigure(c0, 'cnet_c0', width=15, height = 10)
 ```
 
 
