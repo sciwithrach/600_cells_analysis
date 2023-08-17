@@ -48,7 +48,7 @@ set.seed(444)
 ```{r Define paths}
 
 #Set top-level directory using the here package
-here::i_am("600_cells_analysis/600_cells_analysis.Rmd")
+here::i_am("600_cells_analysis/all_cells_analysis.Rmd")
 library(here)
 here()
 setwd(here())
@@ -194,6 +194,17 @@ SaveObject(c2k, 'srat_P2K_chick')
 SaveObject(c1k, 'srat_P1K_chick')
 SaveObject(m1k, 'srat_P1K_mouse')
 ```
+```{r Per cell QC and multiplet removal}
+#BiocManager::install('scDblFinder')
+#library(SingleCellExperiment)
+library("scDblFinder")
+
+sce_m3k <- as.SingleCellExperiment(m3k)
+sce_m3k <- scDblFinder(sce_m3k, dims = 20)
+
+plot_grid(plotUMAP(sce_m3k, colour_by = "scDblFinder.score"), plotUMAP(sce_m3k,
+    colour_by = "scDblFinder.class"), plotUMAP(sce_m3k, colour_by = "sample"), ncol = 3)
+```
 
 ```{r Combined mouse UMAP}
 m3k <- ScaleData(m3k, verbose = F)
@@ -306,6 +317,15 @@ plot1a + plot2a
 SaveFigure(plot1a + plot2a, 'Top5Markers_MouseChick', width = 10, height = 8)
 ```
 
+
+```{r Some code}
+
+
+
+
+```
+
+
 ```{r Plot feature plots for markers}
 # Plotting HC, SC, and mesenchymal markers for MOUSE
 markers <- c("Otog", "Armc4", "Mgat4c", "Kcnh7", "mt-Rnr1", "mt-Rnr2", "Coch",
@@ -397,7 +417,9 @@ SaveFigure(plot1 + plot2, 'FeatureCountPlots', width = 10, height = 5)
 
 #Feature Count Plots combined mouse and chick
 mc6k <- merge(m3k, c3k, merge.data = T)
-p <- FeatureScatter(mc6k, feature1 = "nCount_RNA", feature2 = "nFeature_RNA", group.by = 'species')
+p <- FeatureScatter(mc6k, feature1 = "nCount_RNA", feature2 = "nFeature_RNA", group.by = 'species', plot.cor=F)
+SaveFigure(p, 'FeatureCount_CombinedPlot', width = 10, height = 5)
+
 
 #UMAP by age and cluster
 p1 <- DimPlot(m3k, reduction = 'umap', group.by = 'sample') + NoAxes() + ggtitle('Mouse UMAP by age')
@@ -408,6 +430,13 @@ p4 <- DimPlot(c3k, reduction = 'umap', group.by = 'RNA_snn_res.0.04') + NoAxes()
 
 SaveFigure(p1 + p2, 'MouseUmapAgeCluster', width = 10, height = 5)
 SaveFigure(p3 + p4, 'ChickUmapAgeCluster', width = 10, height = 5)
+
+#UMAP by 1kvs2k, n_Counts, n_Features
+p5 <- DimPlot(m3k, reduction = 'umap', group.by = 'orig.ident') + NoAxes() + ggtitle('Mouse UMAP by sample')
+p6 <- FeaturePlot(m3k, reduction = 'umap', features = 'nCount_RNA') + NoAxes() + ggtitle('Mouse UMAP by # of Reads')
+p7 <- FeaturePlot(m3k, reduction = 'umap', features = 'nFeature_RNA') + NoAxes() + ggtitle('Mouse UMAP by # of Genes')
+
+p5 + p6 + p7
 ```
 
 ```{r Trajectory analysis mouse}
@@ -465,6 +494,14 @@ traj.1 <- plotReducedDim(sce_c3k, dimred='UMAP', colour_by = 'slingPseudotime_1'
   geom_path(data=embedded.1, aes(x=UMAP_1, y=UMAP_2), size=1.2)
 
 SaveFigure(traj.1, 'c3k_trajectory', width =5, height= 5)
+```
+
+```{r Orthologue analysis for clusters}
+BiocManager::install("orthogene")
+library(orthogene)
+
+
+
 ```
 
 
