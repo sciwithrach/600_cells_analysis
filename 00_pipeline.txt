@@ -1,0 +1,21 @@
+Pipeline for scRNAseq analysis
+
+source constants
+source functions
+create object if needed
+
+PerCellQC - remove scuttle::quickPerCellQC outliers and high mito DNA cells
+
+SeuratBasics - run PCA and UMAP
+
+DoubletAnalysis - remove doublets using scDblFinder
+
+SeuratBasics (again!) - run PCA and UMAP on post-QC dataset
+
+Clustering - define clusters using cluster stability
+
+Marker analysis - Obtain cluster markers based on gene expression using FindAllMarkers
+
+Biomarker analysis - Explore the expression of biologically relevant markers over UMAP
+
+GO analysis - Ontology analysis of cluster markers - outputs can sometimes be unhelpful
