@@ -1,0 +1,243 @@
+---
+title: "Poster analysis chick"
+output: html_notebook
+---
+
+Set up environment
+```{r}
+#Set seed for random number generation
+set.seed(444)
+
+here::i_am("Poster_analysis_chick.Rmd")
+library(here)
+```
+
+Load in raw data for mice datasets
+```{r}
+c1k <- CreateObj(data.dir = here('PR1044_1000_chick_gG5'), object.name = 'P1000_chick_raw')
+  
+c2k <- CreateObj(data.dir = here('PR1044_2000_chick_gG5'), object.name = 'P2000_chick_raw')
+  
+chick.list <- list(c1k, c2k)
+```
+
+Mtio and QC for each dataset
+```{r}
+# Run Mito and QC
+# NEEDS TO RUN IN CONSOLE
+
+chick.list_filtered <- lapply(chick.list, MitoAndQC)
+
+```
+
+Normalise datasets and find variable features
+```{r}
+# Use SCTransform to normalise and find variable features
+# Then run PCA and elbow plot
+# Then run UMAP with user defined PCs
+
+chick.list_filtered <- lapply(chick.list_filtered, SeuratBasics, transform = T)
+
+```
+
+Doublet removal
+
+```{r}
+# Remove doublets
+# Plot cells removed
+# Save plots and Seurat object
+chick.list_filtered <- lapply(chick.list_filtered, DoubletRemoval, npcs = 50)
+
+SaveObject(chick.list_filtered, 'chick_list_1k_2k_afterDoubletRemoval')
+```
+
+Re-run normalisation on filtered dataset
+
+```{r}
+# Remove PCAs and UMAPs
+chick.list_filtered[[1]]@reductions$PCA <- NULL
+chick.list_filtered[[2]]@reductions$PCA <- NULL
+
+chick.list_filtered[[1]]@reductions$UMAP <- NULL
+chick.list_filtered[[2]]@reductions$UMAP <- NULL
+
+# Copy to new object
+chick.list_round2 <- chick.list_filtered
+
+# Add orig.ident for each dataset
+chick.list_round2[[1]]$orig.ident <- '1k'
+chick.list_round2[[2]]$orig.ident <- '2k'
+
+######################
+# RUN IN CONSOLE
+# As above but after QC and Doublet removal
+chick.list_round2 <- lapply(chick.list_round2, SeuratBasics, transform = T)
+
+```
+
+Find integration anchors and integrate datasets
+
+```{r}
+
+# Select integration features and prep for integration
+features <- SelectIntegrationFeatures(object.list = chick.list_round2, nfeatures = 10000)
+
+chick.list_round2 <- PrepSCTIntegration(object.list = chick.list_round2, anchor.features = features)
+
+# Find integration anchors
+anchors <- FindIntegrationAnchors(object.list = chick.list_round2, normalization.method = "SCT",
+    anchor.features = features)
+
+# Integrate datasets
+chick <- IntegrateData(anchorset = anchors, normalization.method = "SCT")
+
+# Set default assay
+DefaultAssay(chick) <- "integrated"
+
+SaveObject(chick, 'integrated_1k_2k_chick')
+```
+
+Create UMAP on integrated dataset
+
+```{r}
+
+#Seurat basics
+chick <- SeuratBasics(chick)
+
+SaveObject(chick, 'integrated_1k_2k_chick_afterUMAP')
+
+```
+
+Plot UMAPs
+```{r}
+chick <- ReadObject('integrated_1k_2k_chick_afterUMAP')
+
+# Plot UMAP by origin
+p <- DimPlot(chick, reduction='umap', group.by = 'orig.ident') + NoAxes() + ggtitle('chick UMAP by dataset')
+
+# Plot UMAP by age
+q <- DimPlot(chick, reduction='umap', group.by = 'sample') + NoAxes() + ggtitle('chick UMAP by age')
+
+# Plot UMAP by #reads
+r <- FeaturePlot(chick, reduction = 'umap', features = 'nCount_SCT') + NoAxes() + ggtitle('chick UMAP by # of Reads')
+
+# Plot UMAP by #features
+s <- FeaturePlot(chick, reduction = 'umap', features = 'nFeature_SCT') + NoAxes() + ggtitle('chick UMAP by # of Features')
+
+#Plot all together
+p + q + r + s
+
+SaveFigure(p + q + r + s, 'chick_integrated_umaps', width = 10, height = 8)
+```
+
+Clustering 
+
+```{r}
+
+#chick <- ReadObject('integrated_1k_2k_chick_afterUMAP')
+
+chick_clustered <- Clustering(chick)
+
+t <- DimPlot(chick_clustered, reduction='umap', group.by = 'integrated_snn_res.0.4') + NoAxes() + ggtitle('chick UMAP by cluster')
+
+p + q + r + s + t
+
+SaveObject(chick_clustered, 'integrated_1k_2k_chick_afterClustering')
+SaveFigure(t, 'chick_umap_clustered', width = 10, height = 8)
+```
+Find all markers
+```{r}
+
+#u <- MarkerAnalysisPlot(chick_clustered, final.res = final.res)
+final.res <- 0.4
+resolution <- "integrated_snn_res.0.4"
+#Find markers
+chick.markers <-FindAllMarkers(chick_clustered, 
+                     test.use = 'MAST', 
+                     group.by = 'integrated_snn_res.0.4')
+
+SaveObject(chick.markers, 'chick_markers')
+chick.markers.list <- split(chick.markers, chick.markers$cluster)
+
+chick.top_markers <- lapply(chick.markers.list, function(x) top_n(x, n=5, wt=avg_log2FC))
+chick.top_markers <- bind_rows(chick.top_markers, .id = "id")
+
+#Plot top 5 markers for chick
+chick.top_plot <- sub("\\.\\d+$", "", rownames(chick.top_markers))
+chick.top_plot <- unique(chick.top_plot)
+plot <- DotPlot(chick_clustered, features = chick.top_plot, group.by = resolution) + coord_flip()
+
+plot
+
+SaveFigure(plot, 'top5_chick_markers', width = 20, height = 15)
+```
+Plot biological markers
+```{r}
+## SCs ##
+# Otog - SCs & type 2 HCs
+# Sparcl1 - type 2 HCs
+
+
+## HCs ##
+# Atoh1 - nascent hair cells
+# Armc4 - all HCs
+# Ush2a - all HCs
+# Bdnf - all HCs
+
+## MES ##
+# Pcca - striolar supporting cells and all HCs
+# Coch - extrastriolar & transitional supporting cells
+# Stim2 - extrastriolar type 2 hair cells
+
+## GLIA ##
+# Pllp - extrastriolar & transitional supporting cells 
+# Erc1 - striolar SCs, type 2 HCs
+
+## NEU ##
+# Mbp - striolar SCs
+# SPOCK 1 - SCs and transitional SCs
+
+chick_clustered <- ReadObject('integrated_1k_2k_chick_afterClustering')
+
+chick.biomarkers <- str_to_upper(c("Myo7a",
+#                "Rasd2",
+                "Otof",
+                "Ocm", 
+#                "Plp1",
+                "Lgr5",
+                "Sox2",
+#                "Sparcl1",
+                "Jag1"
+#                "Tectb"
+                ))
+
+plot <- FeaturePlot(chick_clustered, features = chick.biomarkers)
+plot
+
+SaveFigure(plot, "chick_biomarkers_marcela", width = 8, height = 10)
+
+```
+
+Plot UMAP labelled by cell type
+```{r}
+
+#Add labels and plot
+chick_labelled <- chick_clustered
+
+plt_labels <- c("Mesenchyme", "Supporting Cells", "Hair Cells", rep('Supporting Cells', 2), # 0 to 4
+                'Neurons & Glia', 'Supporting Cells', 'Supporting Cells', 'Hair Cells', # 5 to 8
+                'Mesenchyme', 'Neurons & Glia', 'Mesenchyme', 'Supporting Cells', # 9 to 12
+                rep('Neurons & Glia', 2), 'Supporting Cells', 'Mesenchyme'
+                )
+
+names(plt_labels) <- levels(chick_labelled)
+
+chick_labelled <- RenameIdents(chick_labelled, plt_labels)
+
+u <- DimPlot(chick_labelled, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend() + NoAxes() + ggtitle('Chick UMAP by cell type')
+
+SaveFigure(plot, 'chick_labelled_umap_clusters', width = 8, height = 10)
+SaveObject(chick_labelled, 'chick_cluster_labels')
+```
+
+

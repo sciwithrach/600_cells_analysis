@@ -1,0 +1,270 @@
+---
+title: "Poster analysis"
+output: html_notebook
+---
+
+Set up environment
+```{r}
+#Set seed for random number generation
+set.seed(444)
+
+here::i_am("Poster_analysis.Rmd")
+library(here)
+```
+
+Load in raw data for mice datasets
+```{r}
+m1k <- CreateObj(data.dir = here('PR1044_1000_mouse'), object.name = 'P1000_mouse_raw')
+  
+m2k <- CreateObj(data.dir = here('PR1044_2000_mouse'), object.name = 'P2000_mouse_raw')
+  
+m5k <- CreateObj(data.dir = here('PR0979_5000'), object.name = 'P5000_mouse_raw')
+
+mouse.list <- list(m1k, m2k, m5k)
+```
+
+Mtio and QC for each dataset
+```{r}
+# Run Mito and QC
+# Using 0.5 as cutoff
+# NEEDS TO RUN IN CONSOLE
+
+mouse.list_filtered <- lapply(mouse.list, MitoAndQC)
+
+```
+
+Normalise datasets and find variable features
+```{r}
+# Use SCTransform to normalise and find variable features
+# Then run PCA and elbow plot
+# Then run UMAP with user defined PCs
+
+mouse.list_filtered <- lapply(mouse.list_filtered, SeuratBasics, transform = T)
+
+```
+
+Doublet removal
+
+```{r}
+# Remove doublets
+# Plot cells removed
+# Save plots and Seurat object
+mouse.list_filtered <- lapply(mouse.list_filtered, DoubletRemoval, npcs = 50)
+
+SaveObject(mouse.list_filtered, 'list_1k_2k_5k_afterDoubletRemoval')
+```
+
+Remove reductions and add orig.ident
+
+```{r}
+# Remove PCAs and UMAPs
+mouse.list_filtered[[1]]@reductions$PCA <- NULL
+mouse.list_filtered[[2]]@reductions$PCA <- NULL
+mouse.list_filtered[[3]]@reductions$PCA <- NULL
+
+mouse.list_filtered[[1]]@reductions$UMAP <- NULL
+mouse.list_filtered[[2]]@reductions$UMAP <- NULL
+mouse.list_filtered[[3]]@reductions$UMAP <- NULL
+
+# Copy to new object
+mouse.list_round2 <- mouse.list_filtered
+
+# Add orig.ident for each dataset
+mouse.list_round2[[1]]$orig.ident <- '1k'
+mouse.list_round2[[2]]$orig.ident <- '2k'
+mouse.list_round2[[3]]$orig.ident <- '5k'
+
+```
+
+Re-normalise and reduce dimensions on filtered dataset
+```{r}
+######################
+# RUN IN CONSOLE
+# As above but after QC and Doublet removal
+mouse.list_round2 <- lapply(mouse.list_round2, SeuratBasics, transform = T)
+
+```
+
+Find integration anchors and integrate datasets
+
+```{r}
+
+# Select integration features and prep for integration
+features <- SelectIntegrationFeatures(object.list = mouse.list_round2, nfeatures = 10000)
+
+mouse.list_round2 <- PrepSCTIntegration(object.list = mouse.list_round2, anchor.features = features)
+
+# Find integration anchors
+anchors <- FindIntegrationAnchors(object.list = mouse.list_round2, normalization.method = "SCT",
+    anchor.features = features)
+
+# Integrate datasets
+mouse <- IntegrateData(anchorset = anchors, normalization.method = "SCT")
+
+# Set default assay
+DefaultAssay(mouse) <- "integrated"
+
+SaveObject(mouse, 'integrated_1k_2k_5k_mouse')
+```
+
+Create UMAP on integrated dataset
+
+```{r}
+
+#Seurat basics
+mouse <- SeuratBasics(mouse)
+
+SaveObject(mouse, 'integrated_1k_2k_5k_mouse_afterUMAP')
+
+```
+
+Plot UMAPs
+```{r}
+
+# Plot UMAP by origin
+p <- DimPlot(mouse, reduction='umap', group.by = 'orig.ident') + NoAxes() + ggtitle('Mouse UMAP by dataset')
+
+#Reorder factor to put ages in chronological order
+mouse$sample <- factor(mouse$sample, levels = c('P0', 'P2', 'P4', 'P8', 'P11', 'P14', 'P21'))
+
+# Plot UMAP by age
+q <- DimPlot(mouse, reduction='umap', group.by = 'sample') + NoAxes() + ggtitle('Mouse UMAP by age')
+
+# Plot UMAP by #reads
+r <- FeaturePlot(mouse, reduction = 'umap', features = 'nCount_SCT') + NoAxes() + ggtitle('Mouse UMAP by nReads (normalised)')
+
+# Plot UMAP by #features
+s <- FeaturePlot(mouse, reduction = 'umap', features = 'nFeature_SCT') + NoAxes() + ggtitle('Mouse UMAP by nFeatures (normalised)')
+
+#Plot all together
+p + q + r + s
+
+```
+
+Clustering 
+
+```{r}
+
+mouse <- ReadObject('integrated_1k_2k_5k_mouse_afterUMAP')
+
+mouse_clustered <- Clustering(mouse)
+
+t <- DimPlot(mouse_clustered, reduction='umap', group.by = 'integrated_snn_res.0.2') + NoAxes() + ggtitle('Mouse UMAP by cluster')
+
+SaveObject(mouse_clustered, 'integrated_1k_2k_5k_mouse_afterClustering')
+
+p + q + r + s + t
+```
+Find all markers
+```{r}
+
+#u <- MarkerAnalysisPlot(mouse_clustered, final.res = final.res)
+
+#Find markers
+markers <-FindAllMarkers(mouse_clustered, 
+                     test.use = 'MAST', 
+                     group.by = 'integrated_snn_res.0.2')
+
+SaveObject(markers, 'mouse_markers')
+markers.list <- split(markers, markers$cluster)
+
+top_markers <- lapply(markers.list, function(x) top_n(x, n=5, wt=avg_log2FC))
+top_markers <- bind_rows(top_markers, .id = "id")
+
+#Plot top 5 markers for mouse
+top_plot <- sub("\\.\\d+$", "", rownames(top_markers))
+top_plot <- unique(top_plot)
+plot <- DotPlot(mouse_clustered, features = top_plot, group.by = resolution) + coord_flip()
+
+plot
+
+SaveFigure(plot, 'top5_mouse_markers', width = 20, height = 15)
+```
+Plot biological markers
+```{r}
+## SCs ##
+# Otog - SCs & non-sensory epithelia
+# Sparcl1 - type 2 SCs & vasuclar cells
+
+
+## HCs ##
+# Armc4 - all HCs
+# Ush2a - all HCs, stronger in types 3-5
+# Bdnf - HCs, opposite to Ush2a
+
+## MES ##
+# Pcca - mesenchyme
+# Coch - mesenchyme
+# Stim2 - non sensory epithelia
+
+## GLIA ##
+# Pllp
+# Erc1 
+
+## NEU ##
+# Mbp - myelinated cells
+
+
+biomarkers <- c("Myo7a",
+                "Rasd2",
+                "Otof",
+ #               "Ocm", 
+                "Plp1",
+                "Lgr5",
+ #               "Sox2",
+  #              "Sparcl1",
+                "Jag1"
+#                "Tectb"
+                )
+
+plot <- FeaturePlot(mouse_clustered, features = biomarkers)
+plot
+
+SaveFigure(plot, "mouse_biomarkers_marcela", width = 8, height = 10)
+```
+
+Plot UMAP labelled by cell type
+```{r}
+
+#plt_clusters <- list(
+#  c(2, 3, 4, 8, 10, 7),
+#  c(0, 9),
+#  c(1, 5),
+#  c(6),
+#  c(11, 13, 12)
+#)
+
+#plt_labels <- list(
+#  "Supporting Cells",
+#  "Mesenchyme",
+#  "Hair Cells",
+#  "Neurons & Glia",
+#  "Non-sensory Epithelia"
+#)
+
+#Add labels and plot
+mouse_labelled <- mouse_clustered
+
+plt_labels <- c("Mesenchyme", "Hair Cells", rep("Supporting Cells", 3), "Hair Cells", "Neurons & Glia", 'Supporting Cells', 'Neurons & Glia', "Mesenchyme", 'Supporting Cells', rep('NS Epithelia', 3), rep('Neurons & Glia', 3))
+
+names(plt_labels) <- levels(mouse_labelled)
+
+mouse_labelled <- RenameIdents(mouse_labelled, plt_labels)
+
+u <- DimPlot(mouse_labelled, reduction = "umap", label = TRUE, pt.size = 0.5) + NoLegend() + NoAxes()
+
+#SaveFigure(plot, 'mouse_labelled_umap_clusters', width = 8, height = 10)
+#SaveObject(mouse_labelled, 'mouse_cluster_labels')
+```
+
+Plot all for poster
+```{R}
+
+# Plot UMAPs in order
+p + q + t + r + s + u # Save as PDF 30 x 15 in
+
+# Plot biomarkers
+plot # Save as PDF 10 x 15 in
+
+```
+
