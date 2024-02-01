@@ -204,17 +204,25 @@ sce_m3k <- scDblFinder(sce_m3k, dims = 20)
 
 plot_grid(plotUMAP(sce_m3k, colour_by = "scDblFinder.score"), plotUMAP(sce_m3k,
     colour_by = "scDblFinder.class"), plotUMAP(sce_m3k, colour_by = "sample"), ncol = 3)
+
+sce_m3k_filtered <- sce_m3k[, sce_m3k$scDblFinder.class == 'singlet']
+m3k <- as.Seurat(sce_m3k_filtered)
+
+m3k@reductions$PCA <- NULL
+m3k@reductions$UMAP <- NULL
+
+
 ```
 
 ```{r Combined mouse UMAP}
 m3k <- ScaleData(m3k, verbose = F)
 m3k <- NormalizeData(m3k)
 m3k <- FindVariableFeatures(m3k)
-m3k <- RunPCA(m3k, npcs = 30, verbose=F)
-ElbowPlot(m3k, ndims=30)
+m3k <- RunPCA(m3k, npcs = 50, verbose=F)
+ElbowPlot(m3k, ndims=50)
 #20PCs chosen for UMAP
 
-m3k <- RunUMAP(m3k, reduction = 'pca', dims = 1:20)
+m3k <- RunUMAP(m3k, reduction = 'pca', dims = 1:50)
 p <- DimPlot(m3k, reduction='umap', group.by = 'orig.ident')
 p
 ```
@@ -283,18 +291,17 @@ SaveObject(c3k, 'srat_c3k_after_clustering')
 library('MAST')
 
 #Find markers for mouse
-m3k_markers <- lapply(levels(m3k@meta.data$RNA_snn_res.0.03), function(x) FindMarkers(m3k, test.use = 'MAST', ident.1=x, group.by = 'RNA_snn_res.0.03'))
+m3k_markers <- FindAllMarkers(m3k, test.use = 'MAST', group.by = 'RNA_snn_res.0.03')
 
 #Find markers for chick
-c3k_markers <- lapply(levels(c3k@meta.data$RNA_snn_res.0.04), function(x) FindMarkers(c3k, test.use = 'MAST', ident.1=x, group.by = 'RNA_snn_res.0.04'))
+c3k_markers <- lapply(levels(c3k@meta.data$RNA_snn_res.0.04), function(x) FindAllMarkers(c3k, test.use = 'MAST', group.by = 'RNA_snn_res.0.04'))
 
 #Get top 5 markers for mouse
 #library(dplyr)
-m3k_top_markers <- lapply(m3k_markers, function(x) top_n(x, n=5, wt=avg_log2FC))
-m3k_top_markers <- bind_rows(m3k_top_markers, .id = "id")
+m3k_top_markers <- m3k_markers %>% group_by(cluster) %>% top_n(n=5, wt=avg_log2FC)
 
 #Plot top 5 markers for mouse
-m3k_top_plot <- unique(rownames(m3k_top_markers))
+m3k_top_plot <- unique(m3k_top_markers$gene)
 plot1 <- DotPlot(m3k, features = m3k_top_plot, group.by = "RNA_snn_res.0.03") + coord_flip()
 
 SaveFigure(plot, "m3k_top5_markers", width = 9, height = 20)
@@ -346,22 +353,30 @@ library(rtracklayer)
 library(org.Mm.eg.db)
 library(enrichplot)
 
-m3k.GO.genes <- lapply(m3k_markers, function(x) tibble(gene_name = rownames(x), avg_log2FC = x$avg_log2FC))
+
+
+m3k.GO.genes <- m3k_markers %>% dplyr::select('gene', 'avg_log2FC') %>% deframe() %>% sort(., decreasing = T)
+
+m3k_markers_list <- split(m3k_markers, levels(m3k_markers$cluster))
+m3k.GO.genes <- lapply(m3k_markers_list, function(x) tibble(gene_name = rownames(x), avg_log2FC = x$avg_log2FC))
 m3k.GO.genes <- lapply(m3k.GO.genes, deframe)
 m3k.GO.genes <- lapply(m3k.GO.genes, sort, decreasing = T)
 
+
 #OrgDB <- org.Mm.eg.db
 
-m.eGO <- lapply(m3k.GO.genes, function (x) 
-            gseGO(geneList = x,
+m.eGO <-     lapply(m3k.GO.genes, 
+                    function(x) {
+                    gseGO(geneList = x,
              OrgDb = org.Mm.eg.db,
              keyType = 'SYMBOL',
-             ont = 'ALL',
+             ont = 'BP',
              minGSSize = 100,
              maxGSSize = 500,
              pvalueCutoff = 0.05,
              verbose = T)
-            )
+                    }
+)
 
 SaveObject(m.eGO, 'mouse_eGO_analysis')
 #eGO <- ReadObject('eGO')
